@@ -18,4 +18,8 @@ docker-compose logs -f service
 - curl -H 'Authorization: Bearer [jwt-token here...]' -X GET http://localhost:8080/api/owners
 ## API Documentation
 http://localhost:8080/swagger-ui.html
+## Jacoco Test Coverage
+- Run mvn build
+- Coverage reports are available at target/site/jacoco/index.html
+
 
