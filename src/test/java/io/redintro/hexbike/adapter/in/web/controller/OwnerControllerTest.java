@@ -1,0 +1,77 @@
+package io.redintro.hexbike.adapter.in.web.controller;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.redintro.hexbike.domain.Owner;
+import io.redintro.hexbike.port.in.ShowOwnerPort;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+
+import java.util.List;
+
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+public class OwnerControllerTest {
+    private MockMvc mvc;
+
+    @InjectMocks
+    private OwnerController controller;
+
+    @Mock
+    private ShowOwnerPort showOwnerPort;
+
+    private JacksonTester<List<Owner>> jacksonListTester;
+    private JacksonTester<Owner> jacksonTester;
+
+    @BeforeEach
+    public void setUp() {
+        JacksonTester.initFields(this, new ObjectMapper());
+
+        mvc = MockMvcBuilders.standaloneSetup(controller).build();
+    }
+
+    @Test
+    public void shouldFindAllOwners() throws Exception {
+        List<Owner> owners = List.of(new Owner(1L,"Jeff", "Jefferson"));
+
+        when(showOwnerPort.findAll()).thenReturn(owners);
+
+        MockHttpServletResponse response = mvc.perform(
+                MockMvcRequestBuilders.get("/api/owners").accept(MediaType.APPLICATION_JSON))
+                    .andReturn()
+                        .getResponse();
+
+        assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
+        assertThat(response.getContentAsString(), is(equalTo(jacksonListTester.write(owners).getJson())));
+    }
+
+    @Test
+    public void shouldFindById() throws Exception {
+        Owner owner = new Owner(1L, "Jeff", "Jefferson");
+
+        when(showOwnerPort.findById(1L)).thenReturn(owner);
+
+        MockHttpServletResponse response = mvc.perform(
+                MockMvcRequestBuilders.get("/api/owners/1").accept(MediaType.APPLICATION_JSON))
+                    .andReturn()
+                        .getResponse();
+
+        assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
+        assertThat(response.getContentAsString(), is(equalTo(jacksonTester.write(owner).getJson())));
+    }
+}

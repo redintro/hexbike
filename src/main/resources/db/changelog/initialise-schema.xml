@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet id="1" author="matt" context="dev">
+        <createTable tableName="user">
+            <column name="id" type="int" autoIncrement="true" incrementBy="1">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <loadData
+                file="db/data/user.csv"
+                tableName="user">
+            <column name="id" type="numeric"/>
+            <column name="user_name" type="string"/>
+            <column name="password" type="string"/>
+            <column name="role" type="string"/>
+        </loadData>
+    </changeSet>
+
+    <changeSet id="2" author="matt" context="dev">
+        <createTable tableName="bike">
+            <column name="id" type="int" autoIncrement="true" incrementBy="1">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="make" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="model" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="colour" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="year" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="owner" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <loadData
+                file="db/data/bike.csv"
+                tableName="bike">
+            <column name="id" type="numeric"/>
+            <column name="make" type="string"/>
+            <column name="model" type="string"/>
+            <column name="colour" type="string"/>
+            <column name="year" type="numeric"/>
+            <column name="price" type="numeric"/>
+            <column name="owner" type="numeric"/>
+        </loadData>
+    </changeSet>
+
+    <changeSet id="3" author="matt" context="dev">
+        <createTable tableName="owner">
+            <column name="id" type="int" autoIncrement="true" incrementBy="1">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <loadData
+                file="db/data/owner.csv"
+                tableName="owner">
+            <column name="id" type="numeric"/>
+            <column name="first_name" type="string"/>
+            <column name="last_name" type="string"/>
+        </loadData>
+    </changeSet>
+
+</databaseChangeLog>

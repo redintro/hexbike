@@ -1,0 +1,42 @@
+version: '3'
+services:
+  service:
+    build:
+      context: ./deploy/app
+    container_name: hexbike-service
+    image: redintro/hexbike-service
+    restart: always
+    networks:
+      - new
+    ports:
+      - "8080:8080"
+    environment:
+      spring_profiles_active: dev
+    volumes:
+      - ./target:/opt
+    depends_on:
+      - db
+
+  db:
+    container_name: hexbike-database
+    image: postgres:10-alpine
+    restart: always
+    networks:
+      new:
+        aliases:
+          - db_host
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: hexbike_dev
+    volumes:
+      - db-data:/var/lib/postgres/data
+
+networks:
+  new:
+
+volumes:
+  app-data:
+  db-data:
