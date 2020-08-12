@@ -17,8 +17,8 @@
 	<properties>
 		<java.version>11</java.version>
 		<jacoco.version>0.8.5</jacoco.version>
-		<jacoco.branch.coverage.threshold>0</jacoco.branch.coverage.threshold>
-		<jacoco.line.coverage.threshold>0</jacoco.line.coverage.threshold>
+		<jacoco.branch.coverage.threshold>100%</jacoco.branch.coverage.threshold>
+		<jacoco.line.coverage.threshold>100%</jacoco.line.coverage.threshold>
 	</properties>
 
 	<dependencies>
@@ -77,6 +77,11 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.7</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -95,6 +100,14 @@
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>${jacoco.version}</version>
+				<configuration>
+					<excludes>
+						<exclude>**/HexBikeApplication.class</exclude>
+						<exclude>**/SecurityConfig.class</exclude>
+                        <!-- TODO: Include when Mockito / PowerMock work with JUnit 5 -->
+						<exclude>**/AuthenticationService.class</exclude>
+					</excludes>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
@@ -114,9 +127,6 @@
 							<goal>check</goal>
 						</goals>
                         <configuration>
-							<excludes>
-								<exclude>**/redintro/*/SecurityConfig.class</exclude>
-							</excludes>
 							<dataFile>target/jacoco.exec</dataFile>
                             <rules>
 								<rule>

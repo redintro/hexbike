@@ -1,7 +1,7 @@
 package io.redintro.hexbike.adapter.out.persistence;
 
 import io.redintro.hexbike.domain.Bike;
-import io.redintro.hexbike.port.out.FindCarPort;
+import io.redintro.hexbike.port.out.FindBikePort;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityNotFoundException;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class BikePersistenceAdapter implements FindCarPort {
+public class BikePersistenceAdapter implements FindBikePort {
     private final BikeRepository repository;
 
     public BikePersistenceAdapter(BikeRepository repository) {

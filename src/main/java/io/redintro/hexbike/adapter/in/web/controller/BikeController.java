@@ -30,8 +30,6 @@ public class BikeController {
     @Operation(security = { @SecurityRequirement(name = "bearer-token") })
     @GetMapping(value = "/bikes/{id}", produces = "application/json")
     public Bike getCar(@PathVariable Long id, Principal principal) {
-        assert(principal != null);
-        assert(principal.getName().equals("admin"));
         return showBikePort.findById(id);
     }
 }

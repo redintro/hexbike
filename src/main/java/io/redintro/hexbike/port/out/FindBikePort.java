@@ -4,7 +4,7 @@ import io.redintro.hexbike.domain.Bike;
 
 import java.util.List;
 
-public interface FindCarPort {
+public interface FindBikePort {
     List<Bike> findAll();
     Bike findById(Long bikeId);
 }

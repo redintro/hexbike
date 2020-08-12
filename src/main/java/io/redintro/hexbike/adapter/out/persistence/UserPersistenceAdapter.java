@@ -8,15 +8,15 @@ import javax.persistence.EntityNotFoundException;
 
 @Component
 public class UserPersistenceAdapter implements FindUserPort {
-    private final UserRepository repository;
+    private final UserRepository userRepository;
 
-    public UserPersistenceAdapter(UserRepository repository) {
-        this.repository = repository;
+    public UserPersistenceAdapter(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public User findByUserName(String userName) {
-        return repository
+        return userRepository
                 .findByUsername(userName)
                 .map(UserMapper::mapToDomainEntity)
                 .orElseThrow(EntityNotFoundException::new);
