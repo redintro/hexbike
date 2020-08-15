@@ -21,6 +21,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.security.core.userdetails.User;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -59,8 +60,7 @@ class BikeControllerTest {
         jwtToken = AuthenticationService.getToken("admin");
 
         when(userDetailsService.loadUserByUsername(any(String.class)))
-                .thenReturn(new org.springframework.security.core.
-                        userdetails.User("admin", "$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG",
+                .thenReturn(new User("admin", "$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG",
                         true, true, true, true,
                         AuthorityUtils.createAuthorityList("ADMIN")));
 
