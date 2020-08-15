@@ -1,4 +1,4 @@
-package io.redintro.hexbike;
+package io.redintro.hexbike.shared.config;
 
 import io.redintro.hexbike.adapter.in.web.filter.AuthenticationFilter;
 import io.redintro.hexbike.adapter.in.web.filter.LoginFilter;
