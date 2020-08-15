@@ -5,8 +5,8 @@
 - git@github.com:redintro/hexbike.git
 
 ## Maven
-The build has been configured to create the application and use docker-compose to start up and tear down first tear down 
-containers with the latest code:
+The build has been configured to create the application and use docker-compose to start up and tear down the containers
+ with the latest code:
 - To build: `mvn clean install`
 
 To run via maven:
