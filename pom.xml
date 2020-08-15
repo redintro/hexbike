@@ -157,44 +157,53 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>com.dkanejs.maven.plugins</groupId>
-				<artifactId>docker-compose-maven-plugin</artifactId>
-				<version>${docker-compose-maven-plugin.version}</version>
-				<configuration>
-					<composeFile>${project.basedir}/docker-compose.yml</composeFile>
-					<detachedMode>true</detachedMode>
-					<build>true</build>
-				</configuration>
-				<executions>
-					<execution>
-						<id>up</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>up</goal>
-						</goals>
-						<configuration>
-							<composeFile>${project.basedir}/docker-compose.yml</composeFile>
-							<detachedMode>true</detachedMode>
-						</configuration>
-					</execution>
-					<execution>
-						<id>down</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>down</goal>
-						</goals>
-						<configuration>
-							<composeFile>${project.basedir}/docker-compose.yml</composeFile>
-							<removeVolumes>true</removeVolumes>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
 
+	<profiles>
+		<profile>
+			<id>docker-compose</id>
+            <build>
+				<plugins>
+					<plugin>
+						<groupId>com.dkanejs.maven.plugins</groupId>
+						<artifactId>docker-compose-maven-plugin</artifactId>
+						<version>${docker-compose-maven-plugin.version}</version>
+						<configuration>
+							<composeFile>${project.basedir}/docker-compose.yml</composeFile>
+							<detachedMode>true</detachedMode>
+							<build>true</build>
+						</configuration>
+						<executions>
+							<execution>
+								<id>down</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>down</goal>
+								</goals>
+								<configuration>
+									<composeFile>${project.basedir}/docker-compose.yml</composeFile>
+									<removeVolumes>true</removeVolumes>
+								</configuration>
+							</execution>
+							<execution>
+								<id>up</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>up</goal>
+								</goals>
+								<configuration>
+									<composeFile>${project.basedir}/docker-compose.yml</composeFile>
+									<detachedMode>true</detachedMode>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
