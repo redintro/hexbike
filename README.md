@@ -4,19 +4,21 @@
 - https://github.com/redintro/hexbike
 - git@github.com:redintro/hexbike.git
 
-## Maven
-The build has been configured to create the application and use docker-compose to start up and tear down the containers
- with the latest code:
+## Building with Maven
+The project is configured to use maven as its build tool:
 - To build: `mvn clean install`
 
-To run via maven:
+The project has a docker-compose maven profile defined that clears down and stands up a docker-compose environment: 
+- To build and run: `mvn clean install -P docker-compose`
+
+Maven can also be used to call docker-compose directly: 
 - Start: `mvn docker-compose:up`
 - Stop: `mvn docker-compose:down`
 
 See: https://github.com/dkanejs/docker-compose-maven-plugin
 
 ## Docker Compose
-To run from the command line:
+To run from the command line without maven:
 - Start: `docker-compose up -d --build`
 - Stop: `docker-compose down`
 
