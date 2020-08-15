@@ -19,7 +19,7 @@ docker-compose logs -f service
 ## API Documentation
 http://localhost:8080/swagger-ui.html
 ## Jacoco Test Coverage
-- Run mvn build
+- Run mvn clean install
 - Coverage reports are available at target/site/jacoco/index.html
 
 
