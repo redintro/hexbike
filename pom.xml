@@ -19,6 +19,12 @@
 		<jacoco.version>0.8.5</jacoco.version>
 		<jacoco.branch.coverage.threshold>100%</jacoco.branch.coverage.threshold>
 		<jacoco.line.coverage.threshold>100%</jacoco.line.coverage.threshold>
+		<jjwt.version>0.9.1</jjwt.version>
+		<liquibase.core.version>3.8.7</liquibase.core.version>
+		<immutables.version>2.8.8</immutables.version>
+		<postgresql.version>42.2.10</postgresql.version>
+		<springdoc.openapi-ui.version>1.2.32</springdoc.openapi-ui.version>
+		<commons.io.version>2.7</commons.io.version>
 	</properties>
 
 	<dependencies>
@@ -37,7 +43,7 @@
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
-			<version>0.9.1</version>
+			<version>${jjwt.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
@@ -46,24 +52,24 @@
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
-			<version>3.8.7</version>
+			<version>${liquibase.core.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.immutables</groupId>
 			<artifactId>value</artifactId>
-			<version>2.8.8</version>
+			<version>${immutables.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.2.10</version>
+			<version>${postgresql.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>1.2.32</version>
+			<version>${springdoc.openapi-ui.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -79,7 +85,7 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.7</version>
+			<version>${commons.io.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -104,7 +110,7 @@
 					<excludes>
 						<exclude>**/HexBikeApplication.class</exclude>
 						<exclude>**/SecurityConfig.class</exclude>
-                        <!-- TODO: Include when Mockito / PowerMock work with JUnit 5 -->
+                        <!-- TODO: All statics so include when Mockito / PowerMock works with JUnit 5 -->
 						<exclude>**/AuthenticationService.class</exclude>
 					</excludes>
 				</configuration>
