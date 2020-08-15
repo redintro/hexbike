@@ -25,6 +25,7 @@
 		<postgresql.version>42.2.10</postgresql.version>
 		<springdoc.openapi-ui.version>1.2.32</springdoc.openapi-ui.version>
 		<commons.io.version>2.7</commons.io.version>
+		<docker-compose-maven-plugin.version>4.0.0</docker-compose-maven-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -151,6 +152,40 @@
 									</limits>
 								</rule>
 							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.dkanejs.maven.plugins</groupId>
+				<artifactId>docker-compose-maven-plugin</artifactId>
+				<version>${docker-compose-maven-plugin.version}</version>
+				<configuration>
+					<composeFile>${project.basedir}/docker-compose.yml</composeFile>
+					<detachedMode>true</detachedMode>
+					<build>true</build>
+				</configuration>
+				<executions>
+					<execution>
+						<id>up</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>up</goal>
+						</goals>
+						<configuration>
+							<composeFile>${project.basedir}/docker-compose.yml</composeFile>
+							<detachedMode>true</detachedMode>
+						</configuration>
+					</execution>
+					<execution>
+						<id>down</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>down</goal>
+						</goals>
+						<configuration>
+							<composeFile>${project.basedir}/docker-compose.yml</composeFile>
+							<removeVolumes>true</removeVolumes>
 						</configuration>
 					</execution>
 				</executions>
