@@ -36,7 +36,7 @@ class ShowBikeServiceTest {
 
     @Test
     public void shouldFindAll() {
-        when(showBikeService.findAll()).thenReturn(List.of(bike));
+        when(findBikePort.findAll()).thenReturn(List.of(bike));
 
         List<Bike> bikes = showBikeService.findAll();
 
@@ -45,7 +45,7 @@ class ShowBikeServiceTest {
 
     @Test
     public void shouldFindById() {
-        when(showBikeService.findById(any(Long.class))).thenReturn(bike);
+        when(findBikePort.findById(any(Long.class))).thenReturn(bike);
 
         bike = showBikeService.findById(1L);
 

@@ -34,7 +34,7 @@ class ShowOwnerServiceTest {
 
     @Test
     public void shouldFindAll() {
-        when(showOwnerService.findAll()).thenReturn(List.of(owner));
+        when(findOwnerPort.findAll()).thenReturn(List.of(owner));
 
         List<Owner> owners = showOwnerService.findAll();
 
@@ -43,7 +43,7 @@ class ShowOwnerServiceTest {
 
     @Test
     public void shouldFindById() {
-        when(showOwnerService.findById(any(Long.class))).thenReturn(owner);
+        when(findOwnerPort.findById(any(Long.class))).thenReturn(owner);
 
         owner = showOwnerService.findById(1L);
 
