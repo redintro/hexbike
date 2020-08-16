@@ -50,7 +50,7 @@ Call the API:
 
 ## API Documentation
 View the API documentation:
-`http://localhost:8080/swagger-ui.html`
+http://localhost:8080/swagger-ui.html
 
 To access protected endpoints obtain a bearer token, click on the padlock icon and authenticate with the bearer token
 
@@ -59,4 +59,7 @@ Code coverage reports are automatically generated as part of the build:
 - Run: `mvn clean install`
 - Coverage reports are available at target/site/jacoco/index.html
 
-
+## Liquibase
+The project uses liquibase to manage the database schema and the maven plugin
+to add additional functionality
+- To generate a changelog file from an existing database: `mvn liquibase:generateChangeLog`
