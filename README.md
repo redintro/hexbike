@@ -8,15 +8,6 @@
 The project is configured to use maven as its build tool:
 - To build: `mvn clean install`
 
-The project has a docker-compose maven profile defined that clears down and stands up a docker-compose environment: 
-- To build and run: `mvn clean install -P docker-compose`
-
-Maven can also be used to call docker-compose directly: 
-- Start: `mvn docker-compose:up`
-- Stop: `mvn docker-compose:down`
-
-See: https://github.com/dkanejs/docker-compose-maven-plugin
-
 ## Docker Compose
 To run from the command line without maven:
 - Start: `docker-compose up -d --build`
