@@ -23,6 +23,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.security.core.userdetails.User;
 
+import javax.persistence.EntityNotFoundException;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -98,5 +100,19 @@ class BikeControllerTest {
 
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
         assertThat(response.getContentAsString(), is(equalTo(bikeJacksonTester.write(bike).getJson())));
+    }
+
+    @Test
+    public void shouldFailToFindById() throws Exception {
+        when(showBikePort.findById(1L)).thenThrow(new EntityNotFoundException());
+
+        MockHttpServletResponse response = mvc.perform(
+                MockMvcRequestBuilders.get("/api/bikes/1")
+                        .header(HttpHeaders.AUTHORIZATION, jwtToken)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andReturn()
+                .getResponse();
+
+        assertThat(response.getStatus(), is(equalTo(HttpStatus.NOT_FOUND.value())));
     }
 }
