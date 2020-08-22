@@ -1,4 +1,4 @@
-package io.redintro.hexbike.adapter.out.persistence;
+package io.redintro.hexbike.adapter.out.persistence.entity;
 
 import org.junit.jupiter.api.Test;
 

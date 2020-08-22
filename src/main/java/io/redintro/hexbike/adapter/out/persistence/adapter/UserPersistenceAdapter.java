@@ -1,5 +1,7 @@
-package io.redintro.hexbike.adapter.out.persistence;
+package io.redintro.hexbike.adapter.out.persistence.adapter;
 
+import io.redintro.hexbike.adapter.out.persistence.repository.UserRepository;
+import io.redintro.hexbike.adapter.out.persistence.mapper.UserOutMapper;
 import io.redintro.hexbike.domain.User;
 import io.redintro.hexbike.port.out.FindUserPort;
 import org.springframework.stereotype.Component;

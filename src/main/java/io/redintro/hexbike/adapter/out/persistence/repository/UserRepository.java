@@ -1,5 +1,6 @@
-package io.redintro.hexbike.adapter.out.persistence;
+package io.redintro.hexbike.adapter.out.persistence.repository;
 
+import io.redintro.hexbike.adapter.out.persistence.entity.UserJpaEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

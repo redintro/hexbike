@@ -1,7 +1,8 @@
-package io.redintro.hexbike.adapter.out.persistence;
+package io.redintro.hexbike.adapter.out.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.redintro.hexbike.adapter.out.persistence.entity.BikeJpaEntity;
 
 import javax.persistence.*;
 import java.util.List;

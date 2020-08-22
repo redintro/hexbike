@@ -1,5 +1,8 @@
-package io.redintro.hexbike.adapter.out.persistence;
+package io.redintro.hexbike.adapter.out.persistence.adapter;
 
+import io.redintro.hexbike.adapter.out.persistence.repository.BikeRepository;
+import io.redintro.hexbike.adapter.out.persistence.entity.BikeJpaEntity;
+import io.redintro.hexbike.adapter.out.persistence.mapper.BikeOutMapper;
 import io.redintro.hexbike.domain.Bike;
 import io.redintro.hexbike.port.out.FindBikePort;
 import org.springframework.stereotype.Component;

@@ -1,5 +1,6 @@
-package io.redintro.hexbike.adapter.out.persistence;
+package io.redintro.hexbike.adapter.out.persistence.mapper;
 
+import io.redintro.hexbike.adapter.out.persistence.entity.UserJpaEntity;
 import io.redintro.hexbike.domain.User;
 import org.junit.jupiter.api.Test;
 

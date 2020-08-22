@@ -1,5 +1,8 @@
-package io.redintro.hexbike.adapter.out.persistence;
+package io.redintro.hexbike.adapter.out.persistence.adapter;
 
+import io.redintro.hexbike.adapter.out.persistence.repository.OwnerRepository;
+import io.redintro.hexbike.adapter.out.persistence.entity.OwnerJpaEntity;
+import io.redintro.hexbike.adapter.out.persistence.mapper.OwnerOutMapper;
 import io.redintro.hexbike.domain.Owner;
 import io.redintro.hexbike.port.out.FindOwnerPort;
 import org.springframework.stereotype.Component;

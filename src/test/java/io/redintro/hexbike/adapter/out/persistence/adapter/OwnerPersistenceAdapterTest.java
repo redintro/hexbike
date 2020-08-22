@@ -1,5 +1,7 @@
-package io.redintro.hexbike.adapter.out.persistence;
+package io.redintro.hexbike.adapter.out.persistence.adapter;
 
+import io.redintro.hexbike.adapter.out.persistence.entity.OwnerJpaEntity;
+import io.redintro.hexbike.adapter.out.persistence.repository.OwnerRepository;
 import io.redintro.hexbike.domain.Owner;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
