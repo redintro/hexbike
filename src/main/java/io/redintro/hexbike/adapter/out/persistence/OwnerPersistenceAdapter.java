@@ -22,7 +22,7 @@ public class OwnerPersistenceAdapter implements FindOwnerPort {
 
         return owners
                 .stream()
-                .map(OwnerMapper::mapToDomainEntity)
+                .map(OwnerOutMapper::mapToDomainEntity)
                 .collect(Collectors.toList());
     }
 
@@ -30,7 +30,7 @@ public class OwnerPersistenceAdapter implements FindOwnerPort {
     public Owner findById(Long ownerId) {
         return repository
                 .findById(ownerId)
-                .map(OwnerMapper::mapToDomainEntity)
+                .map(OwnerOutMapper::mapToDomainEntity)
                 .orElseThrow(EntityNotFoundException::new);
     }
 }

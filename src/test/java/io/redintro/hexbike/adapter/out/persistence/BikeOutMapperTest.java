@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-class BikeMapperTest {
+class BikeOutMapperTest {
     @Test
-    public void shouldCreateBikeMapper() {
-        BikeMapper bikeMapper = new BikeMapper();
-        assertThat(bikeMapper, is(notNullValue()));
+    public void shouldCreateBikeOutMapper() {
+        BikeOutMapper bikeOutMapper = new BikeOutMapper();
+        assertThat(bikeOutMapper, is(notNullValue()));
     }
 
     @Test
@@ -19,7 +19,7 @@ class BikeMapperTest {
         BikeJpaEntity bikeJpaEntity = new BikeJpaEntity(1L, "Cinelli", "Vigorelli", "White",
                 2017, 1249, new OwnerJpaEntity(1L,"Jeff", "Jefferson"));
 
-        Bike bike = BikeMapper.mapToDomainEntity(bikeJpaEntity);
+        Bike bike = BikeOutMapper.mapToDomainEntity(bikeJpaEntity);
 
         assertThat(bike.getId(), is(equalTo(1L)));
         assertThat(bike.getMake(), is(equalTo("Cinelli")));
@@ -37,7 +37,7 @@ class BikeMapperTest {
         Bike bike = new Bike(1L, "Cinelli", "Vigorelli", "White", 2017,
                 1249, new Owner(1L, "Jeff", "Jefferson"));
 
-        BikeJpaEntity bikeJpaEntity = BikeMapper.mapToJpaEntity(bike);
+        BikeJpaEntity bikeJpaEntity = BikeOutMapper.mapToJpaEntity(bike);
 
         assertThat(bikeJpaEntity.getId(), is(equalTo(1L)));
         assertThat(bikeJpaEntity.getMake(), is(equalTo("Cinelli")));

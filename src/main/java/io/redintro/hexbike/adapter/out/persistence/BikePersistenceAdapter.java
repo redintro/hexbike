@@ -22,14 +22,14 @@ public class BikePersistenceAdapter implements FindBikePort {
 
         return bikes
                 .stream()
-                .map(BikeMapper::mapToDomainEntity)
+                .map(BikeOutMapper::mapToDomainEntity)
                 .collect(Collectors.toList());
     }
 
     @Override
     public Bike findById(Long bikeId) {
         return repository.findById(bikeId)
-                .map(BikeMapper::mapToDomainEntity)
+                .map(BikeOutMapper::mapToDomainEntity)
                 .orElseThrow(EntityNotFoundException::new);
     }
 }

@@ -8,18 +8,18 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
-class UserMapperTest {
+class UserOutMapperTest {
     @Test
     public void shouldCreateUserMapper() {
-        UserMapper userMapper = new UserMapper();
-        assertThat(userMapper, is(notNullValue()));
+        UserOutMapper userOutMapper = new UserOutMapper();
+        assertThat(userOutMapper, is(notNullValue()));
     }
 
     @Test
     public void shouldMapToDomainEntity() {
         UserJpaEntity userJpaEntity = new UserJpaEntity(1L, "jeff01", "!Password", "admin");
 
-        User user = UserMapper.mapToDomainEntity(userJpaEntity);
+        User user = UserOutMapper.mapToDomainEntity(userJpaEntity);
 
         assertThat(user.getId(), is(equalTo(1L)));
         assertThat(user.getUsername(), is(equalTo("jeff01")));
@@ -31,7 +31,7 @@ class UserMapperTest {
     public void should() {
         User user = new User(1L, "jeff01", "!Password", "admin");
 
-        UserJpaEntity userJpaEntity = UserMapper.mapToJpaEntity(user);
+        UserJpaEntity userJpaEntity = UserOutMapper.mapToJpaEntity(user);
 
         assertThat(userJpaEntity.getId(), is(equalTo(1L)));
         assertThat(userJpaEntity.getUsername(), is(equalTo("jeff01")));

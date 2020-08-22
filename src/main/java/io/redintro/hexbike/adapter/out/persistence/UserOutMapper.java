@@ -2,7 +2,7 @@ package io.redintro.hexbike.adapter.out.persistence;
 
 import io.redintro.hexbike.domain.User;
 
-public class UserMapper {
+public class UserOutMapper {
     public static User mapToDomainEntity(UserJpaEntity user) {
         return new User(
                 user.getId(),

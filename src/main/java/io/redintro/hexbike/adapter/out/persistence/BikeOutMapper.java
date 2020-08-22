@@ -3,7 +3,7 @@ package io.redintro.hexbike.adapter.out.persistence;
 import io.redintro.hexbike.domain.Bike;
 import io.redintro.hexbike.domain.Owner;
 
-public class BikeMapper {
+public class BikeOutMapper {
     public static Bike mapToDomainEntity(BikeJpaEntity bike) {
         return new Bike(
                 bike.getId(),

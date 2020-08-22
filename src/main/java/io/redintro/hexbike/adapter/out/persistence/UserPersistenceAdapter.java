@@ -18,7 +18,7 @@ public class UserPersistenceAdapter implements FindUserPort {
     public User findByUserName(String userName) {
         return userRepository
                 .findByUsername(userName)
-                .map(UserMapper::mapToDomainEntity)
+                .map(UserOutMapper::mapToDomainEntity)
                 .orElseThrow(EntityNotFoundException::new);
     }
 }
