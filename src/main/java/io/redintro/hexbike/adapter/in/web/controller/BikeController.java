@@ -38,12 +38,12 @@ public class BikeController {
 
     @Operation(security = { @SecurityRequirement(name = "bearer-token") })
     @GetMapping(value = "/bikes/{id}", produces = "application/json")
-    public BikeResource getCar(@PathVariable Long id, Principal principal) {
+    public BikeResource show(@PathVariable Long id, Principal principal) {
         try {
             Bike bike = showBikePort.findById(id);
             return BikeInMapper.mapToResource(bike);
         } catch(EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot find a bike with an ID: " + id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot find a bike with the ID: " + id);
         }
     }
 }
