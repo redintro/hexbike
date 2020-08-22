@@ -41,15 +41,15 @@ class LoginFilterTest {
                 .thenReturn(new UsernamePasswordAuthenticationToken("admin", "!Password",
                         Collections.emptyList()));
 
-        String accountCredentials =
+        String accountCredentialsResource =
                 "{ " +
                     "\"username\" : \"jeffo1\", " +
                     "\"password\" : \"!Password\" " +
                 "}";
 
-        request.setContent(IOUtils.toByteArray(IOUtils.toInputStream(accountCredentials, "UTF-8")));
+        request.setContent(IOUtils.toByteArray(IOUtils.toInputStream(accountCredentialsResource, "UTF-8")));
 
-        LoginFilter loginFilter = new LoginFilter("/api/cars", authenticationManager);
+        LoginFilter loginFilter = new LoginFilter("/api/bikes", authenticationManager);
 
         Authentication authentication = loginFilter.attemptAuthentication(request, response);
 
@@ -59,7 +59,7 @@ class LoginFilterTest {
 
     @Test
     public void successfulAuthentication() {
-        LoginFilter loginFilter = spy(new LoginFilter("/api/cars", authenticationManager));
+        LoginFilter loginFilter = spy(new LoginFilter("/api/bikes", authenticationManager));
 
         FilterChain filterChain = mock(FilterChain.class);
 

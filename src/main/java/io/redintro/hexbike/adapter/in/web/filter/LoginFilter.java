@@ -1,6 +1,8 @@
 package io.redintro.hexbike.adapter.in.web.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.redintro.hexbike.adapter.in.web.mapper.AccountCredentialsInMapper;
+import io.redintro.hexbike.adapter.in.web.resource.AccountCredentialsResource;
 import io.redintro.hexbike.domain.AccountCredentials;
 import io.redintro.hexbike.service.AuthenticationService;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,7 +29,9 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
             throws AuthenticationException, IOException, ServletException {
 
-        AccountCredentials credentials = new ObjectMapper().readValue(req.getInputStream(), AccountCredentials.class);
+        AccountCredentialsResource credentialsResource = new ObjectMapper().readValue(req.getInputStream(), AccountCredentialsResource.class);
+
+        AccountCredentials credentials = AccountCredentialsInMapper.mapToDomainEntity(credentialsResource);
 
         return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(credentials.getUsername(),
                 credentials.getPassword(), Collections.emptyList()));

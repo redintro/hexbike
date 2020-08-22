@@ -1,0 +1,36 @@
+package io.redintro.hexbike.adapter.in.web.mapper;
+
+import io.redintro.hexbike.adapter.in.web.resource.AccountCredentialsResource;
+import io.redintro.hexbike.domain.AccountCredentials;
+import org.junit.jupiter.api.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+
+class AccountCredentialsInMapperTest {
+    @Test
+    public void shouldCreateAccountCredentialsInMapper() {
+        AccountCredentialsInMapper bikeInMapper = new AccountCredentialsInMapper();
+        assertThat(bikeInMapper, is(notNullValue()));
+    }
+
+    @Test
+    public void shouldMapToDomainEntity() {
+        AccountCredentialsResource accountCredentialsResource = new AccountCredentialsResource("jeff01", "!Password");
+
+        AccountCredentials accountCredentials = AccountCredentialsInMapper.mapToDomainEntity(accountCredentialsResource);
+
+        assertThat(accountCredentials.getUsername(), is(equalTo("jeff01")));
+        assertThat(accountCredentials.getPassword(), is(equalTo("!Password")));
+    }
+
+    @Test
+    public void shouldMapToResource() {
+        AccountCredentials accountCredentials = new AccountCredentials("jeff01", "!Password");
+
+        AccountCredentialsResource accountCredentialsResource = AccountCredentialsInMapper.mapToResource(accountCredentials);
+
+        assertThat(accountCredentialsResource.getUsername(), is(equalTo("jeff01")));
+        assertThat(accountCredentialsResource.getPassword(), is(equalTo("!Password")));
+    }
+}

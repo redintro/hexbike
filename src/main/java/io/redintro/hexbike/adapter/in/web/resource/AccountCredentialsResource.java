@@ -1,13 +1,13 @@
-package io.redintro.hexbike.domain;
+package io.redintro.hexbike.adapter.in.web.resource;
 
-public class AccountCredentials {
+public class AccountCredentialsResource {
     private String username;
     private String password;
 
-    public AccountCredentials() {
+    public AccountCredentialsResource() {
     }
 
-    public AccountCredentials(String username, String password) {
+    public AccountCredentialsResource(String username, String password) {
         this.username = username;
         this.password = password;
     }
