@@ -1,5 +1,7 @@
 package io.redintro.hexbike.adapter.in.web.controller;
 
+import io.redintro.hexbike.adapter.in.web.mapper.BikeInMapper;
+import io.redintro.hexbike.adapter.in.web.resource.BikeResource;
 import io.redintro.hexbike.domain.Bike;
 import io.redintro.hexbike.port.in.ShowBikePort;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.persistence.EntityNotFoundException;
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -26,15 +29,19 @@ public class BikeController {
 
     @Operation(security = { @SecurityRequirement(name = "bearer-token") })
     @GetMapping(value = "/bikes", produces = "application/json")
-    public List<Bike> index() {
-        return showBikePort.findAll();
+    public List<BikeResource> index() {
+        List<Bike> bikes = showBikePort.findAll();
+        return bikes.stream()
+                .map(BikeInMapper::mapToResource)
+                .collect(Collectors.toList());
     }
 
     @Operation(security = { @SecurityRequirement(name = "bearer-token") })
     @GetMapping(value = "/bikes/{id}", produces = "application/json")
-    public Bike getCar(@PathVariable Long id, Principal principal) {
+    public BikeResource getCar(@PathVariable Long id, Principal principal) {
         try {
-            return showBikePort.findById(id);
+            Bike bike = showBikePort.findById(id);
+            return BikeInMapper.mapToResource(bike);
         } catch(EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot find a bike with an ID: " + id);
         }

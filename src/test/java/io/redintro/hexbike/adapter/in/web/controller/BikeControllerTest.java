@@ -1,5 +1,7 @@
 package io.redintro.hexbike.adapter.in.web.controller;
 
+import io.redintro.hexbike.adapter.in.web.mapper.BikeInMapper;
+import io.redintro.hexbike.adapter.in.web.resource.BikeResource;
 import io.redintro.hexbike.domain.Bike;
 import io.redintro.hexbike.domain.Owner;
 import io.redintro.hexbike.port.in.ShowBikePort;
@@ -30,6 +32,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -48,10 +51,10 @@ class BikeControllerTest {
     private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
-    private JacksonTester<List<Bike>> bikeListJacksonTester;
+    private JacksonTester<List<BikeResource>> jacksonListTester;
 
     @Autowired
-    private JacksonTester<Bike> bikeJacksonTester;
+    private JacksonTester<BikeResource> jacksonTester;
 
     private String jwtToken;
 
@@ -71,7 +74,7 @@ class BikeControllerTest {
     }
 
    @Test
-   public void shouldFindAllCars() throws Exception {
+   public void shouldFindAll() throws Exception {
         List<Bike> bikes = List.of(bike);
 
         when(showBikePort.findAll()).thenReturn(bikes);
@@ -83,8 +86,12 @@ class BikeControllerTest {
                                 .andReturn()
                                     .getResponse();
 
+        List<BikeResource> bikeResources = bikes.stream()
+                .map(BikeInMapper::mapToResource)
+                .collect(Collectors.toList());
+
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
-        assertThat(response.getContentAsString(), is(equalTo(bikeListJacksonTester.write(bikes).getJson())));
+        assertThat(response.getContentAsString(), is(equalTo(jacksonListTester.write(bikeResources).getJson())));
     }
 
     @Test
@@ -98,8 +105,10 @@ class BikeControllerTest {
                                 .andReturn()
                                     .getResponse();
 
+        BikeResource bikeResource = BikeInMapper.mapToResource(bike);
+
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
-        assertThat(response.getContentAsString(), is(equalTo(bikeJacksonTester.write(bike).getJson())));
+        assertThat(response.getContentAsString(), is(equalTo(jacksonTester.write(bikeResource).getJson())));
     }
 
     @Test

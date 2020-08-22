@@ -1,6 +1,8 @@
 package io.redintro.hexbike.adapter.in.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.redintro.hexbike.adapter.in.web.mapper.OwnerInMapper;
+import io.redintro.hexbike.adapter.in.web.resource.OwnerResource;
 import io.redintro.hexbike.domain.Owner;
 import io.redintro.hexbike.port.in.ShowOwnerPort;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +24,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.mockito.Mockito.when;
 
@@ -35,8 +38,8 @@ public class OwnerControllerTest {
     @Mock
     private ShowOwnerPort showOwnerPort;
 
-    private JacksonTester<List<Owner>> jacksonListTester;
-    private JacksonTester<Owner> jacksonTester;
+    private JacksonTester<List<OwnerResource>> jacksonListTester;
+    private JacksonTester<OwnerResource> jacksonTester;
 
     @BeforeEach
     public void setUp() {
@@ -56,8 +59,12 @@ public class OwnerControllerTest {
                     .andReturn()
                         .getResponse();
 
+        List<OwnerResource> ownerResources = owners.stream()
+                .map(OwnerInMapper::mapToResource)
+                .collect(Collectors.toList());
+
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
-        assertThat(response.getContentAsString(), is(equalTo(jacksonListTester.write(owners).getJson())));
+        assertThat(response.getContentAsString(), is(equalTo(jacksonListTester.write(ownerResources).getJson())));
     }
 
     @Test
@@ -71,7 +78,9 @@ public class OwnerControllerTest {
                     .andReturn()
                         .getResponse();
 
+        OwnerResource ownerResource = OwnerInMapper.mapToResource(owner);
+
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
-        assertThat(response.getContentAsString(), is(equalTo(jacksonTester.write(owner).getJson())));
+        assertThat(response.getContentAsString(), is(equalTo(jacksonTester.write(ownerResource).getJson())));
     }
 }

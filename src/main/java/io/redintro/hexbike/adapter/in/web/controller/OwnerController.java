@@ -1,5 +1,7 @@
 package io.redintro.hexbike.adapter.in.web.controller;
 
+import io.redintro.hexbike.adapter.in.web.mapper.OwnerInMapper;
+import io.redintro.hexbike.adapter.in.web.resource.OwnerResource;
 import io.redintro.hexbike.domain.Owner;
 import io.redintro.hexbike.port.in.ShowOwnerPort;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController()
 @RequestMapping("/api")
@@ -22,13 +25,17 @@ public class OwnerController {
 
     @Operation(security = { @SecurityRequirement(name = "bearer-token") })
     @GetMapping(value = "/owners", produces = "application/json")
-    public List<Owner> index() {
-        return showOwnerPort.findAll();
+    public List<OwnerResource> index() {
+        List<Owner> owners = showOwnerPort.findAll();
+        return owners.stream()
+                .map(OwnerInMapper::mapToResource)
+                .collect(Collectors.toList());
     }
 
     @Operation(security = { @SecurityRequirement(name = "bearer-token") })
     @GetMapping(value = "/owners/{id}", produces = "application/json")
-    public Owner show(@PathVariable long id) {
-        return showOwnerPort.findById(id);
+    public OwnerResource show(@PathVariable long id) {
+        Owner owner = showOwnerPort.findById(id);
+        return OwnerInMapper.mapToResource(owner);
     }
 }
