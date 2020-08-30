@@ -58,8 +58,8 @@ public class OwnerControllerTest {
         MockHttpServletResponse response = mvc.perform(
                 MockMvcRequestBuilders.get("/api/owners")
                         .accept(MediaType.APPLICATION_JSON))
-                            .andReturn()
-                                .getResponse();
+                .andReturn()
+                .getResponse();
 
         List<OwnerResource> ownerResources = owners.stream()
                 .map(OwnerInMapper::mapToResource)
@@ -80,8 +80,8 @@ public class OwnerControllerTest {
         MockHttpServletResponse response = mvc.perform(
                 MockMvcRequestBuilders.get("/api/owners/" + ownerId)
                         .accept(MediaType.APPLICATION_JSON))
-                            .andReturn()
-                                .getResponse();
+                .andReturn()
+                .getResponse();
 
         OwnerResource ownerResource = OwnerInMapper.mapToResource(owner);
 

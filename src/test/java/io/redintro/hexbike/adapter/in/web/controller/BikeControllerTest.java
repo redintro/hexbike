@@ -96,15 +96,15 @@ class BikeControllerTest {
         UUID bikeId = UUID.randomUUID();
         UUID ownerId = UUID.randomUUID();
 
-        Bike bike =new Bike(bikeId, "Cinelli", "Vigorelli", "White", 2017, 1249,
+        Bike bike = new Bike(bikeId, "Cinelli", "Vigorelli", "White", 2017, 1249,
                 new Owner(ownerId, "Jeff", "Jefferson"));
 
         when(showBikePort.findById(bikeId)).thenReturn(bike);
 
         MockHttpServletResponse response = mvc.perform(
                 MockMvcRequestBuilders.get("/api/bikes/" + bikeId)
-                        .header(HttpHeaders.AUTHORIZATION, jwtToken)
-                        .accept(MediaType.APPLICATION_JSON))
+                    .header(HttpHeaders.AUTHORIZATION, jwtToken)
+                    .accept(MediaType.APPLICATION_JSON))
                 .andReturn()
                 .getResponse();
 
