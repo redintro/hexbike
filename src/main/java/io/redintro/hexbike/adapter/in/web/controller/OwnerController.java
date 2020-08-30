@@ -6,11 +6,14 @@ import io.redintro.hexbike.domain.Owner;
 import io.redintro.hexbike.port.in.ShowOwnerPort;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -39,7 +42,11 @@ public class OwnerController {
     @Operation(security = { @SecurityRequirement(name = BEARER_TOKEN) })
     @GetMapping(value = "/owners/{id}", produces = APPLICATION_JSON)
     public OwnerResource show(@PathVariable UUID id) {
-        Owner owner = showOwnerPort.findById(id);
-        return OwnerInMapper.mapToResource(owner);
+        try {
+            Owner owner = showOwnerPort.findById(id);
+            return OwnerInMapper.mapToResource(owner);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot find a user with the ID: " + id);
+        }
     }
 }

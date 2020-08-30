@@ -19,6 +19,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import javax.persistence.EntityNotFoundException;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -51,7 +53,7 @@ public class OwnerControllerTest {
 
     @Test
     public void shouldFindAllOwners() throws Exception {
-        List<Owner> owners = List.of(new Owner(UUID.randomUUID(),"Jeff", "Jefferson"));
+        List<Owner> owners = List.of(new Owner(UUID.randomUUID(), "Jeff", "Jefferson"));
 
         when(showOwnerPort.findAll()).thenReturn(owners);
 
@@ -87,5 +89,20 @@ public class OwnerControllerTest {
 
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
         assertThat(response.getContentAsString(), is(equalTo(jacksonTester.write(ownerResource).getJson())));
+    }
+
+    @Test
+    public void shouldFailToFindById() throws Exception {
+        UUID ownerId = UUID.randomUUID();
+
+        when(showOwnerPort.findById(ownerId)).thenThrow(new EntityNotFoundException());
+
+        MockHttpServletResponse response = mvc.perform(
+                MockMvcRequestBuilders.get("/api/owners/" + ownerId)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andReturn()
+                .getResponse();
+
+        assertThat(response.getStatus(), is(equalTo(HttpStatus.NOT_FOUND.value())));
     }
 }
