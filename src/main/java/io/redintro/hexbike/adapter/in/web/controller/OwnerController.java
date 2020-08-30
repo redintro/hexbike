@@ -46,7 +46,7 @@ public class OwnerController {
             Owner owner = showOwnerPort.findById(id);
             return OwnerInMapper.mapToResource(owner);
         } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot find a user with the ID: " + id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot find a owner with the ID: " + id);
         }
     }
 }
