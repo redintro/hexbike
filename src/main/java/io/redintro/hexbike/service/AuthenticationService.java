@@ -15,13 +15,14 @@ public class AuthenticationService {
     private static final long EXPIRATION_TIME = 86400000; // 1 day in ms
     private static final String SIGNING_KEY = "SecretKey";
     private static final String PREFIX = "Bearer";
+    private static final String HEADER_NAME = "Authorization";
 
     public static void addToken(HttpServletResponse res, String username) {
-        res.addHeader("Authorization", PREFIX + " " + getToken(username));
+        res.addHeader(HEADER_NAME, PREFIX + " " + getToken(username));
     }
 
     public static Authentication getAuthentication(HttpServletRequest req) {
-        Optional<String> token = Optional.ofNullable(req.getHeader("Authorization"));
+        Optional<String> token = Optional.ofNullable(req.getHeader(HEADER_NAME));
 
         Optional<String> user = token.map(t -> Jwts.parser()
                 .setSigningKey(SIGNING_KEY)
