@@ -24,6 +24,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.mockito.Mockito.when;
@@ -50,14 +51,15 @@ public class OwnerControllerTest {
 
     @Test
     public void shouldFindAllOwners() throws Exception {
-        List<Owner> owners = List.of(new Owner(1L,"Jeff", "Jefferson"));
+        List<Owner> owners = List.of(new Owner(UUID.randomUUID(),"Jeff", "Jefferson"));
 
         when(showOwnerPort.findAll()).thenReturn(owners);
 
         MockHttpServletResponse response = mvc.perform(
-                MockMvcRequestBuilders.get("/api/owners").accept(MediaType.APPLICATION_JSON))
-                    .andReturn()
-                        .getResponse();
+                MockMvcRequestBuilders.get("/api/owners")
+                        .accept(MediaType.APPLICATION_JSON))
+                            .andReturn()
+                                .getResponse();
 
         List<OwnerResource> ownerResources = owners.stream()
                 .map(OwnerInMapper::mapToResource)
@@ -69,14 +71,17 @@ public class OwnerControllerTest {
 
     @Test
     public void shouldFindById() throws Exception {
-        Owner owner = new Owner(1L, "Jeff", "Jefferson");
+        UUID ownerId = UUID.randomUUID();
 
-        when(showOwnerPort.findById(1L)).thenReturn(owner);
+        Owner owner = new Owner(ownerId, "Jeff", "Jefferson");
+
+        when(showOwnerPort.findById(ownerId)).thenReturn(owner);
 
         MockHttpServletResponse response = mvc.perform(
-                MockMvcRequestBuilders.get("/api/owners/1").accept(MediaType.APPLICATION_JSON))
-                    .andReturn()
-                        .getResponse();
+                MockMvcRequestBuilders.get("/api/owners/" + ownerId)
+                        .accept(MediaType.APPLICATION_JSON))
+                            .andReturn()
+                                .getResponse();
 
         OwnerResource ownerResource = OwnerInMapper.mapToResource(owner);
 

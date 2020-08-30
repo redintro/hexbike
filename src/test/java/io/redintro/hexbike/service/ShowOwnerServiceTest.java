@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -25,16 +26,9 @@ class ShowOwnerServiceTest {
     @InjectMocks
     ShowOwnerService showOwnerService;
 
-    private Owner owner;
-
-    @BeforeEach
-    public void setUp() {
-        owner = new Owner(1L, "Jeff", "Jefferson");
-    }
-
     @Test
     public void shouldFindAll() {
-        when(findOwnerPort.findAll()).thenReturn(List.of(owner));
+        when(findOwnerPort.findAll()).thenReturn(List.of(new Owner(UUID.randomUUID(), "Jeff", "Jefferson")));
 
         List<Owner> owners = showOwnerService.findAll();
 
@@ -43,10 +37,12 @@ class ShowOwnerServiceTest {
 
     @Test
     public void shouldFindById() {
-        when(findOwnerPort.findById(any(Long.class))).thenReturn(owner);
+        UUID ownerId = UUID.randomUUID();
 
-        owner = showOwnerService.findById(1L);
+        when(findOwnerPort.findById(any(UUID.class))).thenReturn(new Owner(ownerId, "Jeff", "Jefferson"));
 
-        assertThat(owner.getId(), is(equalTo(1L)));
+        Owner owner = showOwnerService.findById(ownerId);
+
+        assertThat(owner.getId(), is(equalTo(ownerId)));
     }
 }

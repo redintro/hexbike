@@ -9,6 +9,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.UUID;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -25,7 +27,7 @@ class UserDetailsServiceImplTest {
     @Test
     public void shouldLoadUserByUsername() {
         when(findUserPort.findByUserName(any(String.class)))
-                .thenReturn(new User(1L, "jeff01", "!Password", "admin"));
+                .thenReturn(new User(UUID.randomUUID(), "jeff01", "!Password", "admin"));
 
         UserDetails userDetails = userDetailsService.loadUserByUsername("jeff01");
 

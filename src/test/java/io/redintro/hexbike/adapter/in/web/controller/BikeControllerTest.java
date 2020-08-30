@@ -32,6 +32,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -58,8 +59,6 @@ class BikeControllerTest {
 
     private String jwtToken;
 
-    private Bike bike;
-
     @BeforeEach
     public void setUp() {
         jwtToken = AuthenticationService.getToken("admin");
@@ -68,14 +67,12 @@ class BikeControllerTest {
                 .thenReturn(new User("admin", "$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG",
                         true, true, true, true,
                         AuthorityUtils.createAuthorityList("ADMIN")));
-
-        bike = new Bike(1L, "Cinelli", "Vigorelli", "White", 2017,
-                1249, new Owner(1L, "Jeff", "Jefferson"));
     }
 
    @Test
    public void shouldFindAll() throws Exception {
-        List<Bike> bikes = List.of(bike);
+        List<Bike> bikes = List.of(new Bike(UUID.randomUUID(), "Cinelli", "Vigorelli", "White", 2017,
+                1249, new Owner(UUID.randomUUID(), "Jeff", "Jefferson")));
 
         when(showBikePort.findAll()).thenReturn(bikes);
 
@@ -96,14 +93,20 @@ class BikeControllerTest {
 
     @Test
     public void shouldFindById() throws Exception {
-        when(showBikePort.findById(1L)).thenReturn(bike);
+        UUID bikeId = UUID.randomUUID();
+        UUID ownerId = UUID.randomUUID();
+
+        Bike bike =new Bike(bikeId, "Cinelli", "Vigorelli", "White", 2017, 1249,
+                new Owner(ownerId, "Jeff", "Jefferson"));
+
+        when(showBikePort.findById(bikeId)).thenReturn(bike);
 
         MockHttpServletResponse response = mvc.perform(
-                MockMvcRequestBuilders.get("/api/bikes/1")
+                MockMvcRequestBuilders.get("/api/bikes/" + bikeId)
                         .header(HttpHeaders.AUTHORIZATION, jwtToken)
-                            .accept(MediaType.APPLICATION_JSON))
-                                .andReturn()
-                                    .getResponse();
+                        .accept(MediaType.APPLICATION_JSON))
+                .andReturn()
+                .getResponse();
 
         BikeResource bikeResource = BikeInMapper.mapToResource(bike);
 
@@ -113,14 +116,16 @@ class BikeControllerTest {
 
     @Test
     public void shouldFailToFindById() throws Exception {
-        when(showBikePort.findById(1L)).thenThrow(new EntityNotFoundException());
+        UUID bikeId = UUID.randomUUID();
+
+        when(showBikePort.findById(bikeId)).thenThrow(new EntityNotFoundException());
 
         MockHttpServletResponse response = mvc.perform(
-                MockMvcRequestBuilders.get("/api/bikes/1")
+                MockMvcRequestBuilders.get("/api/bikes/" + bikeId)
                         .header(HttpHeaders.AUTHORIZATION, jwtToken)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andReturn()
-                .getResponse();
+                            .accept(MediaType.APPLICATION_JSON))
+                                .andReturn()
+                                    .getResponse();
 
         assertThat(response.getStatus(), is(equalTo(HttpStatus.NOT_FOUND.value())));
     }

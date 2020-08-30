@@ -1,19 +1,21 @@
 package io.redintro.hexbike.adapter.in.web.resource;
 
+import java.util.UUID;
+
 public class UserResource {
-    private final Long id;
+    private final UUID id;
     private final String username;
     private final String password;
     private final String role;
 
-    public UserResource(Long id, String username, String password, String role) {
+    public UserResource(UUID id, String username, String password, String role) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.role = role;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 

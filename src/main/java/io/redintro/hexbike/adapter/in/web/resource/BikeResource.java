@@ -1,7 +1,9 @@
 package io.redintro.hexbike.adapter.in.web.resource;
 
+import java.util.UUID;
+
 public class BikeResource {
-    private final Long id;
+    private final UUID id;
     private final String make;
     private final String model;
     private final String colour;
@@ -9,7 +11,7 @@ public class BikeResource {
     private final int price;
     private final OwnerResource owner;
 
-    public BikeResource(Long id, String make, String model, String colour, int year, int price,
+    public BikeResource(UUID id, String make, String model, String colour, int year, int price,
                         OwnerResource owner) {
         this.id = id;
         this.make = make;
@@ -20,7 +22,7 @@ public class BikeResource {
         this.owner = owner;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 

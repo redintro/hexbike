@@ -4,6 +4,8 @@ import io.redintro.hexbike.adapter.in.web.resource.UserResource;
 import io.redintro.hexbike.domain.User;
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -16,11 +18,13 @@ class UserInMapperTest {
 
     @Test
     public void shouldMapToDomainEntity() {
-        UserResource userResource = new UserResource(1L, "jeff01", "!Password", "admin");
+        UUID userId = UUID.randomUUID();
+
+        UserResource userResource = new UserResource(userId, "jeff01", "!Password", "admin");
 
         User user = UserInMapper.mapToDomainEntity(userResource);
 
-        assertThat(user.getId(), is(equalTo(1L)));
+        assertThat(user.getId(), is(equalTo(userId)));
         assertThat(user.getUsername(), is(equalTo("jeff01")));
         assertThat(user.getPassword(), is(equalTo("!Password")));
         assertThat(user.getRole(), is(equalTo("admin")));
@@ -28,11 +32,13 @@ class UserInMapperTest {
 
     @Test
     public void shouldMapToResource() {
-        User user = new User(1L, "jeff01", "!Password", "admin");
+        UUID userId = UUID.randomUUID();
+
+        User user = new User(userId, "jeff01", "!Password", "admin");
 
         UserResource userResource = UserInMapper.mapToResource(user);
 
-        assertThat(userResource.getId(), is(equalTo(1L)));
+        assertThat(userResource.getId(), is(equalTo(userId)));
         assertThat(userResource.getUsername(), is(equalTo("jeff01")));
         assertThat(userResource.getPassword(), is(equalTo("!Password")));
         assertThat(userResource.getRole(), is(equalTo("admin")));

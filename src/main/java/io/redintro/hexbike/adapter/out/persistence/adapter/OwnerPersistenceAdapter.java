@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -30,7 +31,7 @@ public class OwnerPersistenceAdapter implements FindOwnerPort {
     }
 
     @Override
-    public Owner findById(Long ownerId) {
+    public Owner findById(UUID ownerId) {
         return repository
                 .findById(ownerId)
                 .map(OwnerOutMapper::mapToDomainEntity)

@@ -1,17 +1,19 @@
 package io.redintro.hexbike.adapter.in.web.resource;
 
+import java.util.UUID;
+
 public class OwnerResource {
-    private final Long id;
+    private final UUID id;
     private final String firstName;
     private final String lastName;
 
-    public OwnerResource(Long id, String firstName, String lastName) {
+    public OwnerResource(UUID id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 

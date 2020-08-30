@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -28,8 +29,10 @@ class OwnerPersistenceAdapterTest {
 
     @Test
     public void shouldFindAll() {
+        UUID ownerId = UUID.randomUUID();
+
         when(ownerRepository.findAll())
-                .thenReturn(List.of(new OwnerJpaEntity(1L, "Jeff", "Jefferson")));
+                .thenReturn(List.of(new OwnerJpaEntity(ownerId, "Jeff", "Jefferson")));
 
         List<Owner> owners = ownerPersistenceAdapter.findAll();
 
@@ -38,12 +41,14 @@ class OwnerPersistenceAdapterTest {
 
     @Test
     public void shouldFindByUserName() {
-        when(ownerRepository.findById(any(Long.class)))
-                .thenReturn(Optional.of(new OwnerJpaEntity(1L, "Jeff", "Jefferson")));
+        UUID ownerId = UUID.randomUUID();
 
-        Owner owner = ownerPersistenceAdapter.findById(1L);
+        when(ownerRepository.findById(any(UUID.class)))
+                .thenReturn(Optional.of(new OwnerJpaEntity(ownerId, "Jeff", "Jefferson")));
 
-        assertThat(owner.getId(), is(equalTo(1L)));
+        Owner owner = ownerPersistenceAdapter.findById(ownerId);
+
+        assertThat(owner.getId(), is(equalTo(ownerId)));
         assertThat(owner.getFirstName(), is(equalTo("Jeff")));
         assertThat(owner.getLastName(), is(equalTo("Jefferson")));
     }

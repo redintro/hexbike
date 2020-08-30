@@ -7,7 +7,7 @@
 
     <changeSet id="1" author="matt" context="dev">
         <createTable tableName="user">
-            <column name="id" type="int" autoIncrement="true" incrementBy="1">
+            <column name="id" type="uuid">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="user_name" type="varchar(50)">
@@ -24,7 +24,7 @@
         <loadData
                 file="db/data/user.csv"
                 tableName="user">
-            <column name="id" type="numeric"/>
+            <column name="id" type="uuid"/>
             <column name="user_name" type="string"/>
             <column name="password" type="string"/>
             <column name="role" type="string"/>
@@ -33,7 +33,7 @@
 
     <changeSet id="2" author="matt" context="dev">
         <createTable tableName="bike">
-            <column name="id" type="int" autoIncrement="true" incrementBy="1">
+            <column name="id" type="uuid">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="make" type="varchar(50)">
@@ -51,7 +51,7 @@
             <column name="price" type="numeric">
                 <constraints nullable="false"/>
             </column>
-            <column name="owner" type="numeric">
+            <column name="owner" type="uuid">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -59,19 +59,19 @@
         <loadData
                 file="db/data/bike.csv"
                 tableName="bike">
-            <column name="id" type="numeric"/>
+            <column name="id" type="uuid"/>
             <column name="make" type="string"/>
             <column name="model" type="string"/>
             <column name="colour" type="string"/>
             <column name="year" type="numeric"/>
             <column name="price" type="numeric"/>
-            <column name="owner" type="numeric"/>
+            <column name="owner" type="uuid"/>
         </loadData>
     </changeSet>
 
     <changeSet id="3" author="matt" context="dev">
         <createTable tableName="owner">
-            <column name="id" type="int" autoIncrement="true" incrementBy="1">
+            <column name="id" type="uuid">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="first_name" type="varchar(50)">
@@ -85,7 +85,7 @@
         <loadData
                 file="db/data/owner.csv"
                 tableName="owner">
-            <column name="id" type="numeric"/>
+            <column name="id" type="uuid"/>
             <column name="first_name" type="string"/>
             <column name="last_name" type="string"/>
         </loadData>

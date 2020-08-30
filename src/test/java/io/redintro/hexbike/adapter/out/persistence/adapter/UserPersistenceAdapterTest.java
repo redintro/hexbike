@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -27,13 +28,15 @@ class UserPersistenceAdapterTest {
 
     @Test
     public void shouldFindByUserName() {
+        UUID userId = UUID.randomUUID();
+
         when(userRepository.findByUsername(any(String.class)))
-                .thenReturn(Optional.of(new UserJpaEntity(1L, "jeff01", "!Password",
+                .thenReturn(Optional.of(new UserJpaEntity(userId, "jeff01", "!Password",
                         "admin")));
 
         User user = userPersistenceAdapter.findByUserName("Jeff");
 
-        assertThat(user.getId(), is(equalTo(1L)));
+        assertThat(user.getId(), is(equalTo(userId)));
         assertThat(user.getUsername(), is(equalTo("jeff01")));
         assertThat(user.getPassword(), is(equalTo("!Password")));
         assertThat(user.getRole(), is(equalTo("admin")));

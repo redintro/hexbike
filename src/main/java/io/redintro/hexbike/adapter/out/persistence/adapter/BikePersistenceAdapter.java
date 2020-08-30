@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -30,7 +31,7 @@ public class BikePersistenceAdapter implements FindBikePort {
     }
 
     @Override
-    public Bike findById(Long bikeId) {
+    public Bike findById(UUID bikeId) {
         return repository.findById(bikeId)
                 .map(BikeOutMapper::mapToDomainEntity)
                 .orElseThrow(EntityNotFoundException::new);

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController()
@@ -34,7 +35,7 @@ public class OwnerController {
 
     @Operation(security = { @SecurityRequirement(name = "bearer-token") })
     @GetMapping(value = "/owners/{id}", produces = "application/json")
-    public OwnerResource show(@PathVariable long id) {
+    public OwnerResource show(@PathVariable UUID id) {
         Owner owner = showOwnerPort.findById(id);
         return OwnerInMapper.mapToResource(owner);
     }

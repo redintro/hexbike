@@ -6,6 +6,7 @@ import io.redintro.hexbike.adapter.out.persistence.entity.BikeJpaEntity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "owner")
@@ -13,7 +14,7 @@ import java.util.List;
 public class OwnerJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private UUID id;
     @Column(nullable = false, name= "first_name")
     private String firstName;
     @Column(nullable = false, name = "last_name")
@@ -26,13 +27,13 @@ public class OwnerJpaEntity {
     public OwnerJpaEntity() {
     }
 
-    public OwnerJpaEntity(Long id, String firstName, String lastName) {
+    public OwnerJpaEntity(UUID id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 

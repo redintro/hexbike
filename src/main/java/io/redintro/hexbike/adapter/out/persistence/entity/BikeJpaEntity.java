@@ -1,13 +1,16 @@
 package io.redintro.hexbike.adapter.out.persistence.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "bike")
 public class BikeJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private UUID id;
     private String make;
     private String model;
     private String colour;
@@ -21,7 +24,7 @@ public class BikeJpaEntity {
     public BikeJpaEntity() {
     }
 
-    public BikeJpaEntity(Long id, String make, String model, String colour, int year, int price, OwnerJpaEntity owner) {
+    public BikeJpaEntity(UUID id, String make, String model, String colour, int year, int price, OwnerJpaEntity owner) {
         this.id = id;
         this.make = make;
         this.model = model;
@@ -31,7 +34,7 @@ public class BikeJpaEntity {
         this.owner = owner;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 

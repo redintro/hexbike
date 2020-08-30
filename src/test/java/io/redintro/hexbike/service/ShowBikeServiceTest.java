@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -26,17 +27,12 @@ class ShowBikeServiceTest {
     @InjectMocks
     private ShowBikeService showBikeService;
 
-    private Bike bike;
-
-    @BeforeEach
-    public void setUp() {
-        bike = new Bike(1L, "Cinelli", "Vigorelli", "White", 2017,
-                1249, new Owner(1L, "Jeff", "Jefferson"));
-    }
-
     @Test
     public void shouldFindAll() {
-        when(findBikePort.findAll()).thenReturn(List.of(bike));
+        when(findBikePort.findAll())
+                .thenReturn(List.of(new Bike(UUID.randomUUID(), "Cinelli", "Vigorelli",
+                        "White", 2017, 1249, new Owner(UUID.randomUUID(),
+                        "Jeff", "Jefferson"))));
 
         List<Bike> bikes = showBikeService.findAll();
 
@@ -45,10 +41,15 @@ class ShowBikeServiceTest {
 
     @Test
     public void shouldFindById() {
-        when(findBikePort.findById(any(Long.class))).thenReturn(bike);
+        UUID bikeId =  UUID.randomUUID();
+        UUID ownerId = UUID.randomUUID();
 
-        bike = showBikeService.findById(1L);
+        when(findBikePort.findById(any(UUID.class))).thenReturn(new Bike(bikeId, "Cinelli", "Vigorelli",
+                "White", 2017, 1249, new Owner(ownerId, "Jeff", "Jefferson")));
 
-        assertThat(bike.getId(), is(equalTo(1L)));
+        Bike bike = showBikeService.findById(bikeId);
+
+        assertThat(bike.getId(), is(equalTo(bikeId)));
+        assertThat(bike.getOwner().getId(), is(equalTo(ownerId)));
     }
 }

@@ -1,15 +1,16 @@
 package io.redintro.hexbike.adapter.out.persistence.entity;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "`user`") // user is a reserved word in postgresql
 public class UserJpaEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
-    private Long id;
+    private UUID id;
 
     @Column(nullable = false, unique = true, name = "user_name")
     private String username;
@@ -23,14 +24,14 @@ public class UserJpaEntity {
     public UserJpaEntity() {
     }
 
-    public UserJpaEntity(Long id, String username, String password, String role) {
+    public UserJpaEntity(UUID id, String username, String password, String role) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.role = role;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 

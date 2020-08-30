@@ -1,17 +1,19 @@
 package io.redintro.hexbike.domain;
 
+import java.util.UUID;
+
 public class Owner {
-    private final Long id;
+    private final UUID id;
     private final String firstName;
     private final String lastName;
 
-    public Owner(Long id, String firstName, String lastName) {
+    public Owner(UUID id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 

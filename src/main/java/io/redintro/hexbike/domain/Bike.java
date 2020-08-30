@@ -1,7 +1,9 @@
 package io.redintro.hexbike.domain;
 
+import java.util.UUID;
+
 public class Bike {
-    private final Long id;
+    private final UUID id;
     private final String make;
     private final String model;
     private final String colour;
@@ -9,7 +11,7 @@ public class Bike {
     private final int price;
     private final Owner owner;
 
-    public Bike(Long id, String make, String model, String colour, int year, int price,
+    public Bike(UUID id, String make, String model, String colour, int year, int price,
                 Owner owner) {
         this.id = id;
         this.make = make;
@@ -20,7 +22,7 @@ public class Bike {
         this.owner = owner;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
