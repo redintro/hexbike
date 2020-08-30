@@ -78,10 +78,10 @@ class BikeControllerTest {
 
         MockHttpServletResponse response = mvc.perform(
                 MockMvcRequestBuilders.get("/api/bikes")
-                        .header(HttpHeaders.AUTHORIZATION, jwtToken)
-                            .accept(MediaType.APPLICATION_JSON))
-                                .andReturn()
-                                    .getResponse();
+                    .header(HttpHeaders.AUTHORIZATION, jwtToken)
+                    .accept(MediaType.APPLICATION_JSON))
+                .andReturn()
+                .getResponse();
 
         List<BikeResource> bikeResources = bikes.stream()
                 .map(BikeInMapper::mapToResource)
@@ -122,10 +122,10 @@ class BikeControllerTest {
 
         MockHttpServletResponse response = mvc.perform(
                 MockMvcRequestBuilders.get("/api/bikes/" + bikeId)
-                        .header(HttpHeaders.AUTHORIZATION, jwtToken)
-                            .accept(MediaType.APPLICATION_JSON))
-                                .andReturn()
-                                    .getResponse();
+                    .header(HttpHeaders.AUTHORIZATION, jwtToken)
+                    .accept(MediaType.APPLICATION_JSON))
+               .andReturn()
+               .getResponse();
 
         assertThat(response.getStatus(), is(equalTo(HttpStatus.NOT_FOUND.value())));
     }

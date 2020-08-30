@@ -18,14 +18,17 @@ import java.util.stream.Collectors;
 @RestController()
 @RequestMapping("/api")
 public class OwnerController {
+    private static final String BEARER_TOKEN = "bearer-token";
+    private static final String APPLICATION_JSON = "application/json";
+
     private final ShowOwnerPort showOwnerPort;
 
     public OwnerController(ShowOwnerPort showOwnerPort) {
         this.showOwnerPort = showOwnerPort;
     }
 
-    @Operation(security = { @SecurityRequirement(name = "bearer-token") })
-    @GetMapping(value = "/owners", produces = "application/json")
+    @Operation(security = { @SecurityRequirement(name = BEARER_TOKEN) })
+    @GetMapping(value = "/owners", produces = APPLICATION_JSON)
     public List<OwnerResource> index() {
         List<Owner> owners = showOwnerPort.findAll();
         return owners.stream()
@@ -33,8 +36,8 @@ public class OwnerController {
                 .collect(Collectors.toList());
     }
 
-    @Operation(security = { @SecurityRequirement(name = "bearer-token") })
-    @GetMapping(value = "/owners/{id}", produces = "application/json")
+    @Operation(security = { @SecurityRequirement(name = BEARER_TOKEN) })
+    @GetMapping(value = "/owners/{id}", produces = APPLICATION_JSON)
     public OwnerResource show(@PathVariable UUID id) {
         Owner owner = showOwnerPort.findById(id);
         return OwnerInMapper.mapToResource(owner);

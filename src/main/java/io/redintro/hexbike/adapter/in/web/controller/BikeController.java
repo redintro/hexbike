@@ -22,14 +22,17 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api")
 public class BikeController {
+    private static final String BEARER_TOKEN = "bearer-token";
+    private static final String APPLICATION_JSON = "application/json";
+
     private final ShowBikePort showBikePort;
 
     public BikeController(ShowBikePort showBikePort) {
         this.showBikePort = showBikePort;
     }
 
-    @Operation(security = { @SecurityRequirement(name = "bearer-token") })
-    @GetMapping(value = "/bikes", produces = "application/json")
+    @Operation(security = { @SecurityRequirement(name = BEARER_TOKEN) })
+    @GetMapping(value = "/bikes", produces = APPLICATION_JSON)
     public List<BikeResource> index() {
         List<Bike> bikes = showBikePort.findAll();
         return bikes.stream()
@@ -37,8 +40,8 @@ public class BikeController {
                 .collect(Collectors.toList());
     }
 
-    @Operation(security = { @SecurityRequirement(name = "bearer-token") })
-    @GetMapping(value = "/bikes/{id}", produces = "application/json")
+    @Operation(security = { @SecurityRequirement(name = BEARER_TOKEN) })
+    @GetMapping(value = "/bikes/{id}", produces = APPLICATION_JSON)
     public BikeResource show(@PathVariable UUID id, Principal principal) {
         try {
             Bike bike = showBikePort.findById(id);
