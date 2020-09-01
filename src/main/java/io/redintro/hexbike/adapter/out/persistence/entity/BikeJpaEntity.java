@@ -1,7 +1,5 @@
 package io.redintro.hexbike.adapter.out.persistence.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.UUID;
 
