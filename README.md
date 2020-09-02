@@ -45,12 +45,16 @@ http://localhost:8080/swagger-ui.html
 
 To access protected endpoints obtain a bearer token, click on the padlock icon and authenticate with the bearer token
 
-## Jacoco Test Coverage
-Code coverage reports are automatically generated as part of the build:
+## Test Coverage Checks and Reporting
+Jacoco code coverage checks and reports are automatically performed and generated as part of the build:
 - Run: `mvn clean install`
 - Coverage reports are available at target/site/jacoco/index.html
 
-## Liquibase
-The project uses liquibase to manage the database schema and the maven plugin
-to add additional functionality
+## Database Initialisation 
+Uses liquibase to manage the database schema and the maven plugin to add additional functionality
 - To generate a changelog file from an existing database: `mvn liquibase:generateChangeLog`
+
+## Integration Tests
+Uses the Testcontainers framework together with Liquibase to stand up a PostgreSQL docker container instance for 
+integration testing. Integration tests are not run by default as part of the standard maven build. 
+- To run the integration tests: `mvn clean install or mvn clean verify -DskipItTests=false`

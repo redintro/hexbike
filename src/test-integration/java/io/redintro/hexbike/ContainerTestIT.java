@@ -23,7 +23,6 @@ import static org.hamcrest.Matchers.is;
 @SpringBootTest
 @ActiveProfiles("it")
 class ContainerTestIT {
-
 	@Container
 	static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:10")
 			.withDatabaseName("hexbike_it")
