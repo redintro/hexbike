@@ -6,7 +6,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 
 /*
  * A static initializer to create a shared database container for reuse across tests. Used in place of the JUnit 5
- * @Testcontainers annotation to avoid having to set the testcontainers.reuse.enable=true property a local
+ * @Testcontainers annotation to avoid having to set the testcontainers.reuse.enable=true property in a local
  * ~/.testcontainers.properties file.
  */
 public abstract class ContainerTestBase {
