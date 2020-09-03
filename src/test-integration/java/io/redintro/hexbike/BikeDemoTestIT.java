@@ -2,7 +2,6 @@ package io.redintro.hexbike;
 
 import io.redintro.hexbike.adapter.out.persistence.entity.BikeJpaEntity;
 import io.redintro.hexbike.adapter.out.persistence.repository.BikeRepository;
-import io.redintro.hexbike.domain.Bike;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,20 +18,21 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-@Testcontainers
 @SpringBootTest
+@Testcontainers
 @ActiveProfiles("it")
-class ContainerTestIT {
+class BikeDemoTestIT {
 	@Container
-	static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:10")
+	public static final PostgreSQLContainer<?> POSTGRESQL_CONTAINER = new PostgreSQLContainer<>("postgres:10")
 			.withDatabaseName("hexbike_it")
 			.withUsername("docker")
 			.withPassword("docker")
-			.withExposedPorts(5432);
+			.withExposedPorts(5432)
+			.withReuse(true);
 
 	@DynamicPropertySource
-	static void registerPgProperties(DynamicPropertyRegistry registry) {
-		registry.add("spring.datasource.url", () -> String.format("jdbc:postgresql://localhost:%d/hexbike_it", postgreSQLContainer.getFirstMappedPort()));
+	public static void registerPgProperties(DynamicPropertyRegistry registry) {
+		registry.add("spring.datasource.url", () -> String.format("jdbc:postgresql://localhost:%d/hexbike_it", POSTGRESQL_CONTAINER.getFirstMappedPort()));
 		registry.add("spring.datasource.username", () -> "docker");
 		registry.add("spring.datasource.password", () -> "docker");
 	}
@@ -42,7 +42,7 @@ class ContainerTestIT {
 
 	@Test
 	void shouldStartContainers() {
-		assertThat(postgreSQLContainer.isRunning(), is(equalTo(true)));
+		assertThat(POSTGRESQL_CONTAINER.isRunning(), is(equalTo(true)));
 	}
 
 	@Test
