@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.is;
 
 @SpringBootTest
 @ActiveProfiles("it")
-class OwnerDemoTestIT extends ContainerTestBase {
+class OwnerDemoTestIT extends SharedContainerBase {
 	@Autowired
 	private OwnerRepository repository;
 

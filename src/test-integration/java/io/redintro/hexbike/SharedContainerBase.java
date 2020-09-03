@@ -9,7 +9,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
  * @Testcontainers annotation to avoid having to set the testcontainers.reuse.enable=true property in a local
  * ~/.testcontainers.properties file.
  */
-public abstract class ContainerTestBase {
+public abstract class SharedContainerBase {
     static final PostgreSQLContainer<?> POSTGRESQL_CONTAINER;
 
     static {

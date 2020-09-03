@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.is;
 
 @SpringBootTest
 @ActiveProfiles("it")
-class BikeDemoTestIT extends ContainerTestBase {
+class BikeDemoTestIT extends SharedContainerBase {
 	@Autowired
 	private BikeRepository repository;
 
