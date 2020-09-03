@@ -56,5 +56,5 @@ Uses liquibase to manage the database schema and the maven plugin to add additio
 
 ## Integration Tests
 Uses the Testcontainers framework together with Liquibase to stand up a PostgreSQL docker container instance for 
-integration testing. Integration tests are not run by default as part of the standard maven build. 
+integration testing. Integration tests are NOT run by default as part of the standard maven build. 
 - To run the integration tests: `mvn clean install or mvn clean verify -DskipItTests=false`
