@@ -5,6 +5,8 @@ import io.redintro.hexbike.adapter.in.web.resource.OwnerResource;
 import io.redintro.hexbike.domain.Bike;
 import io.redintro.hexbike.domain.Owner;
 
+import java.util.Optional;
+
 public class BikeInMapper {
         public static Bike mapToDomainEntity(BikeResource bike) {
         return new Bike(

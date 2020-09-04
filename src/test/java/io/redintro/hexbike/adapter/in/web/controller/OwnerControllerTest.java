@@ -26,6 +26,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -63,9 +64,7 @@ public class OwnerControllerTest {
                 .andReturn()
                 .getResponse();
 
-        List<OwnerResource> ownerResources = owners.stream()
-                .map(OwnerInMapper::mapToResource)
-                .collect(Collectors.toList());
+        List<OwnerResource> ownerResources = OwnerInMapper.mapToListResource(owners);
 
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
         assertThat(response.getContentAsString(), is(equalTo(jacksonListTester.write(ownerResources).getJson())));
@@ -75,9 +74,9 @@ public class OwnerControllerTest {
     public void shouldFindById() throws Exception {
         UUID ownerId = UUID.randomUUID();
 
-        Owner owner = new Owner(ownerId, "Jeff", "Jefferson");
+        Optional<Owner> maybeOwner = Optional.of(new Owner(ownerId, "Jeff", "Jefferson"));
 
-        when(showOwnerPort.findById(ownerId)).thenReturn(owner);
+        when(showOwnerPort.findById(ownerId)).thenReturn(maybeOwner);
 
         MockHttpServletResponse response = mvc.perform(
                 MockMvcRequestBuilders.get("/api/owners/" + ownerId)
@@ -85,7 +84,7 @@ public class OwnerControllerTest {
                 .andReturn()
                 .getResponse();
 
-        OwnerResource ownerResource = OwnerInMapper.mapToResource(owner);
+        OwnerResource ownerResource = OwnerInMapper.mapToResource(maybeOwner).get();
 
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
         assertThat(response.getContentAsString(), is(equalTo(jacksonTester.write(ownerResource).getJson())));
@@ -95,7 +94,7 @@ public class OwnerControllerTest {
     public void shouldFailToFindById() throws Exception {
         UUID ownerId = UUID.randomUUID();
 
-        when(showOwnerPort.findById(ownerId)).thenThrow(new EntityNotFoundException());
+        when(showOwnerPort.findById(ownerId)).thenReturn(Optional.empty());
 
         MockHttpServletResponse response = mvc.perform(
                 MockMvcRequestBuilders.get("/api/owners/" + ownerId)

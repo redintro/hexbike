@@ -15,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -33,20 +34,13 @@ public class OwnerController {
     @Operation(security = { @SecurityRequirement(name = BEARER_TOKEN) })
     @GetMapping(value = "/owners", produces = APPLICATION_JSON)
     public List<OwnerResource> index() {
-        List<Owner> owners = showOwnerPort.findAll();
-        return owners.stream()
-                .map(OwnerInMapper::mapToResource)
-                .collect(Collectors.toList());
+        return OwnerInMapper.mapToListResource(showOwnerPort.findAll());
     }
 
     @Operation(security = { @SecurityRequirement(name = BEARER_TOKEN) })
     @GetMapping(value = "/owners/{id}", produces = APPLICATION_JSON)
     public OwnerResource show(@PathVariable UUID id) {
-        try {
-            Owner owner = showOwnerPort.findById(id);
-            return OwnerInMapper.mapToResource(owner);
-        } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot find a owner with the ID: " + id);
-        }
+            return OwnerInMapper.mapToResource(showOwnerPort.findById(id))
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot find a owner with the ID: " + id));
     }
 }
