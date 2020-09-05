@@ -9,11 +9,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class OwnerInMapper {
-    public static Owner mapToDomainEntity(OwnerResource owner) {
-        return new Owner(
-                owner.getId(),
-                owner.getFirstName(),
-                owner.getLastName());
+    public static Optional<Owner> mapToDomainEntity(OwnerResource resource) {
+        return resource != null ? Optional.of(
+                new Owner(resource.getId(),
+                        resource.getFirstName(),
+                        resource.getLastName()))
+                : Optional.empty();
     }
 
     public static Optional<OwnerResource> mapToResource(Owner owner) {

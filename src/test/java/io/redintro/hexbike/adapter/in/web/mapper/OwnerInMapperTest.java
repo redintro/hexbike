@@ -12,26 +12,29 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 class OwnerInMapperTest {
-    private UUID ownerId = UUID.randomUUID();
-    private Owner owner = new Owner(ownerId, "Jeff", "Jefferson");
+    private final UUID ownerId = UUID.randomUUID();
+    private final Owner owner = new Owner(ownerId, "Jeff", "Jefferson");
 
     @Test
     public void shouldCreateOwnerMapper() {
-        OwnerInMapper ownerInMapper = new OwnerInMapper();
-        assertThat(ownerInMapper, is(notNullValue()));
+        assertThat(new OwnerInMapper(), is(notNullValue()));
     }
 
     @Test
     public void shouldMapToDomainEntity() {
-        UUID ownerId = UUID.randomUUID();
-
         OwnerResource ownerResource = new OwnerResource(ownerId, "Jeff", "Jefferson");
 
-        Owner owner = OwnerInMapper.mapToDomainEntity(ownerResource);
+        Optional<Owner> owner = OwnerInMapper.mapToDomainEntity(ownerResource);
 
-        assertThat(owner.getId(), is(equalTo(ownerId)));
-        assertThat(owner.getFirstName(), is(equalTo("Jeff")));
-        assertThat(owner.getLastName(), is(equalTo("Jefferson")));
+        assertThat(owner.isPresent(), is(equalTo(true)));
+        assertThat(owner.get().getId(), is(equalTo(ownerId)));
+        assertThat(owner.get().getFirstName(), is(equalTo("Jeff")));
+        assertThat(owner.get().getLastName(), is(equalTo("Jefferson")));
+    }
+
+    @Test
+    public void shouldMapToEmptyDomainEntity() {
+        assertThat(OwnerInMapper.mapToDomainEntity(null).isEmpty(), is(equalTo(true)));
     }
 
     @Test
@@ -45,12 +48,12 @@ class OwnerInMapperTest {
     }
 
     @Test
-    public void shouldMapToEmpty() {
+    public void shouldMapToEmptyResource() {
         assertThat(OwnerInMapper.mapToResource(null).isEmpty(), is(true));
     }
 
     @Test
-    public void shouldMapListToResource() {
+    public void shouldMapToListToResource() {
         List<OwnerResource> ownerResources = OwnerInMapper.mapToListResource(List.of(owner));
         assertThat(ownerResources.size(), is(1));
     }
