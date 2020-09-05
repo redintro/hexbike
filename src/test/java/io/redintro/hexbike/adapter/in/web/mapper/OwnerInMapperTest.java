@@ -36,21 +36,22 @@ class OwnerInMapperTest {
 
     @Test
     public void shouldMapToResource() {
-        OwnerResource ownerResource = OwnerInMapper.mapToResource(Optional.ofNullable(owner)).get();
+        Optional<OwnerResource> ownerResource = OwnerInMapper.mapToResource(owner);
 
-        assertThat(ownerResource.getId(), is(equalTo(ownerId)));
-        assertThat(ownerResource.getFirstName(), is(equalTo("Jeff")));
-        assertThat(ownerResource.getLastName(), is(equalTo("Jefferson")));
+        assertThat(ownerResource.isPresent(), is(equalTo(true)));
+        assertThat(ownerResource.get().getId(), is(equalTo(ownerId)));
+        assertThat(ownerResource.get().getFirstName(), is(equalTo("Jeff")));
+        assertThat(ownerResource.get().getLastName(), is(equalTo("Jefferson")));
     }
 
     @Test
-    public void shouldMapToResourceToEmpty() {
-        assertThat(OwnerInMapper.mapToResource(Optional.empty()).isEmpty(), is(true));
+    public void shouldMapToEmpty() {
+        assertThat(OwnerInMapper.mapToResource(null).isEmpty(), is(true));
     }
 
+    @Test
     public void shouldMapListToResource() {
         List<OwnerResource> ownerResources = OwnerInMapper.mapToListResource(List.of(owner));
         assertThat(ownerResources.size(), is(1));
-
     }
 }

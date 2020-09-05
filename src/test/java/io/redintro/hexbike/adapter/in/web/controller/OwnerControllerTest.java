@@ -19,8 +19,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import javax.persistence.EntityNotFoundException;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -28,7 +26,6 @@ import static org.hamcrest.Matchers.is;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static org.mockito.Mockito.when;
 
@@ -74,9 +71,9 @@ public class OwnerControllerTest {
     public void shouldFindById() throws Exception {
         UUID ownerId = UUID.randomUUID();
 
-        Optional<Owner> maybeOwner = Optional.of(new Owner(ownerId, "Jeff", "Jefferson"));
+        Owner owner = new Owner(ownerId, "Jeff", "Jefferson");
 
-        when(showOwnerPort.findById(ownerId)).thenReturn(maybeOwner);
+        when(showOwnerPort.findById(ownerId)).thenReturn(Optional.of(owner));
 
         MockHttpServletResponse response = mvc.perform(
                 MockMvcRequestBuilders.get("/api/owners/" + ownerId)
@@ -84,10 +81,10 @@ public class OwnerControllerTest {
                 .andReturn()
                 .getResponse();
 
-        OwnerResource ownerResource = OwnerInMapper.mapToResource(maybeOwner).get();
+        Optional<OwnerResource> ownerResource = OwnerInMapper.mapToResource(owner);
 
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
-        assertThat(response.getContentAsString(), is(equalTo(jacksonTester.write(ownerResource).getJson())));
+        assertThat(response.getContentAsString(), is(equalTo(jacksonTester.write(ownerResource.get()).getJson())));
     }
 
     @Test

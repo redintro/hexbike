@@ -40,7 +40,8 @@ public class OwnerController {
     @Operation(security = { @SecurityRequirement(name = BEARER_TOKEN) })
     @GetMapping(value = "/owners/{id}", produces = APPLICATION_JSON)
     public OwnerResource show(@PathVariable UUID id) {
-            return OwnerInMapper.mapToResource(showOwnerPort.findById(id))
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot find a owner with the ID: " + id));
+        return showOwnerPort.findById(id)
+            .flatMap(OwnerInMapper::mapToResource)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot find a owner with the ID: " + id));
     }
 }

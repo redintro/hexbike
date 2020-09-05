@@ -16,15 +16,8 @@ public class OwnerInMapper {
                 owner.getLastName());
     }
 
-    public static Optional<OwnerResource> mapToResource(Optional<Owner> owner) {
-        return owner.map(o -> getOwnerResource(o));
-    }
-
-    private static OwnerResource getOwnerResource(Owner o) {
-        return new OwnerResource(
-                o.getId(),
-                o.getFirstName(),
-                o.getLastName());
+    public static Optional<OwnerResource> mapToResource(Owner owner) {
+        return owner != null ? Optional.of(getOwnerResource(owner)) : Optional.empty();
     }
 
     public static List<OwnerResource> mapToListResource(List<Owner> owners) {
@@ -32,5 +25,12 @@ public class OwnerInMapper {
                 .filter(Objects::nonNull)
                 .map(OwnerInMapper::getOwnerResource)
                 .collect(Collectors.toList());
+    }
+
+    private static OwnerResource getOwnerResource(Owner owner) {
+        return new OwnerResource(
+                owner.getId(),
+                owner.getFirstName(),
+                owner.getLastName());
     }
 }
