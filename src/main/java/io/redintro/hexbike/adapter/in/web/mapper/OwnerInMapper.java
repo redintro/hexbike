@@ -10,15 +10,15 @@ import java.util.stream.Collectors;
 
 public class OwnerInMapper {
     public static Optional<Owner> mapToDomainEntity(OwnerResource resource) {
-        return resource != null ? Optional.of(
-                new Owner(resource.getId(),
+        return Optional.ofNullable(resource)
+                .map(r -> new Owner(
+                        resource.getId(),
                         resource.getFirstName(),
-                        resource.getLastName()))
-                : Optional.empty();
+                        resource.getLastName()));
     }
 
     public static Optional<OwnerResource> mapToResource(Owner owner) {
-        return owner != null ? Optional.of(getOwnerResource(owner)) : Optional.empty();
+        return Optional.ofNullable(owner).map(OwnerInMapper::getOwnerResource);
     }
 
     public static List<OwnerResource> mapToListResource(List<Owner> owners) {
