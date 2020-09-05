@@ -48,6 +48,5 @@ public class BikeResource {
 
     public OwnerResource getOwner() {
         return owner;
-
     }
 }
