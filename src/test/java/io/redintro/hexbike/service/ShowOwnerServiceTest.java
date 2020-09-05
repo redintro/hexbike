@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -39,9 +40,10 @@ class ShowOwnerServiceTest {
     public void shouldFindById() {
         UUID ownerId = UUID.randomUUID();
 
-        when(findOwnerPort.findById(any(UUID.class))).thenReturn(new Owner(ownerId, "Jeff", "Jefferson"));
+        Optional<Owner> maybeOwner = Optional.of(new Owner(ownerId, "Jeff", "Jefferson"));
+        when(findOwnerPort.findById(any(UUID.class))).thenReturn(maybeOwner);
 
-        Owner owner = showOwnerService.findById(ownerId);
+        Owner owner = showOwnerService.findById(ownerId).get();
 
         assertThat(owner.getId(), is(equalTo(ownerId)));
     }

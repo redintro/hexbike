@@ -46,7 +46,7 @@ class OwnerPersistenceAdapterTest {
         when(ownerRepository.findById(any(UUID.class)))
                 .thenReturn(Optional.of(new OwnerJpaEntity(ownerId, "Jeff", "Jefferson")));
 
-        Owner owner = ownerPersistenceAdapter.findById(ownerId);
+        Owner owner = ownerPersistenceAdapter.findById(ownerId).get();
 
         assertThat(owner.getId(), is(equalTo(ownerId)));
         assertThat(owner.getFirstName(), is(equalTo("Jeff")));

@@ -4,12 +4,17 @@ import io.redintro.hexbike.adapter.in.web.resource.OwnerResource;
 import io.redintro.hexbike.domain.Owner;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 class OwnerInMapperTest {
+    private UUID ownerId = UUID.randomUUID();
+    private Owner owner = new Owner(ownerId, "Jeff", "Jefferson");
+
     @Test
     public void shouldCreateOwnerMapper() {
         OwnerInMapper ownerInMapper = new OwnerInMapper();
@@ -31,14 +36,21 @@ class OwnerInMapperTest {
 
     @Test
     public void shouldMapToResource() {
-        UUID ownerId = UUID.randomUUID();
-
-        Owner owner = new Owner(ownerId, "Jeff", "Jefferson");
-
-        OwnerResource ownerResource = OwnerInMapper.mapToResource(owner);
+        OwnerResource ownerResource = OwnerInMapper.mapToResource(Optional.ofNullable(owner)).get();
 
         assertThat(ownerResource.getId(), is(equalTo(ownerId)));
         assertThat(ownerResource.getFirstName(), is(equalTo("Jeff")));
         assertThat(ownerResource.getLastName(), is(equalTo("Jefferson")));
+    }
+
+    @Test
+    public void shouldMapToResourceToEmpty() {
+        assertThat(OwnerInMapper.mapToResource(Optional.empty()).isEmpty(), is(true));
+    }
+
+    public void shouldMapListToResource() {
+        List<OwnerResource> ownerResources = OwnerInMapper.mapToListResource(List.of(owner));
+        assertThat(ownerResources.size(), is(1));
+
     }
 }

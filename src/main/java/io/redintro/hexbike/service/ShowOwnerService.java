@@ -6,6 +6,7 @@ import io.redintro.hexbike.port.out.FindOwnerPort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -22,7 +23,7 @@ public class ShowOwnerService implements ShowOwnerPort {
     }
 
     @Override
-    public Owner findById(UUID ownerId) {
+    public Optional<Owner> findById(UUID ownerId) {
         return findOwnerPort.findById(ownerId);
     }
 }
