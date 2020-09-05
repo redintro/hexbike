@@ -12,23 +12,23 @@ public class OwnerInMapper {
     public static Optional<Owner> mapToDomainEntity(OwnerResource resource) {
         return Optional.ofNullable(resource)
                 .map(r -> new Owner(
-                        resource.getId(),
-                        resource.getFirstName(),
-                        resource.getLastName()));
+                        r.getId(),
+                        r.getFirstName(),
+                        r.getLastName()));
     }
 
     public static Optional<OwnerResource> mapToResource(Owner owner) {
-        return Optional.ofNullable(owner).map(OwnerInMapper::getOwnerResource);
+        return Optional.ofNullable(owner).map(OwnerInMapper::toOwnerResource);
     }
 
     public static List<OwnerResource> mapToListResource(List<Owner> owners) {
         return owners.stream()
                 .filter(Objects::nonNull)
-                .map(OwnerInMapper::getOwnerResource)
+                .map(OwnerInMapper::toOwnerResource)
                 .collect(Collectors.toList());
     }
 
-    private static OwnerResource getOwnerResource(Owner owner) {
+    private static OwnerResource toOwnerResource(Owner owner) {
         return new OwnerResource(
                 owner.getId(),
                 owner.getFirstName(),
