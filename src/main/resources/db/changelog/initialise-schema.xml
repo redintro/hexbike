@@ -3,7 +3,8 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd"
+        logicalFilePath="classpath:db/changelog/initialise-schema.xml">
 
     <changeSet id="1" author="matt" context="dev">
         <createTable tableName="user">
@@ -22,7 +23,7 @@
         </createTable>
 
         <loadData
-                file="db/data/user.csv"
+                file="db/data/user-data.csv"
                 tableName="user">
             <column name="id" type="uuid"/>
             <column name="user_name" type="string"/>
@@ -57,7 +58,7 @@
         </createTable>
 
         <loadData
-                file="db/data/bike.csv"
+                file="db/data/bike-data.csv"
                 tableName="bike">
             <column name="id" type="uuid"/>
             <column name="make" type="string"/>
@@ -83,12 +84,11 @@
         </createTable>
 
         <loadData
-                file="db/data/owner.csv"
+                file="db/data/owner-data.csv"
                 tableName="owner">
             <column name="id" type="uuid"/>
             <column name="first_name" type="string"/>
             <column name="last_name" type="string"/>
         </loadData>
     </changeSet>
-
 </databaseChangeLog>
