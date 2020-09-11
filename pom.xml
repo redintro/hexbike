@@ -21,7 +21,7 @@
 		<jacoco.line.coverage.threshold>100%</jacoco.line.coverage.threshold>
 		<jjwt.version>0.9.1</jjwt.version>
 		<liquibase.core.version>3.8.7</liquibase.core.version>
-		<liquibase-maven-plugin.version>3.4.1</liquibase-maven-plugin.version>
+		<liquibase-maven-plugin.version>3.10.2</liquibase-maven-plugin.version>
 		<immutables.version>2.8.8</immutables.version>
 		<postgresql.version>42.2.10</postgresql.version>
 		<springdoc.openapi-ui.version>1.2.32</springdoc.openapi-ui.version>
