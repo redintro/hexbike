@@ -6,7 +6,7 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd"
         logicalFilePath="classpath:db/changelog/initialise-schema.xml">
 
-    <changeSet id="1" author="matt" context="dev">
+    <changeSet id="1" author="matt">
         <createTable tableName="user">
             <column name="id" type="uuid">
                 <constraints primaryKey="true" nullable="false"/>
@@ -32,7 +32,7 @@
         </loadData>
     </changeSet>
 
-    <changeSet id="2" author="matt" context="dev">
+    <changeSet id="2" author="matt">
         <createTable tableName="bike">
             <column name="id" type="uuid">
                 <constraints primaryKey="true" nullable="false"/>
@@ -70,7 +70,7 @@
         </loadData>
     </changeSet>
 
-    <changeSet id="3" author="matt" context="dev">
+    <changeSet id="3" author="matt">
         <createTable tableName="owner">
             <column name="id" type="uuid">
                 <constraints primaryKey="true" nullable="false"/>
