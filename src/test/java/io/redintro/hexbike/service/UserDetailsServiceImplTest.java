@@ -1,5 +1,6 @@
 package io.redintro.hexbike.service;
 
+import io.redintro.hexbike.domain.Authority;
 import io.redintro.hexbike.domain.User;
 import io.redintro.hexbike.port.out.FindUserPort;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Set;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -27,7 +29,8 @@ class UserDetailsServiceImplTest {
     @Test
     public void shouldLoadUserByUsername() {
         when(findUserPort.findByUserName(any(String.class)))
-                .thenReturn(new User(UUID.randomUUID(), "jeff01", "!Password", "admin"));
+                .thenReturn(new User(UUID.randomUUID(), "jeff01", "!Password", "admin",
+                        Set.of(new Authority(UUID.randomUUID(), "ADMIN"))));
 
         UserDetails userDetails = userDetailsService.loadUserByUsername("jeff01");
 

@@ -1,5 +1,6 @@
 package io.redintro.hexbike.adapter.out.persistence.adapter;
 
+import io.redintro.hexbike.adapter.out.persistence.entity.AuthorityJpaEntity;
 import io.redintro.hexbike.adapter.out.persistence.entity.UserJpaEntity;
 import io.redintro.hexbike.adapter.out.persistence.repository.UserRepository;
 import io.redintro.hexbike.domain.User;
@@ -10,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -29,10 +31,11 @@ class UserPersistenceAdapterTest {
     @Test
     public void shouldFindByUserName() {
         UUID userId = UUID.randomUUID();
+        UUID authorityId = UUID.randomUUID();
 
         when(userRepository.findByUsername(any(String.class)))
                 .thenReturn(Optional.of(new UserJpaEntity(userId, "jeff01", "!Password",
-                        "admin")));
+                        "admin", Set.of(new AuthorityJpaEntity(authorityId, "ADMIN")))));
 
         User user = userPersistenceAdapter.findByUserName("Jeff");
 
@@ -40,5 +43,6 @@ class UserPersistenceAdapterTest {
         assertThat(user.getUsername(), is(equalTo("jeff01")));
         assertThat(user.getPassword(), is(equalTo("!Password")));
         assertThat(user.getRole(), is(equalTo("admin")));
+        assertThat(user.getAuthorities().size(), is(equalTo(1)));
     }
 }

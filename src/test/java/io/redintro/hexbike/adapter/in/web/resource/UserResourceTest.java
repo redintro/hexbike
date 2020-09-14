@@ -2,6 +2,7 @@ package io.redintro.hexbike.adapter.in.web.resource;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Set;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -10,10 +11,12 @@ import static org.hamcrest.Matchers.is;
 
 class UserResourceTest {
     @Test
-    public void shouldCreateUserResouce() {
+    public void shouldCreateUserResource() {
         UUID userId = UUID.randomUUID();
+        UUID authorityId = UUID.randomUUID();
 
-        UserResource userResource = new UserResource(userId, "jeff01", "!Password", "admin");
+        UserResource userResource = new UserResource(userId, "jeff01", "!Password", "admin",
+                Set.of(new AuthorityResource(authorityId, "ADMIN")));
 
         assertThat(userResource.getId(), is(equalTo(userId)));
         assertThat(userResource.getUsername(), is(equalTo("jeff01")));

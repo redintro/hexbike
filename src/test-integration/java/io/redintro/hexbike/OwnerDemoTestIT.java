@@ -25,7 +25,7 @@ class OwnerDemoTestIT extends SharedContainerBase {
 	}
 
 	@Test
-	void shouldFindAllBikes() {
+	void shouldFindAllOwners() {
 		List<OwnerJpaEntity> owners = (List<OwnerJpaEntity>) repository.findAll();
 		assertThat(owners.size(), is(equalTo(1)));
 	}
