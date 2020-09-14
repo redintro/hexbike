@@ -17,9 +17,6 @@
             <column name="password" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="role" type="varchar(50)">
-                <constraints nullable="false"/>
-            </column>
         </createTable>
 
         <loadData
@@ -28,7 +25,6 @@
             <column name="id" type="uuid"/>
             <column name="user_name" type="string"/>
             <column name="password" type="string"/>
-            <column name="role" type="string"/>
         </loadData>
     </changeSet>
 

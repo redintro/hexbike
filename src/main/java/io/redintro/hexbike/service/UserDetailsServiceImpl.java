@@ -30,15 +30,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new org.springframework.security.core.
                 userdetails.User(username, currentUser.getPassword(),
                 true, true, true, true,
-                AuthorityUtils.createAuthorityList(currentUser.getRole()));
+                getAuthorities(currentUser));
     }
 
-    //private org.springframework.security.core.userdetails.User createSpringSecurityUser(User user) {
-    //    List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
-    //            .map(authority -> new SimpleGrantedAuthority(authority.getName()))
-    //            .collect(Collectors.toList());
-    //    return new org.springframework.security.core.userdetails.User(user.getUsername(),
-    //            user.getPassword(),
-    //            grantedAuthorities);
-    //}
+    private List<GrantedAuthority> getAuthorities(User user) {
+        return user.getAuthorities().stream()
+                .map(authority -> new SimpleGrantedAuthority(authority.getName()))
+                .collect(Collectors.toList());
+    }
 }

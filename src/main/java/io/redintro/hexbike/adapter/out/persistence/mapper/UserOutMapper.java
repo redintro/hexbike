@@ -13,7 +13,6 @@ public class UserOutMapper {
                 user.getId(),
                 user.getUsername(),
                 user.getPassword(),
-                user.getRole(),
                 user.getAuthorities()
                         .stream()
                         .map(a -> new Authority(a.getId(), a.getName()))
@@ -25,7 +24,6 @@ public class UserOutMapper {
                 user.getId(),
                 user.getUsername(),
                 user.getPassword(),
-                user.getRole(),
                 user.getAuthorities()
                         .stream()
                         .map(a -> new AuthorityJpaEntity(a.getId(), a.getName()))

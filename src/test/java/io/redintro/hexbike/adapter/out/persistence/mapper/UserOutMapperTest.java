@@ -27,7 +27,7 @@ class UserOutMapperTest {
         UUID userId = UUID.randomUUID();
         UUID authorityId = UUID.randomUUID();
 
-        UserJpaEntity userJpaEntity = new UserJpaEntity(userId, "jeff01", "!Password", "admin",
+        UserJpaEntity userJpaEntity = new UserJpaEntity(userId, "jeff01", "!Password",
                 Set.of(new AuthorityJpaEntity(authorityId, "ADMIN")));
 
         User user = UserOutMapper.mapToDomainEntity(userJpaEntity);
@@ -35,7 +35,6 @@ class UserOutMapperTest {
         assertThat(user.getId(), is(equalTo(userId)));
         assertThat(user.getUsername(), is(equalTo("jeff01")));
         assertThat(user.getPassword(), is(equalTo("!Password")));
-        assertThat(user.getRole(), is(equalTo("admin")));
         assertThat(user.getAuthorities().size(), is(equalTo(1)));
     }
 
@@ -44,7 +43,7 @@ class UserOutMapperTest {
         UUID userId = UUID.randomUUID();
         UUID authorityId = UUID.randomUUID();
 
-        User user = new User(userId, "jeff01", "!Password", "admin",
+        User user = new User(userId, "jeff01", "!Password",
                 Set.of(new Authority(authorityId, "ADMIN")));
 
         UserJpaEntity userJpaEntity = UserOutMapper.mapToJpaEntity(user);
@@ -52,7 +51,6 @@ class UserOutMapperTest {
         assertThat(userJpaEntity.getId(), is(equalTo(userId)));
         assertThat(userJpaEntity.getUsername(), is(equalTo("jeff01")));
         assertThat(userJpaEntity.getPassword(), is(equalTo("!Password")));
-        assertThat(userJpaEntity.getRole(), is(equalTo("admin")));
         assertThat(userJpaEntity.getAuthorities().size(), is(equalTo(1)));
     }
 }

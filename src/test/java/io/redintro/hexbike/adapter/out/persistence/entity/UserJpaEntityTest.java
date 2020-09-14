@@ -2,24 +2,25 @@ package io.redintro.hexbike.adapter.out.persistence.entity;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Set;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
 
 class UserJpaEntityTest {
     @Test
     public void shouldCreateUserJpaEntity() {
         UUID userId = UUID.randomUUID();
+        UUID authorityId = UUID.randomUUID();
 
-        UserJpaEntity userJpaEntity = new UserJpaEntity(userId, "jeff01", "!Password", "admin", null);
+        UserJpaEntity userJpaEntity = new UserJpaEntity(userId, "jeff01", "!Password",
+                Set.of(new AuthorityJpaEntity(authorityId, "ADMIN")));
 
         assertThat(userJpaEntity.getId(), is(equalTo(userId)));
         assertThat(userJpaEntity.getUsername(), is(equalTo("jeff01")));
         assertThat(userJpaEntity.getPassword(), is(equalTo("!Password")));
-        assertThat(userJpaEntity.getRole(), is(equalTo("admin")));
-        assertThat(userJpaEntity.getAuthorities(), is(nullValue()));
+        assertThat(userJpaEntity.getAuthorities().size(), is(equalTo(1)));
     }
 }

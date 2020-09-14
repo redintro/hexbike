@@ -15,12 +15,12 @@ class UserResourceTest {
         UUID userId = UUID.randomUUID();
         UUID authorityId = UUID.randomUUID();
 
-        UserResource userResource = new UserResource(userId, "jeff01", "!Password", "admin",
+        UserResource userResource = new UserResource(userId, "jeff01", "!Password",
                 Set.of(new AuthorityResource(authorityId, "ADMIN")));
 
         assertThat(userResource.getId(), is(equalTo(userId)));
         assertThat(userResource.getUsername(), is(equalTo("jeff01")));
         assertThat(userResource.getPassword(), is(equalTo("!Password")));
-        assertThat(userResource.getRole(), is(equalTo("admin")));
+        assertThat(userResource.getAuthorities().size(), is(equalTo(1)));
     }
 }

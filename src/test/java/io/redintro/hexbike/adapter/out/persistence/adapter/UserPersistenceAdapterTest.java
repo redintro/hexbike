@@ -35,14 +35,13 @@ class UserPersistenceAdapterTest {
 
         when(userRepository.findByUsername(any(String.class)))
                 .thenReturn(Optional.of(new UserJpaEntity(userId, "jeff01", "!Password",
-                        "admin", Set.of(new AuthorityJpaEntity(authorityId, "ADMIN")))));
+                       Set.of(new AuthorityJpaEntity(authorityId, "ADMIN")))));
 
         User user = userPersistenceAdapter.findByUserName("Jeff");
 
         assertThat(user.getId(), is(equalTo(userId)));
         assertThat(user.getUsername(), is(equalTo("jeff01")));
         assertThat(user.getPassword(), is(equalTo("!Password")));
-        assertThat(user.getRole(), is(equalTo("admin")));
         assertThat(user.getAuthorities().size(), is(equalTo(1)));
     }
 }

@@ -23,9 +23,6 @@ public class UserJpaEntity {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private String role;
-
     @JsonIgnore
     @ManyToMany
     @JoinTable(
@@ -37,11 +34,10 @@ public class UserJpaEntity {
     public UserJpaEntity() {
     }
 
-    public UserJpaEntity(UUID id, String username, String password, String role, Set<AuthorityJpaEntity> authorities) {
+    public UserJpaEntity(UUID id, String username, String password, Set<AuthorityJpaEntity> authorities) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.role = role;
         this.authorities = authorities;
     }
 
@@ -55,10 +51,6 @@ public class UserJpaEntity {
 
     public String getPassword() {
         return password;
-    }
-
-    public String getRole() {
-        return role;
     }
 
     public Set<AuthorityJpaEntity> getAuthorities() {

@@ -29,7 +29,7 @@ class UserDetailsServiceImplTest {
     @Test
     public void shouldLoadUserByUsername() {
         when(findUserPort.findByUserName(any(String.class)))
-                .thenReturn(new User(UUID.randomUUID(), "jeff01", "!Password", "admin",
+                .thenReturn(new User(UUID.randomUUID(), "jeff01", "!Password",
                         Set.of(new Authority(UUID.randomUUID(), "ADMIN"))));
 
         UserDetails userDetails = userDetailsService.loadUserByUsername("jeff01");

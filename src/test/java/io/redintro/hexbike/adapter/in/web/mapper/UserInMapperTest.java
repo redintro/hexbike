@@ -24,7 +24,7 @@ class UserInMapperTest {
         UUID userId = UUID.randomUUID();
         UUID authorityId = UUID.randomUUID();
 
-        UserResource userResource = new UserResource(userId, "jeff01", "!Password", "admin",
+        UserResource userResource = new UserResource(userId, "jeff01", "!Password",
                 Set.of(new AuthorityResource(authorityId, "ADMIN")));
 
         User user = UserInMapper.mapToDomainEntity(userResource);
@@ -32,7 +32,6 @@ class UserInMapperTest {
         assertThat(user.getId(), is(equalTo(userId)));
         assertThat(user.getUsername(), is(equalTo("jeff01")));
         assertThat(user.getPassword(), is(equalTo("!Password")));
-        assertThat(user.getRole(), is(equalTo("admin")));
         assertThat(user.getAuthorities().size(), is(equalTo(1)));
     }
 
@@ -41,7 +40,7 @@ class UserInMapperTest {
         UUID userId = UUID.randomUUID();
         UUID authorityId = UUID.randomUUID();
 
-        User user = new User(userId, "jeff01", "!Password", "admin",
+        User user = new User(userId, "jeff01", "!Password",
                 Set.of(new Authority(authorityId, "ADMIN")));
 
         UserResource userResource = UserInMapper.mapToResource(user);
@@ -49,7 +48,6 @@ class UserInMapperTest {
         assertThat(userResource.getId(), is(equalTo(userId)));
         assertThat(userResource.getUsername(), is(equalTo("jeff01")));
         assertThat(userResource.getPassword(), is(equalTo("!Password")));
-        assertThat(userResource.getRole(), is(equalTo("admin")));
         assertThat(userResource.getAuthorities().size(), is(equalTo(1)));
     }
 }
