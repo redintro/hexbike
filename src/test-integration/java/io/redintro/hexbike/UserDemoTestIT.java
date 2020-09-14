@@ -35,12 +35,13 @@ class UserDemoTestIT extends SharedContainerBase {
     }
 
     @Test
-    @Transactional // Keeps the persistence context open so that we can access authorities via the user
+    @Transactional // Keeps the persistence context open so that we can access authorities via user
     void shouldFindAllUserAuthorities() {
         Optional<UserJpaEntity> user = repository.findByUsername("admin");
         Set<AuthorityJpaEntity> authorities = user.get().getAuthorities();
 
         assertThat(user.get().getUsername(), is(equalTo("admin")));
         assertThat(authorities.size(), is(equalTo(1)));
+        assertThat(authorities.stream().findFirst().get().getName(), is(equalTo("ADMIN")));
     }
 }
