@@ -1,6 +1,6 @@
 package io.redintro.hexbike;
 
-import io.redintro.hexbike.adapter.out.persistence.entity.AuthorityJpaEntity;
+import io.redintro.hexbike.adapter.out.persistence.entity.RoleJpaEntity;
 import io.redintro.hexbike.adapter.out.persistence.entity.UserJpaEntity;
 import io.redintro.hexbike.adapter.out.persistence.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ class UserDemoTestIT extends SharedContainerBase {
     @Transactional // Keeps the persistence context open so that we can access authorities via user
     void shouldFindAllUserAuthorities() {
         Optional<UserJpaEntity> user = repository.findByUsername("admin");
-        Set<AuthorityJpaEntity> authorities = user.get().getAuthorities();
+        Set<RoleJpaEntity> authorities = user.get().getRoles();
 
         assertThat(user.get().getUsername(), is(equalTo("admin")));
         assertThat(authorities.size(), is(equalTo(1)));

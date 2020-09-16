@@ -1,6 +1,6 @@
 package io.redintro.hexbike.adapter.out.persistence.adapter;
 
-import io.redintro.hexbike.adapter.out.persistence.entity.AuthorityJpaEntity;
+import io.redintro.hexbike.adapter.out.persistence.entity.RoleJpaEntity;
 import io.redintro.hexbike.adapter.out.persistence.entity.UserJpaEntity;
 import io.redintro.hexbike.adapter.out.persistence.repository.UserRepository;
 import io.redintro.hexbike.domain.User;
@@ -31,17 +31,17 @@ class UserPersistenceAdapterTest {
     @Test
     public void shouldFindByUserName() {
         UUID userId = UUID.randomUUID();
-        UUID authorityId = UUID.randomUUID();
+        UUID roleId = UUID.randomUUID();
 
         when(userRepository.findByUsername(any(String.class)))
                 .thenReturn(Optional.of(new UserJpaEntity(userId, "jeff01", "!Password",
-                       Set.of(new AuthorityJpaEntity(authorityId, "ADMIN")))));
+                       Set.of(new RoleJpaEntity(roleId, "ADMIN")))));
 
         User user = userPersistenceAdapter.findByUserName("Jeff");
 
         assertThat(user.getId(), is(equalTo(userId)));
         assertThat(user.getUsername(), is(equalTo("jeff01")));
         assertThat(user.getPassword(), is(equalTo("!Password")));
-        assertThat(user.getAuthorities().size(), is(equalTo(1)));
+        assertThat(user.getRoles().size(), is(equalTo(1)));
     }
 }

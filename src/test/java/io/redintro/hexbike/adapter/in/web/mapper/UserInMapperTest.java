@@ -1,8 +1,8 @@
 package io.redintro.hexbike.adapter.in.web.mapper;
 
-import io.redintro.hexbike.adapter.in.web.resource.AuthorityResource;
+import io.redintro.hexbike.adapter.in.web.resource.RoleResource;
 import io.redintro.hexbike.adapter.in.web.resource.UserResource;
-import io.redintro.hexbike.domain.Authority;
+import io.redintro.hexbike.domain.Role;
 import io.redintro.hexbike.domain.User;
 import org.junit.jupiter.api.Test;
 
@@ -22,32 +22,32 @@ class UserInMapperTest {
     @Test
     public void shouldMapToDomainEntity() {
         UUID userId = UUID.randomUUID();
-        UUID authorityId = UUID.randomUUID();
+        UUID roleId = UUID.randomUUID();
 
         UserResource userResource = new UserResource(userId, "jeff01", "!Password",
-                Set.of(new AuthorityResource(authorityId, "ADMIN")));
+                Set.of(new RoleResource(roleId, "ADMIN")));
 
         User user = UserInMapper.mapToDomainEntity(userResource);
 
         assertThat(user.getId(), is(equalTo(userId)));
         assertThat(user.getUsername(), is(equalTo("jeff01")));
         assertThat(user.getPassword(), is(equalTo("!Password")));
-        assertThat(user.getAuthorities().size(), is(equalTo(1)));
+        assertThat(user.getRoles().size(), is(equalTo(1)));
     }
 
     @Test
     public void shouldMapToResource() {
         UUID userId = UUID.randomUUID();
-        UUID authorityId = UUID.randomUUID();
+        UUID roleId = UUID.randomUUID();
 
         User user = new User(userId, "jeff01", "!Password",
-                Set.of(new Authority(authorityId, "ADMIN")));
+                Set.of(new Role(roleId, "ADMIN")));
 
         UserResource userResource = UserInMapper.mapToResource(user);
 
         assertThat(userResource.getId(), is(equalTo(userId)));
         assertThat(userResource.getUsername(), is(equalTo("jeff01")));
         assertThat(userResource.getPassword(), is(equalTo("!Password")));
-        assertThat(userResource.getAuthorities().size(), is(equalTo(1)));
+        assertThat(userResource.getRoles().size(), is(equalTo(1)));
     }
 }

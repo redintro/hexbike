@@ -13,14 +13,14 @@ class UserJpaEntityTest {
     @Test
     public void shouldCreateUserJpaEntity() {
         UUID userId = UUID.randomUUID();
-        UUID authorityId = UUID.randomUUID();
+        UUID roleId = UUID.randomUUID();
 
         UserJpaEntity userJpaEntity = new UserJpaEntity(userId, "jeff01", "!Password",
-                Set.of(new AuthorityJpaEntity(authorityId, "ADMIN")));
+                Set.of(new RoleJpaEntity(roleId, "ADMIN")));
 
         assertThat(userJpaEntity.getId(), is(equalTo(userId)));
         assertThat(userJpaEntity.getUsername(), is(equalTo("jeff01")));
         assertThat(userJpaEntity.getPassword(), is(equalTo("!Password")));
-        assertThat(userJpaEntity.getAuthorities().size(), is(equalTo(1)));
+        assertThat(userJpaEntity.getRoles().size(), is(equalTo(1)));
     }
 }

@@ -8,14 +8,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-class AuthorityJpaEntityTest {
+class RoleJpaEntityTest {
     @Test
-    public void shouldCreateAuthorityJpaEntity() {
-        UUID authorityId = UUID.randomUUID();
+    public void shouldCreateRoleJpaEntity() {
+        UUID roleId = UUID.randomUUID();
 
-        AuthorityJpaEntity userJpaEntity = new AuthorityJpaEntity(authorityId, "ADMIN");
+        RoleJpaEntity userJpaEntity = new RoleJpaEntity(roleId, "ADMIN");
 
-        assertThat(userJpaEntity.getId(), is(equalTo(authorityId)));
+        assertThat(userJpaEntity.getId(), is(equalTo(roleId)));
         assertThat(userJpaEntity.getName(), is(equalTo("ADMIN")));
     }
 }

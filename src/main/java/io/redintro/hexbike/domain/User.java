@@ -7,13 +7,13 @@ public class User {
     private final UUID id;
     private final String username;
     private final String password;
-    private final Set<Authority> authorities;
+    private final Set<Role> roles;
 
-    public User(UUID id, String username, String password, Set<Authority> authorities) {
+    public User(UUID id, String username, String password, Set<Role> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.authorities = authorities;
+        this.roles = roles;
     }
 
     public UUID getId() {
@@ -28,7 +28,7 @@ public class User {
         return password;
     }
 
-    public Set<Authority> getAuthorities() {
-        return authorities;
+    public Set<Role> getRoles() {
+        return roles;
     }
 }

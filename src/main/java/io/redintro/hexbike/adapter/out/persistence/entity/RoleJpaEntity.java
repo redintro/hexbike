@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "authority")
-public class AuthorityJpaEntity {
+@Table(name = "role")
+public class RoleJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -13,10 +13,10 @@ public class AuthorityJpaEntity {
     @Column(nullable = false)
     private String name;
 
-    public AuthorityJpaEntity() {
+    public RoleJpaEntity() {
     }
 
-    public AuthorityJpaEntity(UUID id, String name) {
+    public RoleJpaEntity(UUID id, String name) {
         this.id = id;
         this.name = name;
     }

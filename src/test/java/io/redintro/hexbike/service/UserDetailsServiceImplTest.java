@@ -1,6 +1,6 @@
 package io.redintro.hexbike.service;
 
-import io.redintro.hexbike.domain.Authority;
+import io.redintro.hexbike.domain.Role;
 import io.redintro.hexbike.domain.User;
 import io.redintro.hexbike.port.out.FindUserPort;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ class UserDetailsServiceImplTest {
     public void shouldLoadUserByUsername() {
         when(findUserPort.findByUserName(any(String.class)))
                 .thenReturn(new User(UUID.randomUUID(), "jeff01", "!Password",
-                        Set.of(new Authority(UUID.randomUUID(), "ADMIN"))));
+                        Set.of(new Role(UUID.randomUUID(), "ADMIN"))));
 
         UserDetails userDetails = userDetailsService.loadUserByUsername("jeff01");
 

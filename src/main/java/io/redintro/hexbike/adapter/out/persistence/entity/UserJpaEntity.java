@@ -26,19 +26,19 @@ public class UserJpaEntity {
     @JsonIgnore
     @ManyToMany
     @JoinTable(
-            name = "user_authority",
+            name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "id")})
-    private Set<AuthorityJpaEntity> authorities = new HashSet<>();
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
+    private Set<RoleJpaEntity> roles = new HashSet<>();
 
     public UserJpaEntity() {
     }
 
-    public UserJpaEntity(UUID id, String username, String password, Set<AuthorityJpaEntity> authorities) {
+    public UserJpaEntity(UUID id, String username, String password, Set<RoleJpaEntity> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.authorities = authorities;
+        this.roles = roles;
     }
 
     public UUID getId() {
@@ -53,7 +53,7 @@ public class UserJpaEntity {
         return password;
     }
 
-    public Set<AuthorityJpaEntity> getAuthorities() {
-        return authorities;
+    public Set<RoleJpaEntity> getRoles() {
+        return roles;
     }
 }

@@ -89,7 +89,7 @@
     </changeSet>
 
     <changeSet id="4" author="matt">
-        <createTable tableName="authority">
+        <createTable tableName="role">
             <column name="id" type="uuid">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -99,28 +99,28 @@
         </createTable>
 
         <loadData
-                file="db/data/authority.csv"
-                tableName="authority">
+                file="db/data/role.csv"
+                tableName="role">
             <column name="id" type="uuid"/>
             <column name="name" type="string"/>
         </loadData>
     </changeSet>
 
     <changeSet id="5" author="matt">
-        <createTable tableName="user_authority">
+        <createTable tableName="user_role">
             <column name="user_id" type="uuid">
                 <constraints nullable="false"/>
             </column>
-            <column name="authority_id" type="uuid">
+            <column name="role_id" type="uuid">
                 <constraints nullable="false"/>
             </column>
         </createTable>
 
         <loadData
-                file="db/data/user-authority.csv"
-                tableName="user_authority">
+                file="db/data/user-role.csv"
+                tableName="user_role">
             <column name="user_id" type="uuid"/>
-            <column name="authority_id" type="uuid"/>
+            <column name="role_id" type="uuid"/>
         </loadData>
     </changeSet>
 </databaseChangeLog>

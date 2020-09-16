@@ -13,14 +13,14 @@ class UserTest {
     @Test
     public void shouldCreateUser() {
         UUID userId = UUID.randomUUID();
-        UUID authorityId = UUID.randomUUID();
+        UUID roleId = UUID.randomUUID();
 
         User user = new User(userId, "jeff01", "!Password",
-                Set.of(new Authority(authorityId, "ADMIN")));
+                Set.of(new Role(roleId, "ADMIN")));
 
         assertThat(user.getId(), is(equalTo(userId)));
         assertThat(user.getUsername(), is(equalTo("jeff01")));
         assertThat(user.getPassword(), is(equalTo("!Password")));
-        assertThat(user.getAuthorities().size(), is(equalTo(1)));
+        assertThat(user.getRoles().size(), is(equalTo(1)));
     }
 }

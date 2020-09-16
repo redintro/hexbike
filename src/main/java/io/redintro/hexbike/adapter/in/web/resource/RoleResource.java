@@ -1,12 +1,12 @@
-package io.redintro.hexbike.domain;
+package io.redintro.hexbike.adapter.in.web.resource;
 
 import java.util.UUID;
 
-public class Authority {
+public class RoleResource {
     private final UUID id;
     private final String name;
 
-    public Authority(UUID id, String name) {
+    public RoleResource(UUID id, String name) {
         this.id = id;
         this.name = name;
     }

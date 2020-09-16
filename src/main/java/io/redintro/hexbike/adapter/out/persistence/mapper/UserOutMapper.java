@@ -1,8 +1,8 @@
 package io.redintro.hexbike.adapter.out.persistence.mapper;
 
-import io.redintro.hexbike.adapter.out.persistence.entity.AuthorityJpaEntity;
+import io.redintro.hexbike.adapter.out.persistence.entity.RoleJpaEntity;
 import io.redintro.hexbike.adapter.out.persistence.entity.UserJpaEntity;
-import io.redintro.hexbike.domain.Authority;
+import io.redintro.hexbike.domain.Role;
 import io.redintro.hexbike.domain.User;
 
 import java.util.stream.Collectors;
@@ -13,9 +13,9 @@ public class UserOutMapper {
                 user.getId(),
                 user.getUsername(),
                 user.getPassword(),
-                user.getAuthorities()
+                user.getRoles()
                         .stream()
-                        .map(a -> new Authority(a.getId(), a.getName()))
+                        .map(a -> new Role(a.getId(), a.getName()))
                         .collect(Collectors.toSet()));
     }
 
@@ -24,9 +24,9 @@ public class UserOutMapper {
                 user.getId(),
                 user.getUsername(),
                 user.getPassword(),
-                user.getAuthorities()
+                user.getRoles()
                         .stream()
-                        .map(a -> new AuthorityJpaEntity(a.getId(), a.getName()))
+                        .map(a -> new RoleJpaEntity(a.getId(), a.getName()))
                         .collect(Collectors.toSet()));
     }
 }
