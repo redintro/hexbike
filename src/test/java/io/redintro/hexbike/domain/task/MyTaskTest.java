@@ -12,7 +12,7 @@ import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 public class MyTaskTest {
-    private final static long SIXTY_SECONDS = 60L;
+    private final static long TEN_SECONDS = 10L;
 
     @SpyBean
     private MyTask myTask;
@@ -21,8 +21,8 @@ public class MyTaskTest {
     public void shouldRunMyTask() {
         assert(true);
         await()
-            .atMost(Duration.ofSeconds(SIXTY_SECONDS))
+            .atMost(Duration.ofSeconds(TEN_SECONDS))
             .untilAsserted(() -> verify(myTask, atLeastOnce())
-            .doSomething());
+            .execute());
     }
 }

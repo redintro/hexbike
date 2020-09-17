@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "schedule.frequency.mytask",
+      "type": "java.lang.String",
+      "description": "Description for schedule.frequency.mytask."
+  }
+] }
