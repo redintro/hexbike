@@ -58,3 +58,13 @@ Uses liquibase to manage the database schema and the maven plugin to add additio
 Uses the Testcontainers framework together with Liquibase to stand up a PostgreSQL docker container instance for 
 integration testing. Integration tests are NOT run by default as part of the standard maven build. 
 - To run the integration tests: `mvn clean install or mvn clean verify -DskipItTests=false`
+
+## Scheduled Tasks, Redis and Shedlock
+Runs a simple scheduled task that uses Redis and Shedlock to ensure only one instance of the application can
+run a scheduled task at any given time.
+- Access cache container: `docker-compose exec cache sh`
+- Start redis cli: `redis-cli`
+- Check redis is up: `ping`
+- List all keyspaces: `info keyspace` which should return a list in the form of db0:, db1:, db2:...
+- Select a keyspace: `select n` where 'n' is the keyspace number db[n]: (not required for db0 as it is default)
+- List all keys in a keyspace: `keys *`

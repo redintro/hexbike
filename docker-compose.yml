@@ -15,7 +15,20 @@ services:
     volumes:
       - ./target:/opt
     depends_on:
+      - cache
       - db
+
+  cache:
+    container_name: hexbike-cache
+    image: redis:alpine
+    networks:
+      new:
+        aliases:
+          - cache_host
+    ports:
+      - 6379:6379
+    volumes:
+    - cache-data:/var/lib/redis
 
   db:
     container_name: hexbike-database
@@ -39,4 +52,5 @@ networks:
 
 volumes:
   app-data:
+  cache-data:
   db-data:

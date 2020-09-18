@@ -40,6 +40,16 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>io.lettuce</groupId>
+					<artifactId>lettuce-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
@@ -72,6 +82,21 @@
 			<version>${postgresql.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>3.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.javacrumbs.shedlock</groupId>
+			<artifactId>shedlock-spring</artifactId>
+			<version>4.14.0</version>
+		</dependency>
+		<dependency>
+			<groupId>net.javacrumbs.shedlock</groupId>
+			<artifactId>shedlock-provider-redis-spring</artifactId>
+			<version>4.14.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>${springdoc.openapi-ui.version}</version>
@@ -87,10 +112,23 @@
 			<artifactId>commons-io</artifactId>
 			<version>${commons.io.version}</version>
 		</dependency>
+
         <!-- Test -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>it.ozimov</groupId>
+			<artifactId>embedded-redis</artifactId>
+			<version>0.7.3</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.awaitility</groupId>
+			<artifactId>awaitility</artifactId>
+			<version>4.0.3</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -191,9 +229,13 @@
 				<configuration>
 					<excludes>
 						<exclude>**/HexBikeApplication.class</exclude>
+						<exclude>**/RedisConfig.class</exclude>
+						<exclude>**/SchedulerConfig.class</exclude>
 						<exclude>**/SecurityConfig.class</exclude>
                         <!-- TODO: All statics so include when Mockito / PowerMock works with JUnit 5 -->
 						<exclude>**/AuthenticationService.class</exclude>
+						<!-- TODO: Write tests! -->
+						<exclude>**/MyTask.class</exclude>
 					</excludes>
 				</configuration>
 				<executions>
