@@ -21,7 +21,7 @@ public class SchedulerConfig {
 
     @Bean
     public LockProvider lockProvider(RedisConnectionFactory connectionFactory) {
-        LOGGER.info("-- lockProvider initialised");
+        LOGGER.info("lockProvider initialised");
         return new RedisLockProvider(connectionFactory, LOCK_NAMESPACE);
     }
 
@@ -30,7 +30,7 @@ public class SchedulerConfig {
         ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
         threadPoolTaskScheduler.setPoolSize(5);
         threadPoolTaskScheduler.setThreadNamePrefix("ThreadPoolTaskScheduler");
-        LOGGER.info("-- taskScheduler initialised");
+        LOGGER.info("taskScheduler initialised");
         return threadPoolTaskScheduler;
     }
 }

@@ -24,7 +24,7 @@ public class RedisConfig {
     public JedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration(host, port);
         JedisClientConfiguration clientConfiguration = JedisClientConfiguration.builder().usePooling().build();
-        LOGGER.info("-- redisConnectionFactory initialised");
+        LOGGER.info("redisConnectionFactory initialised with host: '{}' and port: '{}'", host, port);
         return new JedisConnectionFactory(config, clientConfiguration);
     }
 
@@ -32,7 +32,7 @@ public class RedisConfig {
     public RedisTemplate<String, Object> redisTemplate() {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory());
-        LOGGER.info("-- redisTemplate initialised");
+        LOGGER.info("redisTemplate initialised");
         return template;
     }
 }
