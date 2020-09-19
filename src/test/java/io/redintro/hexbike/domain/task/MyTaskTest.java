@@ -39,7 +39,6 @@ public class MyTaskTest {
 
     @Test
     public void shouldRunMyTask() {
-        assert(true);
         await()
             .atMost(Duration.ofSeconds(TEN_SECONDS))
             .untilAsserted(() -> verify(myTask, atLeastOnce())
