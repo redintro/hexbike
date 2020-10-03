@@ -7,6 +7,7 @@ import io.redintro.hexbike.port.in.ShowBikePort;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +24,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 public class BikeController {
     private static final String BEARER_TOKEN = "bearer-token";
-    private static final String APPLICATION_JSON = "application/json";
 
     private final ShowBikePort showBikePort;
 
@@ -32,7 +32,7 @@ public class BikeController {
     }
 
     @Operation(security = { @SecurityRequirement(name = BEARER_TOKEN) })
-    @GetMapping(value = "/bikes", produces = APPLICATION_JSON)
+    @GetMapping(value = "/bikes", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<BikeResource> index() {
         List<Bike> bikes = showBikePort.findAll();
         return bikes.stream()
@@ -41,7 +41,7 @@ public class BikeController {
     }
 
     @Operation(security = { @SecurityRequirement(name = BEARER_TOKEN) })
-    @GetMapping(value = "/bikes/{id}", produces = APPLICATION_JSON)
+    @GetMapping(value = "/bikes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public BikeResource show(@PathVariable UUID id, Principal principal) {
         try {
             Bike bike = showBikePort.findById(id);
