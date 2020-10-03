@@ -1,4 +1,4 @@
-package io.redintro.hexbike.shared.config;
+package io.redintro.hexbike.shared.config.props;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

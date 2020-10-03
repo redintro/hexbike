@@ -1,5 +1,6 @@
-package io.redintro.hexbike.shared.config;
+package io.redintro.hexbike.shared.config.props;
 
+import io.redintro.hexbike.shared.config.props.SchedulerProps;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
