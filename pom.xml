@@ -27,29 +27,16 @@
 		<springdoc.openapi-ui.version>1.2.32</springdoc.openapi-ui.version>
 		<commons.io.version>2.7</commons.io.version>
 		<redis.clients.version>3.3.0</redis.clients.version>
+		<shedlock-spring.version>4.14.0</shedlock-spring.version>
+		<shedlock-provider-redis-spring.version>4.14.0</shedlock-provider-redis-spring.version>
+		<testcontainers.version>1.14.3</testcontainers.version>
 		<skipItTests>true</skipItTests>
 	</properties>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.30</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>ch.qos.logback</groupId>
-					<artifactId>logback-classic</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.apache.logging.log4j</groupId>
-					<artifactId>log4j-to-slf4j</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -86,12 +73,6 @@
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
 			<version>${liquibase.core.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.immutables</groupId>
@@ -108,34 +89,16 @@
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 			<version>${redis.clients.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>net.javacrumbs.shedlock</groupId>
 			<artifactId>shedlock-spring</artifactId>
-			<version>4.14.0</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-				</exclusion>
-			</exclusions>
+			<version>${shedlock-spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.javacrumbs.shedlock</groupId>
 			<artifactId>shedlock-provider-redis-spring</artifactId>
-			<version>4.14.0</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-				</exclusion>
-			</exclusions>
+			<version>${shedlock-provider-redis-spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springdoc</groupId>
@@ -166,39 +129,21 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>it.ozimov</groupId>
-			<artifactId>embedded-redis</artifactId>
-			<version>0.7.3</version>
-			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-simple</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.awaitility</groupId>
-			<artifactId>awaitility</artifactId>
-			<version>4.0.3</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>testcontainers</artifactId>
-			<version>1.14.3</version>
+			<version>${testcontainers.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>junit-jupiter</artifactId>
-			<version>1.14.3</version>
+			<version>${testcontainers.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>1.14.3</version>
+			<version>${testcontainers.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -286,8 +231,6 @@
 						<exclude>**/SecurityConfig.class</exclude>
                         <!-- TODO: All statics so include when Mockito / PowerMock works with JUnit 5 -->
 						<exclude>**/AuthenticationService.class</exclude>
-						<!-- TODO: Write tests! -->
-						<exclude>**/MyTask.class</exclude>
 					</excludes>
 				</configuration>
 				<executions>
