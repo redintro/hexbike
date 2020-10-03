@@ -4,7 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationProperties(prefix = "schedule")
+@ConfigurationProperties(prefix = "io.redintro.scheduling")
 public class SchedulerProps {
     public static class Frequency {
         private String pattern;
@@ -19,16 +19,16 @@ public class SchedulerProps {
     }
 
     public static class Lock {
-        private String name;
+        private String nameSpace;
         private String atLeastFor;
         private String atMostFor;
 
-        public String getName() {
-            return name;
+        public String getNameSpace() {
+            return nameSpace;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setNameSpace(String nameSpace) {
+            this.nameSpace = nameSpace;
         }
 
         public String getAtLeastFor() {
@@ -48,8 +48,17 @@ public class SchedulerProps {
         }
     }
 
+    private boolean enabled;
     private Frequency frequency;
     private Lock lock;
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
     public Frequency getFrequency() {
         return frequency;

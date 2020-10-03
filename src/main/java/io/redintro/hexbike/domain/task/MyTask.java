@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 public class MyTask {
     private static final Logger LOGGER = LoggerFactory.getLogger(MyTask.class);
 
-    @Scheduled(cron = "${schedule.frequency.pattern}")
-    @SchedulerLock(name = "${schedule.lock.name}",
-            lockAtLeastFor = "${schedule.lock.atLeastFor}",
-            lockAtMostFor = "${schedule.lock.atMostFor}")
+    @Scheduled(cron = "${io.redintro.scheduling.frequency.pattern}")
+    @SchedulerLock(name = "io.redintro.scheduling.lock.name.my-task",
+            lockAtLeastFor = "${io.redintro.scheduling.lock.atLeastFor}",
+            lockAtMostFor = "${io.redintro.scheduling.lock.atMostFor}")
     public void execute() {
-        LOGGER.info("-- MyTask execute() called");
+        LOGGER.info("Scheduled task called [{}]", this.toString());
     }
 }
