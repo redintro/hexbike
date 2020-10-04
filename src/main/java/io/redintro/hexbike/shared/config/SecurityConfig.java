@@ -2,7 +2,7 @@ package io.redintro.hexbike.shared.config;
 
 import io.redintro.hexbike.adapter.in.web.filter.AuthenticationFilter;
 import io.redintro.hexbike.adapter.in.web.filter.LoginFilter;
-import io.redintro.hexbike.service.UserDetailsServiceImpl;
+import io.redintro.hexbike.service.HexBikeUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,9 +23,9 @@ import java.util.Collections;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserDetailsServiceImpl userDetailsService;
+    private final HexBikeUserDetailsService userDetailsService;
 
-    public SecurityConfig(UserDetailsServiceImpl userDetailsService) {
+    public SecurityConfig(HexBikeUserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 

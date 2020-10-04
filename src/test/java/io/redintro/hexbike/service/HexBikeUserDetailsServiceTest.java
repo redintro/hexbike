@@ -19,12 +19,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class UserDetailsServiceImplTest {
+class HexBikeUserDetailsServiceTest {
     @Mock
     private FindUserPort findUserPort;
 
     @InjectMocks
-    private UserDetailsServiceImpl userDetailsService;
+    private HexBikeUserDetailsService userDetailsService;
 
     @Test
     public void shouldLoadUserByUsername() {

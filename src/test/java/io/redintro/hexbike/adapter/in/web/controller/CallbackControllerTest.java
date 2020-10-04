@@ -1,6 +1,6 @@
 package io.redintro.hexbike.adapter.in.web.controller;
 
-import io.redintro.hexbike.service.UserDetailsServiceImpl;
+import io.redintro.hexbike.service.HexBikeUserDetailsService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -24,7 +24,7 @@ class CallbackControllerTest {
     private MockMvc mvc;
 
     @MockBean
-    private UserDetailsServiceImpl userDetailsService;
+    private HexBikeUserDetailsService userDetailsService;
 
     @Test
     public void shouldFindAll() throws Exception {

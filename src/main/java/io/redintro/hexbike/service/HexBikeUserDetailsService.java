@@ -14,10 +14,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class HexBikeUserDetailsService implements UserDetailsService {
     private final FindUserPort findUserPort;
 
-    public UserDetailsServiceImpl(FindUserPort findUserPort) {
+    public HexBikeUserDetailsService(FindUserPort findUserPort) {
         this.findUserPort = findUserPort;
     }
 

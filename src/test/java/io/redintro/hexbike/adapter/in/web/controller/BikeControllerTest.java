@@ -6,7 +6,7 @@ import io.redintro.hexbike.domain.Bike;
 import io.redintro.hexbike.domain.Owner;
 import io.redintro.hexbike.port.in.ShowBikePort;
 import io.redintro.hexbike.service.AuthenticationService;
-import io.redintro.hexbike.service.UserDetailsServiceImpl;
+import io.redintro.hexbike.service.HexBikeUserDetailsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -49,7 +49,7 @@ class BikeControllerTest {
     private ShowBikePort showBikePort;
 
     @MockBean
-    private UserDetailsServiceImpl userDetailsService;
+    private HexBikeUserDetailsService userDetailsService;
 
     @Autowired
     private JacksonTester<List<BikeResource>> jacksonListTester;
