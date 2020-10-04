@@ -1,36 +1,39 @@
 io:
-    redintro:
-        scheduling:
-            enabled: false
-            frequency:
-                pattern: 0 */1 * * * ?
-            lock:
-                atLeastFor: PT30S
-                atMostFor: PT30S
-                nameSpace: hexbike
+  redintro:
+    scheduling:
+      enabled: false
+      frequency:
+        pattern: 0 */1 * * * ?
+      lock:
+        atLeastFor: PT30S
+        atMostFor: PT30S
+        nameSpace: hexbike
+
 logging:
-    level:
-        root: INFO
+  level:
+    root: INFO
+
 management:
-    endpoints:
-        web:
-            exposure:
-                include: '*'
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
 spring:
-    datasource:
-        driver-class-name: org.postgresql.Driver
-        password: docker
-        url: jdbc:postgresql://localhost:5432/hexbike_it
-        username: docker
-    jpa:
-        hibernate:
-            ddl-auto: none
-        properties:
-            hibernate:
-                dialect: org.hibernate.dialect.PostgreSQLDialect
-    liquibase:
-        change-log: classpath:db/liquibase-changelog.xml
-        enabled: true
-    redis:
-        host: localhost
-        port: 6378
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: docker
+    url: jdbc:postgresql://localhost:5432/hexbike_it
+    username: docker
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  liquibase:
+    change-log: classpath:db/liquibase-changelog.xml
+    enabled: true
+  redis:
+    host: localhost
+    port: 6378

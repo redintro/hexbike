@@ -1,47 +1,52 @@
 info:
-    app:
-        description: Demo ports and adapters project
-        name: HexBike
-        version: 0.0.1-SNAPSHOT
+  app:
+    description: Demo ports and adapters project
+    name: HexBike
+    version: 0.0.1-SNAPSHOT
+
 io:
-    redintro:
-        scheduling:
-            enabled: true
-            frequency:
-                pattern: 0 */1 * * * ?
-            lock:
-                atLeastFor: PT30S
-                atMostFor: PT30S
-                nameSpace: hexbike
+  redintro:
+    scheduling:
+      enabled: true
+      frequency:
+        pattern: 0 */1 * * * ?
+      lock:
+        atLeastFor: PT30S
+        atMostFor: PT30S
+        nameSpace: hexbike
+
 logging:
-    level:
-        root: INFO
+  level:
+    root: INFO
+
 management:
-    endpoints:
-        web:
-            exposure:
-                include: '*'
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
 spring:
-    datasource:
-        driver-class-name: org.postgresql.Driver
-        password: docker
-        url: jdbc:postgresql://db_host:5432/hexbike_dev
-        username: docker
-    jpa:
-        hibernate:
-            ddl-auto: none
-        open-in-view: true
-        properties:
-            hibernate:
-                dialect: org.hibernate.dialect.PostgreSQLDialect
-        show-sql: true
-    liquibase:
-        change-log: classpath:db/liquibase-changelog.xml
-    profiles:
-        active: dev
-    redis:
-        host: cache_host
-        port: 6379
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: docker
+    url: jdbc:postgresql://db_host:5432/hexbike_dev
+    username: docker
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+  liquibase:
+    change-log: classpath:db/liquibase-changelog.xml
+  profiles:
+    active: dev
+  redis:
+    host: cache_host
+    port: 6379
+
 springdoc:
-    api-docs:
-        path: /api-docs
+  api-docs:
+    path: /api-docs
