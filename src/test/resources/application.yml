@@ -1,0 +1,21 @@
+io:
+    redintro:
+        scheduling:
+            enabled: false
+            frequency:
+                pattern: 0 */1 * * * ?
+            lock:
+                atLeastFor: PT30S
+                atMostFor: PT30S
+                nameSpace: hexbike
+logging:
+    level:
+        root: INFO
+spring:
+    liquibase:
+        enabled: false
+    profiles:
+        active: test
+    redis:
+        host: localhost
+        port: 6378
