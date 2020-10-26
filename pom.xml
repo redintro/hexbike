@@ -30,6 +30,7 @@
 		<shedlock-spring.version>4.14.0</shedlock-spring.version>
 		<shedlock-provider-redis-spring.version>4.14.0</shedlock-provider-redis-spring.version>
 		<testcontainers.version>1.14.3</testcontainers.version>
+        <vavr.version>0.10.3</vavr.version>
 		<skipItTests>true</skipItTests>
 	</properties>
 
@@ -79,6 +80,11 @@
 			<artifactId>value</artifactId>
 			<version>${immutables.version}</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.vavr</groupId>
+			<artifactId>vavr</artifactId>
+			<version>${vavr.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
