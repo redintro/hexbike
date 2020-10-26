@@ -1,34 +1,25 @@
 package io.redintro.hexbike.domain;
 
+import org.immutables.value.Value;
+
 import java.util.Set;
 import java.util.UUID;
 
-public class User {
-    private final UUID id;
-    private final String username;
-    private final String password;
-    private final Set<Role> roles;
+@Value.Immutable
+public abstract class User {
+    @Value.Parameter
+    public abstract UUID getId();
 
-    public User(UUID id, String username, String password, Set<Role> roles) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.roles = roles;
-    }
+    @Value.Parameter
+    public abstract String getUsername();
 
-    public UUID getId() {
-        return id;
-    }
+    @Value.Parameter
+    public abstract String getPassword();
 
-    public String getUsername() {
-        return username;
-    }
+    @Value.Parameter
+    public abstract Set<Role> getRoles();
 
-    public String getPassword() {
-        return password;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
+    public static User getInstance(UUID id, String username, String password, Set<Role> roles) {
+        return ImmutableUser.of(id, username, password, roles);
     }
 }

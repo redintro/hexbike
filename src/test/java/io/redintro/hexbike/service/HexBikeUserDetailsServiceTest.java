@@ -29,8 +29,8 @@ class HexBikeUserDetailsServiceTest {
     @Test
     public void shouldLoadUserByUsername() {
         when(findUserPort.findByUserName(any(String.class)))
-                .thenReturn(new User(UUID.randomUUID(), "jeff01", "!Password",
-                        Set.of(new Role(UUID.randomUUID(), "ADMIN"))));
+                .thenReturn(User.getInstance(UUID.randomUUID(), "jeff01", "!Password",
+                        Set.of(Role.getInstance(UUID.randomUUID(), "ADMIN"))));
 
         UserDetails userDetails = userDetailsService.loadUserByUsername("jeff01");
 

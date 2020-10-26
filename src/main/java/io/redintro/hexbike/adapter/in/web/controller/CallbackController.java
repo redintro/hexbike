@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class CallbackController {
     @GetMapping(value="callbacks", produces = MediaType.APPLICATION_JSON_VALUE)
     public String index() {
-        return "CallbackController index called";
+        return "{\"message\":\"This is a callback from Hexbike\"}";
     }
 }

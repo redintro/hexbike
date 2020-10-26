@@ -7,14 +7,14 @@ import io.redintro.hexbike.domain.Owner;
 
 public class BikeInMapper {
    public static Bike mapToDomainEntity(BikeResource bike) {
-        return new Bike(
+        return Bike.getInstance(
                 bike.getId(),
                 bike.getMake(),
                 bike.getModel(),
                 bike.getColour(),
                 bike.getYear(),
                 bike.getPrice(),
-                new Owner(
+                Owner.getInstance(
                         bike.getOwner().getId(),
                         bike.getOwner().getFirstName(),
                         bike.getOwner().getLastName()));

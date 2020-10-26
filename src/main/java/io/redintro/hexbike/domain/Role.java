@@ -1,21 +1,18 @@
 package io.redintro.hexbike.domain;
 
+import org.immutables.value.Value;
+
 import java.util.UUID;
 
-public class Role {
-    private final UUID id;
-    private final String name;
+@Value.Immutable
+public abstract class Role {
+    @Value.Parameter
+    public abstract UUID getId();
 
-    public Role(UUID id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+    @Value.Parameter
+    public abstract String getName();
 
-    public UUID getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
+    public static Role getInstance(UUID id, String name) {
+        return ImmutableRole.of(id, name);
     }
 }

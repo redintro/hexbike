@@ -1,52 +1,35 @@
 package io.redintro.hexbike.domain;
 
+import io.redintro.hexbike.domain.ImmutableBike;
+
+import org.immutables.value.Value;
+
 import java.util.UUID;
 
-public class Bike {
-    private final UUID id;
-    private final String make;
-    private final String model;
-    private final String colour;
-    private final int year;
-    private final int price;
-    private final Owner owner;
+@Value.Immutable
+public abstract class Bike {
+    @Value.Parameter
+    public abstract UUID getId();
 
-    public Bike(UUID id, String make, String model, String colour, int year, int price,
-                Owner owner) {
-        this.id = id;
-        this.make = make;
-        this.model = model;
-        this.colour = colour;
-        this.year = year;
-        this.price = price;
-        this.owner = owner;
-    }
+    @Value.Parameter
+    public abstract String getMake();
 
-    public UUID getId() {
-        return id;
-    }
+    @Value.Parameter
+    public abstract String getModel();
 
-    public String getMake() {
-        return make;
-    }
+    @Value.Parameter
+    public abstract String getColour();
 
-    public String getModel() {
-        return model;
-    }
+    @Value.Parameter
+    public abstract int getYear();
 
-    public String getColour() {
-        return colour;
-    }
+    @Value.Parameter
+    public abstract int getPrice();
 
-    public int getYear() {
-        return year;
-    }
+    @Value.Parameter
+    public abstract Owner getOwner();
 
-    public int getPrice() {
-        return price;
-    }
-
-    public Owner getOwner() {
-        return owner;
+    public static Bike getInstance(UUID id, String make, String model, String colour, int year, int price, Owner owner) {
+        return ImmutableBike.of(id, make, model, colour, year, price, owner);
     }
 }

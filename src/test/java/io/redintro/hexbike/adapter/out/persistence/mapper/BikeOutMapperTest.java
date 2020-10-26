@@ -44,8 +44,8 @@ class BikeOutMapperTest {
         UUID bikeId = UUID.randomUUID();
         UUID ownerId = UUID.randomUUID();
 
-        Bike bike = new Bike(bikeId, "Cinelli", "Vigorelli", "White", 2017,
-                1249, new Owner(ownerId, "Jeff", "Jefferson"));
+        Bike bike = Bike.getInstance(bikeId, "Cinelli", "Vigorelli", "White", 2017,
+                1249, Owner.getInstance(ownerId, "Jeff", "Jefferson"));
 
         BikeJpaEntity bikeJpaEntity = BikeOutMapper.mapToJpaEntity(bike);
 

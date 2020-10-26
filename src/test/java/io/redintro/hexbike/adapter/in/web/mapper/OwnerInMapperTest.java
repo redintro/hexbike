@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.*;
 
 class OwnerInMapperTest {
     private final UUID ownerId = UUID.randomUUID();
-    private final Owner owner = new Owner(ownerId, "Jeff", "Jefferson");
+    private final Owner owner = Owner.getInstance(ownerId, "Jeff", "Jefferson");
 
     @Test
     public void shouldCreateOwnerMapper() {

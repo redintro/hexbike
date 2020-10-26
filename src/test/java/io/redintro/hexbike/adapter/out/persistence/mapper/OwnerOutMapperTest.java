@@ -33,7 +33,7 @@ class OwnerOutMapperTest {
     public void shouldMapToJpaEntity() {
         UUID ownerId = UUID.randomUUID();
 
-        Owner owner = new Owner(ownerId, "Jeff", "Jefferson");
+        Owner owner = Owner.getInstance(ownerId, "Jeff", "Jefferson");
 
         OwnerJpaEntity ownerJpaEntity = OwnerOutMapper.mapToJpaEntity(owner);
 

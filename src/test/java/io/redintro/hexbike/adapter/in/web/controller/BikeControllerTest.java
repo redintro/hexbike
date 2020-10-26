@@ -71,8 +71,8 @@ class BikeControllerTest {
 
    @Test
    public void shouldFindAll() throws Exception {
-        List<Bike> bikes = List.of(new Bike(UUID.randomUUID(), "Cinelli", "Vigorelli", "White", 2017,
-                1249, new Owner(UUID.randomUUID(), "Jeff", "Jefferson")));
+        List<Bike> bikes = List.of(Bike.getInstance(UUID.randomUUID(), "Cinelli", "Vigorelli", "White", 2017,
+                1249, Owner.getInstance(UUID.randomUUID(), "Jeff", "Jefferson")));
 
         when(showBikePort.findAll()).thenReturn(bikes);
 
@@ -96,8 +96,8 @@ class BikeControllerTest {
         UUID bikeId = UUID.randomUUID();
         UUID ownerId = UUID.randomUUID();
 
-        Bike bike = new Bike(bikeId, "Cinelli", "Vigorelli", "White", 2017, 1249,
-                new Owner(ownerId, "Jeff", "Jefferson"));
+        Bike bike = Bike.getInstance(bikeId, "Cinelli", "Vigorelli", "White", 2017, 1249,
+                Owner.getInstance(ownerId, "Jeff", "Jefferson"));
 
         when(showBikePort.findById(bikeId)).thenReturn(bike);
 
