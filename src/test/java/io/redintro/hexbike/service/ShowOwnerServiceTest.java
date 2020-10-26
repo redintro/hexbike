@@ -29,7 +29,7 @@ class ShowOwnerServiceTest {
 
     @Test
     public void shouldFindAll() {
-        when(findOwnerPort.findAll()).thenReturn(List.of(new Owner(UUID.randomUUID(), "Jeff", "Jefferson")));
+        when(findOwnerPort.findAll()).thenReturn(List.of(Owner.getInstance(UUID.randomUUID(), "Jeff", "Jefferson")));
 
         List<Owner> owners = showOwnerService.findAll();
 
@@ -40,7 +40,7 @@ class ShowOwnerServiceTest {
     public void shouldFindById() {
         UUID ownerId = UUID.randomUUID();
 
-        Optional<Owner> maybeOwner = Optional.of(new Owner(ownerId, "Jeff", "Jefferson"));
+        Optional<Owner> maybeOwner = Optional.of(Owner.getInstance(ownerId, "Jeff", "Jefferson"));
         when(findOwnerPort.findById(any(UUID.class))).thenReturn(maybeOwner);
 
         Owner owner = showOwnerService.findById(ownerId).get();

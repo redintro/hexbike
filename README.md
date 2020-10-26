@@ -68,3 +68,8 @@ run a scheduled task at any given time.
 - List all keyspaces: `info keyspace` which should return a list in the form of db0:, db1:, db2:...
 - Select a keyspace: `select n` where 'n' is the keyspace number db[n]: (not required for db0 as it is default)
 - List all keys in a keyspace: `keys *`
+
+## Uses the Immutables library `https://immutables.github.io/`
+To set up Annotation processing in IntelliJ:
+- Check the 'Enable annotation processing' checkbox in Settings/Build, Execution, Deployment/Compiler/Annotation Processors
+- Righ click target/generated-sources/annotations directory and choose to 'Mark Directory as' Generated Sources Root

@@ -9,13 +9,13 @@ import java.util.stream.Collectors;
 
 public class UserOutMapper {
     public static User mapToDomainEntity(UserJpaEntity user) {
-        return new User(
+        return User.getInstance(
                 user.getId(),
                 user.getUsername(),
                 user.getPassword(),
                 user.getRoles()
                         .stream()
-                        .map(a -> new Role(a.getId(), a.getName()))
+                        .map(a -> Role.getInstance(a.getId(), a.getName()))
                         .collect(Collectors.toSet()));
     }
 

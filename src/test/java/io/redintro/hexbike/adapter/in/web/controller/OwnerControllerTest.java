@@ -51,7 +51,7 @@ public class OwnerControllerTest {
 
     @Test
     public void shouldFindAllOwners() throws Exception {
-        List<Owner> owners = List.of(new Owner(UUID.randomUUID(), "Jeff", "Jefferson"));
+        List<Owner> owners = List.of(Owner.getInstance(UUID.randomUUID(), "Jeff", "Jefferson"));
 
         when(showOwnerPort.findAll()).thenReturn(owners);
 
@@ -71,7 +71,7 @@ public class OwnerControllerTest {
     public void shouldFindById() throws Exception {
         UUID ownerId = UUID.randomUUID();
 
-        Owner owner = new Owner(ownerId, "Jeff", "Jefferson");
+        Owner owner = Owner.getInstance(ownerId, "Jeff", "Jefferson");
 
         when(showOwnerPort.findById(ownerId)).thenReturn(Optional.of(owner));
 

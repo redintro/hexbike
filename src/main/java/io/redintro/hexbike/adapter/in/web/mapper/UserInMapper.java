@@ -9,13 +9,13 @@ import java.util.stream.Collectors;
 
 public class UserInMapper {
     public static User mapToDomainEntity(UserResource user) {
-        return new User(
+        return User.getInstance(
                 user.getId(),
                 user.getUsername(),
                 user.getPassword(),
                 user.getRoles()
                     .stream()
-                    .map(r -> new Role(r.getId(), r.getName()))
+                    .map(r -> Role.getInstance(r.getId(), r.getName()))
                     .collect(Collectors.toSet()));
     }
 

@@ -42,8 +42,8 @@ class UserOutMapperTest {
         UUID userId = UUID.randomUUID();
         UUID roleId = UUID.randomUUID();
 
-        User user = new User(userId, "jeff01", "!Password",
-                Set.of(new Role(roleId, "ADMIN")));
+        User user = User.getInstance(userId, "jeff01", "!Password",
+                Set.of(Role.getInstance(roleId, "ADMIN")));
 
         UserJpaEntity userJpaEntity = UserOutMapper.mapToJpaEntity(user);
 

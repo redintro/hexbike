@@ -5,7 +5,7 @@ import io.redintro.hexbike.domain.Owner;
 
 public class OwnerOutMapper {
     public static Owner mapToDomainEntity(OwnerJpaEntity owner) {
-        return new Owner(
+        return Owner.getInstance(
                 owner.getId(),
                 owner.getFirstName(),
                 owner.getLastName());

@@ -1,27 +1,21 @@
 package io.redintro.hexbike.domain;
 
+import org.immutables.value.Value;
+
 import java.util.UUID;
 
-public class Owner {
-    private final UUID id;
-    private final String firstName;
-    private final String lastName;
+@Value.Immutable
+public abstract class Owner {
+    @Value.Parameter
+    public abstract UUID getId();
 
-    public Owner(UUID id, String firstName, String lastName) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+    @Value.Parameter
+    public abstract String getFirstName();
 
-    public UUID getId() {
-        return id;
-    }
+    @Value.Parameter
+    public abstract String getLastName();
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
+    public static Owner getInstance(UUID id, String firstName, String lastName) {
+        return ImmutableOwner.of(id, firstName, lastName);
     }
 }

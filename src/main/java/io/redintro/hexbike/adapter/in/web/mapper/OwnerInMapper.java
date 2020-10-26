@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class OwnerInMapper {
     public static Optional<Owner> mapToDomainEntity(OwnerResource resource) {
         return Optional.ofNullable(resource)
-                .map(r -> new Owner(
+                .map(r -> Owner.getInstance(
                         r.getId(),
                         r.getFirstName(),
                         r.getLastName()));

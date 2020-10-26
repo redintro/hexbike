@@ -12,7 +12,7 @@ public class RoleTest {
     @Test
     public void shouldCreateRole() {
         final UUID roleId = UUID.randomUUID();
-        final Role role = new Role(roleId, "ADMIN");
+        final Role role = Role.getInstance(roleId, "ADMIN");
 
         assertThat(role.getId(), is(equalTo(roleId)));
         assertThat(role.getName(), is(equalTo("ADMIN")));
