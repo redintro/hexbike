@@ -5,8 +5,9 @@
 - git@github.com:redintro/hexbike.git
 
 ## Building with Maven
-The project is configured to use maven as its build tool:
+The project is configured to use maven as its build tool and skip integration tests by default:
 - To build: `mvn clean install`
+- To build and run the optional integration tests: `mvn clean install -DskipItTests=false`
 
 ## Docker Compose
 To run from the command line without maven:
