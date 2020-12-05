@@ -40,6 +40,7 @@ public class OwnerControllerTest {
     private ShowOwnerPort showOwnerPort;
 
     private JacksonTester<List<OwnerResource>> jacksonListTester;
+
     private JacksonTester<OwnerResource> jacksonTester;
 
     @BeforeEach

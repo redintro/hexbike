@@ -18,7 +18,8 @@ public class OwnerInMapper {
     }
 
     public static Optional<OwnerResource> mapToResource(Owner owner) {
-        return Optional.ofNullable(owner).map(OwnerInMapper::toOwnerResource);
+        return Optional.ofNullable(owner)
+                .map(OwnerInMapper::toOwnerResource);
     }
 
     public static List<OwnerResource> mapToListResource(List<Owner> owners) {

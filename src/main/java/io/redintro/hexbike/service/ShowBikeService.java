@@ -6,6 +6,7 @@ import io.redintro.hexbike.port.out.FindBikePort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -22,7 +23,7 @@ public class ShowBikeService implements ShowBikePort {
     }
 
     @Override
-    public Bike findById(UUID bikeId) {
+    public Optional<Bike> findById(UUID bikeId) {
         return findBikePort.findById(bikeId);
     }
 }

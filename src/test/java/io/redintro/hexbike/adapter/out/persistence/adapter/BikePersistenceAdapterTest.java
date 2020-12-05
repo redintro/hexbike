@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -46,20 +47,21 @@ class BikePersistenceAdapterTest {
         UUID ownerId = UUID.randomUUID();
 
         when(bikeRepository.findById(any(UUID.class)))
-                .thenReturn(java.util.Optional.of(new BikeJpaEntity(bikeId, "Cinelli", "Vigorelli",
+                .thenReturn(Optional.of(new BikeJpaEntity(bikeId, "Cinelli", "Vigorelli",
                         "White", 2017, 1249, new OwnerJpaEntity(ownerId, "Jeff",
                         "Jefferson"))));
 
-        Bike bike = bikePersistenceAdapter.findById(bikeId);
+        Optional<Bike> bike = bikePersistenceAdapter.findById(bikeId);
 
-        assertThat(bike.getId(), is(equalTo(bikeId)));
-        assertThat(bike.getMake(), is(equalTo("Cinelli")));
-        assertThat(bike.getModel(), is(equalTo("Vigorelli")));
-        assertThat(bike.getColour(), is(equalTo("White")));
-        assertThat(bike.getYear(), is(equalTo(2017)));
-        assertThat(bike.getPrice(), is(equalTo(1249)));
-        assertThat(bike.getOwner().getId(), is(equalTo(ownerId)));
-        assertThat(bike.getOwner().getFirstName(), is(equalTo("Jeff")));
-        assertThat(bike.getOwner().getLastName(), is(equalTo("Jefferson")));
+        assertThat(bike.isPresent(), is(equalTo(true)));
+        assertThat(bike.get().getId(), is(equalTo(bikeId)));
+        assertThat(bike.get().getMake(), is(equalTo("Cinelli")));
+        assertThat(bike.get().getModel(), is(equalTo("Vigorelli")));
+        assertThat(bike.get().getColour(), is(equalTo("White")));
+        assertThat(bike.get().getYear(), is(equalTo(2017)));
+        assertThat(bike.get().getPrice(), is(equalTo(1249)));
+        assertThat(bike.get().getOwner().getId(), is(equalTo(ownerId)));
+        assertThat(bike.get().getOwner().getFirstName(), is(equalTo("Jeff")));
+        assertThat(bike.get().getOwner().getLastName(), is(equalTo("Jefferson")));
     }
 }

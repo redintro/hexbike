@@ -38,6 +38,7 @@ public class OwnerController {
     public OwnerResource show(@PathVariable UUID id) {
         return showOwnerPort.findById(id)
             .flatMap(OwnerInMapper::mapToResource)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot find a owner with the ID: " + id));
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Cannot find a owner with the ID: " + id));
     }
 }

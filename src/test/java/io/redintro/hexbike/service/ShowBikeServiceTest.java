@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -44,12 +45,13 @@ class ShowBikeServiceTest {
         UUID bikeId =  UUID.randomUUID();
         UUID ownerId = UUID.randomUUID();
 
-        when(findBikePort.findById(any(UUID.class))).thenReturn(Bike.getInstance(bikeId, "Cinelli", "Vigorelli",
-                "White", 2017, 1249, Owner.getInstance(ownerId, "Jeff", "Jefferson")));
+        when(findBikePort.findById(any(UUID.class))).thenReturn(Optional.of(Bike.getInstance(bikeId, "Cinelli", "Vigorelli",
+                "White", 2017, 1249, Owner.getInstance(ownerId, "Jeff", "Jefferson"))));
 
-        Bike bike = showBikeService.findById(bikeId);
+        Optional<Bike> bike = showBikeService.findById(bikeId);
 
-        assertThat(bike.getId(), is(equalTo(bikeId)));
-        assertThat(bike.getOwner().getId(), is(equalTo(ownerId)));
+        assertThat(bike.isPresent(), is(equalTo(true)));
+        assertThat(bike.get().getId(), is(equalTo(bikeId)));
+        assertThat(bike.get().getOwner().getId(), is(equalTo(ownerId)));
     }
 }

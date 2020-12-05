@@ -6,6 +6,8 @@ import io.redintro.hexbike.domain.Bike;
 import io.redintro.hexbike.domain.Owner;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,17 +28,18 @@ class BikeInMapperTest {
         BikeResource bikeResource = new BikeResource(bikeId, "Cinelli", "Vigorelli", "White",
                 2017, 1249, new OwnerResource(ownerId,"Jeff", "Jefferson"));
 
-        Bike bike = BikeInMapper.mapToDomainEntity(bikeResource);
+        Optional<Bike> bike = BikeInMapper.mapToDomainEntity(bikeResource);
 
-        assertThat(bike.getId(), is(equalTo(bikeId)));
-        assertThat(bike.getMake(), is(equalTo("Cinelli")));
-        assertThat(bike.getModel(), is(equalTo("Vigorelli")));
-        assertThat(bike.getColour(), is(equalTo("White")));
-        assertThat(bike.getYear(), is(equalTo(2017)));
-        assertThat(bike.getPrice(), is(equalTo(1249)));
-        assertThat(bike.getOwner().getId(), is(equalTo(ownerId)));
-        assertThat(bike.getOwner().getFirstName(), is(equalTo("Jeff")));
-        assertThat(bike.getOwner().getLastName(), is(equalTo("Jefferson")));
+        assertThat(bike.isPresent(), is(equalTo(true)));
+        assertThat(bike.get().getId(), is(equalTo(bikeId)));
+        assertThat(bike.get().getMake(), is(equalTo("Cinelli")));
+        assertThat(bike.get().getModel(), is(equalTo("Vigorelli")));
+        assertThat(bike.get().getColour(), is(equalTo("White")));
+        assertThat(bike.get().getYear(), is(equalTo(2017)));
+        assertThat(bike.get().getPrice(), is(equalTo(1249)));
+        assertThat(bike.get().getOwner().getId(), is(equalTo(ownerId)));
+        assertThat(bike.get().getOwner().getFirstName(), is(equalTo("Jeff")));
+        assertThat(bike.get().getOwner().getLastName(), is(equalTo("Jefferson")));
     }
 
     @Test
@@ -47,16 +50,30 @@ class BikeInMapperTest {
         Bike bike = Bike.getInstance(bikeId, "Cinelli", "Vigorelli", "White", 2017,
                 1249, Owner.getInstance(ownerId, "Jeff", "Jefferson"));
 
-        BikeResource bikeResource = BikeInMapper.mapToResource(bike);
+        Optional<BikeResource> bikeResource = BikeInMapper.mapToResource(bike);
 
-        assertThat(bikeResource.getId(), is(equalTo(bikeId)));
-        assertThat(bikeResource.getMake(), is(equalTo("Cinelli")));
-        assertThat(bikeResource.getModel(), is(equalTo("Vigorelli")));
-        assertThat(bikeResource.getColour(), is(equalTo("White")));
-        assertThat(bikeResource.getYear(), is(equalTo(2017)));
-        assertThat(bikeResource.getPrice(), is(equalTo(1249)));
-        assertThat(bikeResource.getOwner().getId(), is(equalTo(ownerId)));
-        assertThat(bikeResource.getOwner().getFirstName(), is(equalTo("Jeff")));
-        assertThat(bikeResource.getOwner().getLastName(), is(equalTo("Jefferson")));
+        assertThat(bikeResource.isPresent(), is(equalTo(true)));
+        assertThat(bikeResource.get().getId(), is(equalTo(bikeId)));
+        assertThat(bikeResource.get().getMake(), is(equalTo("Cinelli")));
+        assertThat(bikeResource.get().getModel(), is(equalTo("Vigorelli")));
+        assertThat(bikeResource.get().getColour(), is(equalTo("White")));
+        assertThat(bikeResource.get().getYear(), is(equalTo(2017)));
+        assertThat(bikeResource.get().getPrice(), is(equalTo(1249)));
+        assertThat(bikeResource.get().getOwner().getId(), is(equalTo(ownerId)));
+        assertThat(bikeResource.get().getOwner().getFirstName(), is(equalTo("Jeff")));
+        assertThat(bikeResource.get().getOwner().getLastName(), is(equalTo("Jefferson")));
+    }
+
+    @Test
+    public void shouldMapToListResource() {
+        UUID bikeId = UUID.randomUUID();
+        UUID ownerId = UUID.randomUUID();
+
+        List<Bike> bikes = List.of(Bike.getInstance(bikeId, "Cinelli", "Vigorelli", "White", 2017,
+                1249, Owner.getInstance(ownerId, "Jeff", "Jefferson")));
+
+        List<BikeResource> bikeResources = BikeInMapper.mapToListResource(bikes);
+
+        assertThat(bikeResources.size(), is(equalTo(1)));
     }
 }

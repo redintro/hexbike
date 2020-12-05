@@ -1,5 +1,6 @@
 package io.redintro.hexbike.adapter.in.web.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.redintro.hexbike.adapter.in.web.mapper.BikeInMapper;
 import io.redintro.hexbike.adapter.in.web.resource.BikeResource;
 import io.redintro.hexbike.domain.Bike;
@@ -32,14 +33,13 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@AutoConfigureJsonTesters
 @WebMvcTest(BikeController.class)
 class BikeControllerTest {
     @Autowired
@@ -51,16 +51,16 @@ class BikeControllerTest {
     @MockBean
     private HexBikeUserDetailsService userDetailsService;
 
-    @Autowired
     private JacksonTester<List<BikeResource>> jacksonListTester;
 
-    @Autowired
     private JacksonTester<BikeResource> jacksonTester;
 
     private String jwtToken;
 
     @BeforeEach
     public void setUp() {
+        JacksonTester.initFields(this, new ObjectMapper());
+
         jwtToken = AuthenticationService.getToken("admin");
 
         when(userDetailsService.loadUserByUsername(any(String.class)))
@@ -83,9 +83,7 @@ class BikeControllerTest {
                 .andReturn()
                 .getResponse();
 
-        List<BikeResource> bikeResources = bikes.stream()
-                .map(BikeInMapper::mapToResource)
-                .collect(Collectors.toList());
+        List<BikeResource> bikeResources = BikeInMapper.mapToListResource(bikes);
 
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
         assertThat(response.getContentAsString(), is(equalTo(jacksonListTester.write(bikeResources).getJson())));
@@ -99,7 +97,7 @@ class BikeControllerTest {
         Bike bike = Bike.getInstance(bikeId, "Cinelli", "Vigorelli", "White", 2017, 1249,
                 Owner.getInstance(ownerId, "Jeff", "Jefferson"));
 
-        when(showBikePort.findById(bikeId)).thenReturn(bike);
+        when(showBikePort.findById(bikeId)).thenReturn(Optional.of(bike));
 
         MockHttpServletResponse response = mvc.perform(
                 MockMvcRequestBuilders.get("/api/bikes/" + bikeId)
@@ -108,17 +106,17 @@ class BikeControllerTest {
                 .andReturn()
                 .getResponse();
 
-        BikeResource bikeResource = BikeInMapper.mapToResource(bike);
+        Optional<BikeResource> bikeResource = BikeInMapper.mapToResource(bike);
 
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
-        assertThat(response.getContentAsString(), is(equalTo(jacksonTester.write(bikeResource).getJson())));
+        assertThat(response.getContentAsString(), is(equalTo(jacksonTester.write(bikeResource.get()).getJson())));
     }
 
     @Test
     public void shouldFailToFindById() throws Exception {
         UUID bikeId = UUID.randomUUID();
 
-        when(showBikePort.findById(bikeId)).thenThrow(new EntityNotFoundException());
+        when(showBikePort.findById(bikeId)).thenReturn(Optional.empty());
 
         MockHttpServletResponse response = mvc.perform(
                 MockMvcRequestBuilders.get("/api/bikes/" + bikeId)
