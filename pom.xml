@@ -30,7 +30,7 @@
 		<redis.clients.version>3.3.0</redis.clients.version>
 		<shedlock-spring.version>4.14.0</shedlock-spring.version>
 		<shedlock-provider-redis-spring.version>4.14.0</shedlock-provider-redis-spring.version>
-		<testcontainers.version>1.14.3</testcontainers.version>
+		<testcontainers.version>1.15.1</testcontainers.version>
         <vavr.version>0.10.3</vavr.version>
 		<skipItTests>true</skipItTests>
 	</properties>
