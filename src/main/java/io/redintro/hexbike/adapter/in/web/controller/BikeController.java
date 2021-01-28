@@ -31,14 +31,14 @@ public class BikeController {
     @Operation(security = { @SecurityRequirement(name = BEARER_TOKEN) })
     @GetMapping(value = "/bikes", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<BikeResource> index() {
-       return BikeInMapper.mapToListResource(showBikePort.findAll());
+       return BikeInMapper.mapToListRestResource(showBikePort.findAll());
     }
 
     @Operation(security = { @SecurityRequirement(name = BEARER_TOKEN) })
     @GetMapping(value = "/bikes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public BikeResource show(@PathVariable UUID id, Principal principal) {
        return showBikePort.findById(id)
-               .flatMap(BikeInMapper::mapToResource)
+               .flatMap(BikeInMapper::mapToRestResource)
                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                        "Cannot find a Bike with the ID: " + id));
     }

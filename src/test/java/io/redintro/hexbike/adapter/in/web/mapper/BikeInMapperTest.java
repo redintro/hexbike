@@ -6,6 +6,7 @@ import io.redintro.hexbike.domain.Bike;
 import io.redintro.hexbike.domain.Owner;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -43,14 +44,14 @@ class BikeInMapperTest {
     }
 
     @Test
-    public void shouldMapToResource() {
+    public void shouldMapToRestResource() {
         UUID bikeId = UUID.randomUUID();
         UUID ownerId = UUID.randomUUID();
 
         Bike bike = Bike.getInstance(bikeId, "Cinelli", "Vigorelli", "White", 2017,
                 1249, Owner.getInstance(ownerId, "Jeff", "Jefferson"));
 
-        Optional<BikeResource> bikeResource = BikeInMapper.mapToResource(bike);
+        Optional<BikeResource> bikeResource = BikeInMapper.mapToRestResource(bike);
 
         assertThat(bikeResource.isPresent(), is(equalTo(true)));
         assertThat(bikeResource.get().getId(), is(equalTo(bikeId)));
@@ -65,15 +66,39 @@ class BikeInMapperTest {
     }
 
     @Test
-    public void shouldMapToListResource() {
+    public void shouldMapToListOfRestResource() {
         UUID bikeId = UUID.randomUUID();
         UUID ownerId = UUID.randomUUID();
 
         List<Bike> bikes = List.of(Bike.getInstance(bikeId, "Cinelli", "Vigorelli", "White", 2017,
                 1249, Owner.getInstance(ownerId, "Jeff", "Jefferson")));
 
-        List<BikeResource> bikeResources = BikeInMapper.mapToListResource(bikes);
+        List<BikeResource> bikeResources = BikeInMapper.mapToListRestResource(bikes);
 
         assertThat(bikeResources.size(), is(equalTo(1)));
+    }
+
+    @Test
+    public void shouldMapWithNullBikeToListOfRestResource() {
+        UUID bikeId = UUID.randomUUID();
+        UUID ownerId = UUID.randomUUID();
+
+        Bike bike = Bike.getInstance(bikeId, "Cinelli", "Vigorelli", "White", 2017,
+                1249, Owner.getInstance(ownerId, "Jeff", "Jefferson"));
+
+        List<Bike> bikes = new ArrayList<>();
+        bikes.add(bike);
+        bikes.add(null);
+
+        List<BikeResource> bikeResources = BikeInMapper.mapToListRestResource(bikes);
+
+        assertThat(bikeResources.size(), is(equalTo(1)));
+    }
+
+    @Test
+    public void shouldMapToEmptyListOfRestResource() {
+        List<BikeResource> bikeResources = BikeInMapper.mapToListRestResource(null);
+
+        assertThat(bikeResources.size(), is(equalTo(0)));
     }
 }

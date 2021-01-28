@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -25,8 +24,6 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.security.core.userdetails.User;
-
-import javax.persistence.EntityNotFoundException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -83,7 +80,7 @@ class BikeControllerTest {
                 .andReturn()
                 .getResponse();
 
-        List<BikeResource> bikeResources = BikeInMapper.mapToListResource(bikes);
+        List<BikeResource> bikeResources = BikeInMapper.mapToListRestResource(bikes);
 
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
         assertThat(response.getContentAsString(), is(equalTo(jacksonListTester.write(bikeResources).getJson())));
@@ -106,7 +103,7 @@ class BikeControllerTest {
                 .andReturn()
                 .getResponse();
 
-        Optional<BikeResource> bikeResource = BikeInMapper.mapToResource(bike);
+        Optional<BikeResource> bikeResource = BikeInMapper.mapToRestResource(bike);
 
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
         assertThat(response.getContentAsString(), is(equalTo(jacksonTester.write(bikeResource.get()).getJson())));
