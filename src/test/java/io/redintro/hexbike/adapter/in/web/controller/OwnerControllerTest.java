@@ -5,6 +5,7 @@ import io.redintro.hexbike.adapter.in.web.mapper.OwnerInMapper;
 import io.redintro.hexbike.adapter.in.web.resource.OwnerResource;
 import io.redintro.hexbike.domain.Owner;
 import io.redintro.hexbike.port.in.ShowOwnerPort;
+import io.vavr.control.Option;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +25,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.mockito.Mockito.when;
@@ -62,7 +62,7 @@ public class OwnerControllerTest {
                 .andReturn()
                 .getResponse();
 
-        List<OwnerResource> ownerResources = OwnerInMapper.mapToListResource(owners);
+        List<OwnerResource> ownerResources = OwnerInMapper.mapToListRestResource(owners);
 
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
         assertThat(response.getContentAsString(), is(equalTo(jacksonListTester.write(ownerResources).getJson())));
@@ -74,7 +74,7 @@ public class OwnerControllerTest {
 
         Owner owner = Owner.getInstance(ownerId, "Jeff", "Jefferson");
 
-        when(showOwnerPort.findById(ownerId)).thenReturn(Optional.of(owner));
+        when(showOwnerPort.findById(ownerId)).thenReturn(Option.of(owner));
 
         MockHttpServletResponse response = mvc.perform(
                 MockMvcRequestBuilders.get("/api/owners/" + ownerId)
@@ -82,7 +82,7 @@ public class OwnerControllerTest {
                 .andReturn()
                 .getResponse();
 
-        Optional<OwnerResource> ownerResource = OwnerInMapper.mapToResource(owner);
+        Option<OwnerResource> ownerResource = OwnerInMapper.mapToRestResource(owner);
 
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
         assertThat(response.getContentAsString(), is(equalTo(jacksonTester.write(ownerResource.get()).getJson())));
@@ -92,7 +92,7 @@ public class OwnerControllerTest {
     public void shouldFailToFindById() throws Exception {
         UUID ownerId = UUID.randomUUID();
 
-        when(showOwnerPort.findById(ownerId)).thenReturn(Optional.empty());
+        when(showOwnerPort.findById(ownerId)).thenReturn(Option.none());
 
         MockHttpServletResponse response = mvc.perform(
                 MockMvcRequestBuilders.get("/api/owners/" + ownerId)

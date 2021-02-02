@@ -3,10 +3,10 @@ package io.redintro.hexbike.service;
 import io.redintro.hexbike.domain.Owner;
 import io.redintro.hexbike.port.in.ShowOwnerPort;
 import io.redintro.hexbike.port.out.FindOwnerPort;
+import io.vavr.control.Option;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -23,7 +23,7 @@ public class ShowOwnerService implements ShowOwnerPort {
     }
 
     @Override
-    public Optional<Owner> findById(UUID ownerId) {
+    public Option<Owner> findById(UUID ownerId) {
         return findOwnerPort.findById(ownerId);
     }
 }

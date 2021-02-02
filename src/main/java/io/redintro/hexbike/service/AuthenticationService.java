@@ -2,6 +2,7 @@ package io.redintro.hexbike.service;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.vavr.control.Option;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 
@@ -9,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Optional;
 
 public class AuthenticationService {
     private static final long EXPIRATION_TIME = 86400000; // 1 day in ms
@@ -22,16 +22,16 @@ public class AuthenticationService {
     }
 
     public static Authentication getAuthentication(HttpServletRequest req) {
-        Optional<String> token = Optional.ofNullable(req.getHeader(HEADER_NAME));
+        Option<String> token = Option.of(req.getHeader(HEADER_NAME));
 
-        Optional<String> user = token.map(t -> Jwts.parser()
+        Option<String> user = token.map(t -> Jwts.parser()
                 .setSigningKey(SIGNING_KEY)
                 .parseClaimsJws(t.replace(PREFIX, ""))
                 .getBody()
                 .getSubject());
 
         return user.map(u -> new UsernamePasswordAuthenticationToken(u, null,
-                Collections.emptyList())).orElse(null);
+                Collections.emptyList())).getOrNull();
     }
 
     public static String getToken(String username) {

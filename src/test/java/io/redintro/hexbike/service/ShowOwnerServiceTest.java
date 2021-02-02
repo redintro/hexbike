@@ -2,7 +2,7 @@ package io.redintro.hexbike.service;
 
 import io.redintro.hexbike.domain.Owner;
 import io.redintro.hexbike.port.out.FindOwnerPort;
-import org.junit.jupiter.api.BeforeEach;
+import io.vavr.control.Option;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -10,7 +10,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -40,7 +39,7 @@ class ShowOwnerServiceTest {
     public void shouldFindById() {
         UUID ownerId = UUID.randomUUID();
 
-        Optional<Owner> maybeOwner = Optional.of(Owner.getInstance(ownerId, "Jeff", "Jefferson"));
+        Option<Owner> maybeOwner = Option.of(Owner.getInstance(ownerId, "Jeff", "Jefferson"));
         when(findOwnerPort.findById(any(UUID.class))).thenReturn(maybeOwner);
 
         Owner owner = showOwnerService.findById(ownerId).get();

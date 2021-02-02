@@ -8,6 +8,7 @@ import io.redintro.hexbike.domain.Owner;
 import io.redintro.hexbike.port.in.ShowBikePort;
 import io.redintro.hexbike.service.AuthenticationService;
 import io.redintro.hexbike.service.HexBikeUserDetailsService;
+import io.vavr.control.Option;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,7 +31,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -94,7 +94,7 @@ class BikeControllerTest {
         Bike bike = Bike.getInstance(bikeId, "Cinelli", "Vigorelli", "White", 2017, 1249,
                 Owner.getInstance(ownerId, "Jeff", "Jefferson"));
 
-        when(showBikePort.findById(bikeId)).thenReturn(Optional.of(bike));
+        when(showBikePort.findById(bikeId)).thenReturn(Option.of(bike));
 
         MockHttpServletResponse response = mvc.perform(
                 MockMvcRequestBuilders.get("/api/bikes/" + bikeId)
@@ -103,7 +103,7 @@ class BikeControllerTest {
                 .andReturn()
                 .getResponse();
 
-        Optional<BikeResource> bikeResource = BikeInMapper.mapToRestResource(bike);
+        Option<BikeResource> bikeResource = BikeInMapper.mapToRestResource(bike);
 
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
         assertThat(response.getContentAsString(), is(equalTo(jacksonTester.write(bikeResource.get()).getJson())));
@@ -113,7 +113,7 @@ class BikeControllerTest {
     public void shouldFailToFindById() throws Exception {
         UUID bikeId = UUID.randomUUID();
 
-        when(showBikePort.findById(bikeId)).thenReturn(Optional.empty());
+        when(showBikePort.findById(bikeId)).thenReturn(Option.none());
 
         MockHttpServletResponse response = mvc.perform(
                 MockMvcRequestBuilders.get("/api/bikes/" + bikeId)

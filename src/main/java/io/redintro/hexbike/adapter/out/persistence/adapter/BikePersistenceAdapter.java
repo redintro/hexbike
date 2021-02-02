@@ -5,11 +5,10 @@ import io.redintro.hexbike.adapter.out.persistence.entity.BikeJpaEntity;
 import io.redintro.hexbike.adapter.out.persistence.mapper.BikeOutMapper;
 import io.redintro.hexbike.domain.Bike;
 import io.redintro.hexbike.port.out.FindBikePort;
+import io.vavr.control.Option;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -32,8 +31,8 @@ public class BikePersistenceAdapter implements FindBikePort {
     }
 
     @Override
-    public Optional<Bike> findById(UUID bikeId) {
-        return repository.findById(bikeId)
-                .map(BikeOutMapper::mapToDomainEntity);
+    public Option<Bike> findById(UUID bikeId) {
+        return Option.ofOptional(repository.findById(bikeId)
+                .map(BikeOutMapper::mapToDomainEntity));
     }
 }

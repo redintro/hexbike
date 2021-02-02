@@ -4,6 +4,7 @@ import io.redintro.hexbike.adapter.out.persistence.entity.BikeJpaEntity;
 import io.redintro.hexbike.adapter.out.persistence.entity.OwnerJpaEntity;
 import io.redintro.hexbike.adapter.out.persistence.repository.BikeRepository;
 import io.redintro.hexbike.domain.Bike;
+import io.vavr.control.Option;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -47,13 +47,14 @@ class BikePersistenceAdapterTest {
         UUID ownerId = UUID.randomUUID();
 
         when(bikeRepository.findById(any(UUID.class)))
-                .thenReturn(Optional.of(new BikeJpaEntity(bikeId, "Cinelli", "Vigorelli",
+                .thenReturn(Option.of(new BikeJpaEntity(bikeId, "Cinelli", "Vigorelli",
                         "White", 2017, 1249, new OwnerJpaEntity(ownerId, "Jeff",
-                        "Jefferson"))));
+                        "Jefferson")))
+                        .toJavaOptional());
 
-        Optional<Bike> bike = bikePersistenceAdapter.findById(bikeId);
+        Option<Bike> bike = bikePersistenceAdapter.findById(bikeId);
 
-        assertThat(bike.isPresent(), is(equalTo(true)));
+        assertThat(bike.isDefined(), is(equalTo(true)));
         assertThat(bike.get().getId(), is(equalTo(bikeId)));
         assertThat(bike.get().getMake(), is(equalTo("Cinelli")));
         assertThat(bike.get().getModel(), is(equalTo("Vigorelli")));

@@ -2,10 +2,10 @@ package io.redintro.hexbike.adapter.in.web.mapper;
 
 import io.redintro.hexbike.adapter.in.web.resource.OwnerResource;
 import io.redintro.hexbike.domain.Owner;
+import io.vavr.control.Option;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,9 +24,9 @@ class OwnerInMapperTest {
     public void shouldMapToDomainEntity() {
         OwnerResource ownerResource = new OwnerResource(ownerId, "Jeff", "Jefferson");
 
-        Optional<Owner> owner = OwnerInMapper.mapToDomainEntity(ownerResource);
+        Option<Owner> owner = OwnerInMapper.mapToDomainEntity(ownerResource);
 
-        assertThat(owner.isPresent(), is(equalTo(true)));
+        assertThat(owner.isDefined(), is(equalTo(true)));
         assertThat(owner.get().getId(), is(equalTo(ownerId)));
         assertThat(owner.get().getFirstName(), is(equalTo("Jeff")));
         assertThat(owner.get().getLastName(), is(equalTo("Jefferson")));
@@ -39,9 +39,9 @@ class OwnerInMapperTest {
 
     @Test
     public void shouldMapToResource() {
-        Optional<OwnerResource> ownerResource = OwnerInMapper.mapToResource(owner);
+        Option<OwnerResource> ownerResource = OwnerInMapper.mapToRestResource(owner);
 
-        assertThat(ownerResource.isPresent(), is(equalTo(true)));
+        assertThat(ownerResource.isDefined(), is(equalTo(true)));
         assertThat(ownerResource.get().getId(), is(equalTo(ownerId)));
         assertThat(ownerResource.get().getFirstName(), is(equalTo("Jeff")));
         assertThat(ownerResource.get().getLastName(), is(equalTo("Jefferson")));
@@ -49,12 +49,12 @@ class OwnerInMapperTest {
 
     @Test
     public void shouldMapToEmptyResource() {
-        assertThat(OwnerInMapper.mapToResource(null).isEmpty(), is(true));
+        assertThat(OwnerInMapper.mapToRestResource(null).isEmpty(), is(true));
     }
 
     @Test
     public void shouldMapToListToResource() {
-        List<OwnerResource> ownerResources = OwnerInMapper.mapToListResource(List.of(owner));
+        List<OwnerResource> ownerResources = OwnerInMapper.mapToListRestResource(List.of(owner));
         assertThat(ownerResources.size(), is(1));
     }
 }

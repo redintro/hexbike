@@ -1,9 +1,11 @@
 package io.redintro.hexbike.adapter.in.web.resource;
 
+import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
 public class BikeResource {
     private final UUID id;
+    @NotBlank(message = "Make cannot be blank")
     private final String make;
     private final String model;
     private final String colour;

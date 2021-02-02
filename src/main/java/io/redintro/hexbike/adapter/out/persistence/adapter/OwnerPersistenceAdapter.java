@@ -5,11 +5,10 @@ import io.redintro.hexbike.adapter.out.persistence.entity.OwnerJpaEntity;
 import io.redintro.hexbike.adapter.out.persistence.mapper.OwnerOutMapper;
 import io.redintro.hexbike.domain.Owner;
 import io.redintro.hexbike.port.out.FindOwnerPort;
+import io.vavr.control.Option;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -32,9 +31,9 @@ public class OwnerPersistenceAdapter implements FindOwnerPort {
     }
 
     @Override
-    public Optional<Owner> findById(UUID ownerId) {
-        return repository
+    public Option<Owner> findById(UUID ownerId) {
+        return Option.ofOptional(repository
                 .findById(ownerId)
-                .map(OwnerOutMapper::mapToDomainEntity);
+                .map(OwnerOutMapper::mapToDomainEntity));
     }
 }

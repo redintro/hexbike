@@ -30,15 +30,15 @@ public class OwnerController {
     @Operation(security = { @SecurityRequirement(name = BEARER_TOKEN) })
     @GetMapping(value = "/owners", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<OwnerResource> index() {
-        return OwnerInMapper.mapToListResource(showOwnerPort.findAll());
+        return OwnerInMapper.mapToListRestResource(showOwnerPort.findAll());
     }
 
     @Operation(security = { @SecurityRequirement(name = BEARER_TOKEN) })
     @GetMapping(value = "/owners/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public OwnerResource show(@PathVariable UUID id) {
         return showOwnerPort.findById(id)
-            .flatMap(OwnerInMapper::mapToResource)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+            .flatMap(OwnerInMapper::mapToRestResource)
+            .getOrElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Cannot find a owner with the ID: " + id));
     }
 }

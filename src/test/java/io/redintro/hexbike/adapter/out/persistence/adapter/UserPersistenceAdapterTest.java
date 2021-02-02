@@ -4,13 +4,13 @@ import io.redintro.hexbike.adapter.out.persistence.entity.RoleJpaEntity;
 import io.redintro.hexbike.adapter.out.persistence.entity.UserJpaEntity;
 import io.redintro.hexbike.adapter.out.persistence.repository.UserRepository;
 import io.redintro.hexbike.domain.User;
+import io.vavr.control.Option;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -34,8 +34,8 @@ class UserPersistenceAdapterTest {
         UUID roleId = UUID.randomUUID();
 
         when(userRepository.findByUsername(any(String.class)))
-                .thenReturn(Optional.of(new UserJpaEntity(userId, "jeff01", "!Password",
-                       Set.of(new RoleJpaEntity(roleId, "ADMIN")))));
+                .thenReturn(Option.of(new UserJpaEntity(userId, "jeff01", "!Password",
+                       Set.of(new RoleJpaEntity(roleId, "ADMIN")))).toJavaOptional());
 
         User user = userPersistenceAdapter.findByUserName("Jeff");
 

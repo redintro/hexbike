@@ -4,11 +4,11 @@ import io.redintro.hexbike.adapter.in.web.resource.BikeResource;
 import io.redintro.hexbike.adapter.in.web.resource.OwnerResource;
 import io.redintro.hexbike.domain.Bike;
 import io.redintro.hexbike.domain.Owner;
+import io.vavr.control.Option;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,7 +16,8 @@ import static org.hamcrest.Matchers.*;
 
 class BikeInMapperTest {
     @Test
-    public void shouldCreateBikeInMapper() {
+    public void shouldCreateMapper() {
+        @SuppressWarnings("InstantiationOfUtilityClass")
         BikeInMapper bikeInMapper = new BikeInMapper();
         assertThat(bikeInMapper, is(notNullValue()));
     }
@@ -29,9 +30,9 @@ class BikeInMapperTest {
         BikeResource bikeResource = new BikeResource(bikeId, "Cinelli", "Vigorelli", "White",
                 2017, 1249, new OwnerResource(ownerId,"Jeff", "Jefferson"));
 
-        Optional<Bike> bike = BikeInMapper.mapToDomainEntity(bikeResource);
+        Option<Bike> bike = BikeInMapper.mapToDomainEntity(bikeResource);
 
-        assertThat(bike.isPresent(), is(equalTo(true)));
+        assertThat(bike.isDefined(), is(equalTo(true)));
         assertThat(bike.get().getId(), is(equalTo(bikeId)));
         assertThat(bike.get().getMake(), is(equalTo("Cinelli")));
         assertThat(bike.get().getModel(), is(equalTo("Vigorelli")));
@@ -51,9 +52,9 @@ class BikeInMapperTest {
         Bike bike = Bike.getInstance(bikeId, "Cinelli", "Vigorelli", "White", 2017,
                 1249, Owner.getInstance(ownerId, "Jeff", "Jefferson"));
 
-        Optional<BikeResource> bikeResource = BikeInMapper.mapToRestResource(bike);
+        Option<BikeResource> bikeResource = BikeInMapper.mapToRestResource(bike);
 
-        assertThat(bikeResource.isPresent(), is(equalTo(true)));
+        assertThat(bikeResource.isDefined(), is(equalTo(true)));
         assertThat(bikeResource.get().getId(), is(equalTo(bikeId)));
         assertThat(bikeResource.get().getMake(), is(equalTo("Cinelli")));
         assertThat(bikeResource.get().getModel(), is(equalTo("Vigorelli")));
