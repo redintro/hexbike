@@ -1,0 +1,254 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-user
+      author: matt
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              - tableName: user
+      changes:
+        - createTable:
+            tableName: user
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                 name: user_name
+                 type: VARCHAR(250)
+                 constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+        - loadData:
+            tableName: user
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+              - column:
+                  name: user_name
+                  type: STRING
+              - column:
+                  name: password
+                  type: STRING
+            commentLineStartsWith: //
+            encoding: UTF-8
+            file: ../data/users.csv
+            quotchar:  ''''
+            relativeToChangelogFile: true
+            schemaName: public
+            usePreparedStatements: true
+
+  - changeSet:
+      id: create-table-bike
+      author: matt
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              - tableName: bike
+      changes:
+        - createTable:
+            tableName: bike
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: make
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: model
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: colour
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: year
+                  type: SMALLINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: NUMERIC
+              - column:
+                  name: owner
+                  type: UUID
+                  constraints:
+                    nullable: false
+        - loadData:
+            tableName: bike
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+              - column:
+                  name: make
+                  type: STRING
+              - column:
+                  name: model
+                  type: STRING
+              - column:
+                  name: colour
+                  type: STRING
+              - column:
+                  name: year
+                  type: NUMERIC
+              - column:
+                  name: price
+                  type: NUMERIC
+              - column:
+                  name: owner
+                  type: UUID
+            commentLineStartsWith: //
+            encoding: UTF-8
+            file: ../data/bikes.csv
+            quotchar: ''''
+            relativeToChangelogFile: true
+            schemaName: public
+            usePreparedStatements: true
+
+  - changeSet:
+      id: create-table-owner
+      author: matt
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              - tableName: owner
+      changes:
+        - createTable:
+            tableName: owner
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: first_name
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+        - loadData:
+            tableName: owner
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+              - column:
+                  name: first_name
+                  type: STRING
+              - column:
+                  name: last_name
+                  type: STRING
+            commentLineStartsWith: //
+            encoding: UTF-8
+            file: ../data/owners.csv
+            quotchar: ''''
+            relativeToChangelogFile: true
+            schemaName: public
+            usePreparedStatements: true
+
+  - changeSet:
+      id: create-table-role
+      author: matt
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              - tableName: role
+      changes:
+        - createTable:
+            tableName: role
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+        - loadData:
+            tableName:  role
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+              - column:
+                  name: name
+                  type: STRING
+            commentLineStartsWith:  //
+            encoding:  UTF-8
+            file:  ../data/roles.csv
+            quotchar:  ''''
+            relativeToChangelogFile:  true
+            schemaName:  public
+            usePreparedStatements:  true
+
+  - changeSet:
+      id: create-table-user-role
+      author: matt
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              - tableName: user-role
+      changes:
+        - createTable:
+            tableName: user_role
+            columns:
+              - column:
+                  name: user_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: role_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+        - loadData:
+            tableName: user_role
+            columns:
+              - column:
+                  name: user_id
+                  type: UUID
+              - column:
+                  name: role_id
+                  type: UUID
+            commentLineStartsWith: //
+            encoding: UTF-8
+            file: ../data/user_roles.csv
+            quotchar: ''''
+            relativeToChangelogFile: true
+            schemaName: public
+            usePreparedStatements: true
