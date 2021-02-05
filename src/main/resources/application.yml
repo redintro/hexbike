@@ -29,7 +29,7 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     password: docker
-    url: jdbc:postgresql://db_host:5432/hexbike_dev
+    url: jdbc:postgresql://localhost:5432/hexbike_dev
     username: docker
   jpa:
     hibernate:
@@ -44,7 +44,7 @@ spring:
   profiles:
     active: dev
   redis:
-    host: cache_host
+    host: localhost
     port: 6379
 
 springdoc:
