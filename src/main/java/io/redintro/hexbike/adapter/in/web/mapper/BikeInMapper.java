@@ -34,15 +34,12 @@ public class BikeInMapper {
         return Try.of(() ->
                 Bike.getInstance(
                         bike.getId(),
+                        bike.getOwnerId(),
                         bike.getMake(),
                         bike.getModel(),
                         bike.getColour(),
                         bike.getYear(),
-                        bike.getPrice(),
-                        Owner.getInstance(
-                                bike.getOwner().getId(),
-                                bike.getOwner().getFirstName(),
-                                bike.getOwner().getLastName())))
+                        bike.getPrice()))
                 .toOption();
     }
 
@@ -50,14 +47,11 @@ public class BikeInMapper {
         return Try.of(() ->
                 new BikeResource(
                         bike.getId(),
+                        bike.getOwnerId(),
                         bike.getMake(),
                         bike.getModel(),
                         bike.getColour(),
                         bike.getYear(),
-                        bike.getPrice(),
-                        new OwnerResource(
-                                bike.getOwner().getId(),
-                                bike.getOwner().getFirstName(),
-                                bike.getOwner().getLastName())));
+                        bike.getPrice()));
     }
 }

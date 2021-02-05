@@ -12,6 +12,9 @@ public abstract class Bike {
     public abstract UUID getId();
 
     @Value.Parameter
+    public abstract UUID getOwnerId();
+
+    @Value.Parameter
     public abstract String getMake();
 
     @Value.Parameter
@@ -26,10 +29,7 @@ public abstract class Bike {
     @Value.Parameter
     public abstract int getPrice();
 
-    @Value.Parameter
-    public abstract Owner getOwner();
-
-    public static Bike getInstance(UUID id, String make, String model, String colour, int year, int price, Owner owner) {
-        return ImmutableBike.of(id, make, model, colour, year, price, owner);
+    public static Bike getInstance(UUID id, UUID ownerId, String make, String model, String colour, int year, int price) {
+        return ImmutableBike.of(id, ownerId, make, model, colour, year, price );
     }
 }

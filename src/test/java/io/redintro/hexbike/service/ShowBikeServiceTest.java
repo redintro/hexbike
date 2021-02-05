@@ -31,9 +31,8 @@ class ShowBikeServiceTest {
     @Test
     public void shouldFindAll() {
         when(findBikePort.findAll())
-                .thenReturn(List.of(Bike.getInstance(UUID.randomUUID(), "Cinelli", "Vigorelli",
-                        "White", 2017, 1249, Owner.getInstance(UUID.randomUUID(),
-                        "Jeff", "Jefferson"))));
+                .thenReturn(List.of(Bike.getInstance(UUID.randomUUID(), UUID.randomUUID(), "Cinelli", "Vigorelli",
+                        "White", 2017, 1249)));
 
         List<Bike> bikes = showBikeService.findAll();
 
@@ -45,13 +44,14 @@ class ShowBikeServiceTest {
         UUID bikeId =  UUID.randomUUID();
         UUID ownerId = UUID.randomUUID();
 
-        when(findBikePort.findById(any(UUID.class))).thenReturn(Option.of(Bike.getInstance(bikeId, "Cinelli", "Vigorelli",
-                "White", 2017, 1249, Owner.getInstance(ownerId, "Jeff", "Jefferson"))));
+        when(findBikePort.findById(any(UUID.class)))
+                .thenReturn(Option.of(Bike.getInstance(bikeId, ownerId, "Cinelli", "Vigorelli",
+                "White", 2017, 1249)));
 
         Option<Bike> bike = showBikeService.findById(bikeId);
 
         assertThat(bike.isDefined(), is(equalTo(true)));
         assertThat(bike.get().getId(), is(equalTo(bikeId)));
-        assertThat(bike.get().getOwner().getId(), is(equalTo(ownerId)));
+        assertThat(bike.get().getOwnerId(), is(equalTo(ownerId)));
     }
 }

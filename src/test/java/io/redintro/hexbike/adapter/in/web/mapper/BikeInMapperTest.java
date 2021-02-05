@@ -27,21 +27,19 @@ class BikeInMapperTest {
         UUID bikeId = UUID.randomUUID();
         UUID ownerId = UUID.randomUUID();
 
-        BikeResource bikeResource = new BikeResource(bikeId, "Cinelli", "Vigorelli", "White",
-                2017, 1249, new OwnerResource(ownerId,"Jeff", "Jefferson"));
+        BikeResource bikeResource = new BikeResource(bikeId, ownerId, "Cinelli", "Vigorelli", "White",
+                2017, 1249);
 
         Option<Bike> bike = BikeInMapper.mapToDomainEntity(bikeResource);
 
         assertThat(bike.isDefined(), is(equalTo(true)));
         assertThat(bike.get().getId(), is(equalTo(bikeId)));
+        assertThat(bike.get().getOwnerId(), is(equalTo(ownerId)));
         assertThat(bike.get().getMake(), is(equalTo("Cinelli")));
         assertThat(bike.get().getModel(), is(equalTo("Vigorelli")));
         assertThat(bike.get().getColour(), is(equalTo("White")));
         assertThat(bike.get().getYear(), is(equalTo(2017)));
         assertThat(bike.get().getPrice(), is(equalTo(1249)));
-        assertThat(bike.get().getOwner().getId(), is(equalTo(ownerId)));
-        assertThat(bike.get().getOwner().getFirstName(), is(equalTo("Jeff")));
-        assertThat(bike.get().getOwner().getLastName(), is(equalTo("Jefferson")));
     }
 
     @Test
@@ -49,21 +47,19 @@ class BikeInMapperTest {
         UUID bikeId = UUID.randomUUID();
         UUID ownerId = UUID.randomUUID();
 
-        Bike bike = Bike.getInstance(bikeId, "Cinelli", "Vigorelli", "White", 2017,
-                1249, Owner.getInstance(ownerId, "Jeff", "Jefferson"));
+        Bike bike = Bike.getInstance(bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017,
+                1249);
 
         Option<BikeResource> bikeResource = BikeInMapper.mapToRestResource(bike);
 
         assertThat(bikeResource.isDefined(), is(equalTo(true)));
         assertThat(bikeResource.get().getId(), is(equalTo(bikeId)));
+        assertThat(bikeResource.get().getOwnerId(), is(equalTo(ownerId)));
         assertThat(bikeResource.get().getMake(), is(equalTo("Cinelli")));
         assertThat(bikeResource.get().getModel(), is(equalTo("Vigorelli")));
         assertThat(bikeResource.get().getColour(), is(equalTo("White")));
         assertThat(bikeResource.get().getYear(), is(equalTo(2017)));
         assertThat(bikeResource.get().getPrice(), is(equalTo(1249)));
-        assertThat(bikeResource.get().getOwner().getId(), is(equalTo(ownerId)));
-        assertThat(bikeResource.get().getOwner().getFirstName(), is(equalTo("Jeff")));
-        assertThat(bikeResource.get().getOwner().getLastName(), is(equalTo("Jefferson")));
     }
 
     @Test
@@ -71,8 +67,8 @@ class BikeInMapperTest {
         UUID bikeId = UUID.randomUUID();
         UUID ownerId = UUID.randomUUID();
 
-        List<Bike> bikes = List.of(Bike.getInstance(bikeId, "Cinelli", "Vigorelli", "White", 2017,
-                1249, Owner.getInstance(ownerId, "Jeff", "Jefferson")));
+        List<Bike> bikes = List.of(Bike.getInstance(bikeId, ownerId, "Cinelli", "Vigorelli", "White",
+                2017, 1249));
 
         List<BikeResource> bikeResources = BikeInMapper.mapToListRestResource(bikes);
 
@@ -84,8 +80,8 @@ class BikeInMapperTest {
         UUID bikeId = UUID.randomUUID();
         UUID ownerId = UUID.randomUUID();
 
-        Bike bike = Bike.getInstance(bikeId, "Cinelli", "Vigorelli", "White", 2017,
-                1249, Owner.getInstance(ownerId, "Jeff", "Jefferson"));
+        Bike bike = Bike.getInstance(bikeId, ownerId,"Cinelli", "Vigorelli", "White", 2017,
+                1249);
 
         List<Bike> bikes = new ArrayList<>();
         bikes.add(bike);

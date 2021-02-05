@@ -5,27 +5,30 @@ import java.util.UUID;
 
 public class BikeResource {
     private final UUID id;
+    private final UUID ownerId;
     @NotBlank(message = "Make cannot be blank")
     private final String make;
     private final String model;
     private final String colour;
     private final int year;
     private final int price;
-    private final OwnerResource owner;
 
-    public BikeResource(UUID id, String make, String model, String colour, int year, int price,
-                        OwnerResource owner) {
+    public BikeResource(UUID id, UUID ownerId, String make, String model, String colour, int year, int price) {
         this.id = id;
+        this.ownerId = ownerId;
         this.make = make;
         this.model = model;
         this.colour = colour;
         this.year = year;
         this.price = price;
-        this.owner = owner;
     }
 
     public UUID getId() {
         return id;
+    }
+
+    public UUID getOwnerId() {
+        return ownerId;
     }
 
     public String getMake() {
@@ -46,9 +49,5 @@ public class BikeResource {
 
     public int getPrice() {
         return price;
-    }
-
-    public OwnerResource getOwner() {
-        return owner;
     }
 }
