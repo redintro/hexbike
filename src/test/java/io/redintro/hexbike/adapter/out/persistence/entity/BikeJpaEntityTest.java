@@ -2,6 +2,7 @@ package io.redintro.hexbike.adapter.out.persistence.entity;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -15,7 +16,7 @@ class BikeJpaEntityTest {
         UUID ownerId = UUID.randomUUID();
 
         BikeJpaEntity bikeJpaEntity = new BikeJpaEntity(bikeId, "Cinelli", "Vigorelli", "White",
-                2017, 1249, new OwnerJpaEntity(ownerId,"Jeff", "Jefferson"));
+                2017, 1249, new OwnerJpaEntity(ownerId,"Jeff", "Jefferson", List.of()));
 
         assertThat(bikeJpaEntity.getId(), is(equalTo(bikeId)));
         assertThat(bikeJpaEntity.getMake(), is(equalTo("Cinelli")));

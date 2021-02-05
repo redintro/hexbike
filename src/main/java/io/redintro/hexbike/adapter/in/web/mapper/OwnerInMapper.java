@@ -16,7 +16,11 @@ public class OwnerInMapper {
                 Owner.getInstance(
                         resource.getId(),
                         resource.getFirstName(),
-                        resource.getLastName()))
+                        resource.getLastName(),
+                        resource.getBikeResources().stream()
+                                .map(BikeInMapper::mapToDomainEntity)
+                                .flatMap(Value::toJavaStream)
+                                .collect(Collectors.toList())))
                 .toOption();
     }
 
@@ -38,7 +42,11 @@ public class OwnerInMapper {
                 new OwnerResource(
                         owner.getId(),
                         owner.getFirstName(),
-                        owner.getLastName()))
+                        owner.getLastName(),
+                        owner.getBikes().stream()
+                                .map(BikeInMapper::mapToRestResource)
+                                .flatMap(Value::toJavaStream)
+                                .collect(Collectors.toList())))
                 .toOption();
     }
 }

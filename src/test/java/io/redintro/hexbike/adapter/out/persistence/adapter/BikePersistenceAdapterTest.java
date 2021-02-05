@@ -34,7 +34,9 @@ class BikePersistenceAdapterTest {
 
         when(bikeRepository.findAll())
                 .thenReturn(List.of(new BikeJpaEntity(bikeId, "Cinelli", "Vigorelli", "White", 2017,
-                        1249, new OwnerJpaEntity(ownerId, "Jeff", "Jefferson"))));
+                        1249, new OwnerJpaEntity(ownerId, "Jeff", "Jefferson",
+                        List.of(new BikeJpaEntity(bikeId, "Cinelli", "Vigorelli", "White", 2017,
+                                1249, new OwnerJpaEntity()))))));
 
         List<Bike> bikes = bikePersistenceAdapter.findAll();
 
@@ -49,8 +51,8 @@ class BikePersistenceAdapterTest {
         when(bikeRepository.findById(any(UUID.class)))
                 .thenReturn(Option.of(new BikeJpaEntity(bikeId, "Cinelli", "Vigorelli",
                         "White", 2017, 1249, new OwnerJpaEntity(ownerId, "Jeff",
-                        "Jefferson")))
-                        .toJavaOptional());
+                        "Jefferson", List.of(new BikeJpaEntity(bikeId, "Cinelli", "Vigorelli",
+                        "White", 2017, 1249, new OwnerJpaEntity()))))).toJavaOptional());
 
         Option<Bike> bike = bikePersistenceAdapter.findById(bikeId);
 

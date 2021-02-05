@@ -32,6 +32,13 @@ public class OwnerJpaEntity {
         this.lastName = lastName;
     }
 
+    public OwnerJpaEntity(UUID id, String firstName, String lastName, List<BikeJpaEntity> bikes) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.bikes = bikes;
+    }
+
     public UUID getId() {
         return id;
     }

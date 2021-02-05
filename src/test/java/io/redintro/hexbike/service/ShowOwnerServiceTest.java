@@ -1,5 +1,6 @@
 package io.redintro.hexbike.service;
 
+import io.redintro.hexbike.domain.Bike;
 import io.redintro.hexbike.domain.Owner;
 import io.redintro.hexbike.port.out.FindOwnerPort;
 import io.vavr.control.Option;
@@ -28,7 +29,12 @@ class ShowOwnerServiceTest {
 
     @Test
     public void shouldFindAll() {
-        when(findOwnerPort.findAll()).thenReturn(List.of(Owner.getInstance(UUID.randomUUID(), "Jeff", "Jefferson")));
+        UUID ownerId = UUID.randomUUID();
+        UUID bikeId = UUID.randomUUID();
+
+        when(findOwnerPort.findAll()).thenReturn(List.of(Owner.getInstance(ownerId, "Jeff", "Jefferson",
+                List.of(Bike.getInstance(bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017,
+                1249)))));
 
         List<Owner> owners = showOwnerService.findAll();
 
@@ -38,8 +44,11 @@ class ShowOwnerServiceTest {
     @Test
     public void shouldFindById() {
         UUID ownerId = UUID.randomUUID();
+        UUID bikeId = UUID.randomUUID();
+        Option<Owner> maybeOwner = Option.of(Owner.getInstance(ownerId, "Jeff", "Jefferson",
+                List.of(Bike.getInstance(bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017,
+                        1249))));
 
-        Option<Owner> maybeOwner = Option.of(Owner.getInstance(ownerId, "Jeff", "Jefferson"));
         when(findOwnerPort.findById(any(UUID.class))).thenReturn(maybeOwner);
 
         Owner owner = showOwnerService.findById(ownerId).get();

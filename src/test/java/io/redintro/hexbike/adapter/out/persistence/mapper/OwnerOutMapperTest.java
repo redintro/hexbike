@@ -4,6 +4,7 @@ import io.redintro.hexbike.adapter.out.persistence.entity.OwnerJpaEntity;
 import io.redintro.hexbike.domain.Owner;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -20,25 +21,12 @@ class OwnerOutMapperTest {
     public void shouldMapToDomainEntity() {
         UUID ownerId = UUID.randomUUID();
 
-        OwnerJpaEntity ownerJpaEntity = new OwnerJpaEntity(ownerId, "Jeff", "Jefferson");
+        OwnerJpaEntity ownerJpaEntity = new OwnerJpaEntity(ownerId, "Jeff", "Jefferson", List.of());
 
         Owner owner = OwnerOutMapper.mapToDomainEntity(ownerJpaEntity);
 
         assertThat(owner.getId(), is(equalTo(ownerId)));
         assertThat(owner.getFirstName(), is(equalTo("Jeff")));
         assertThat(owner.getLastName(), is(equalTo("Jefferson")));
-    }
-
-    @Test
-    public void shouldMapToJpaEntity() {
-        UUID ownerId = UUID.randomUUID();
-
-        Owner owner = Owner.getInstance(ownerId, "Jeff", "Jefferson");
-
-        OwnerJpaEntity ownerJpaEntity = OwnerOutMapper.mapToJpaEntity(owner);
-
-        assertThat(ownerJpaEntity.getId(), is(equalTo(ownerId)));
-        assertThat(ownerJpaEntity.getFirstName(), is(equalTo("Jeff")));
-        assertThat(ownerJpaEntity.getLastName(), is(equalTo("Jefferson")));
     }
 }

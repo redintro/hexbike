@@ -2,6 +2,7 @@ package io.redintro.hexbike.domain;
 
 import org.immutables.value.Value;
 
+import java.util.List;
 import java.util.UUID;
 
 @Value.Immutable
@@ -15,7 +16,10 @@ public abstract class Owner {
     @Value.Parameter
     public abstract String getLastName();
 
-    public static Owner getInstance(UUID id, String firstName, String lastName) {
-        return ImmutableOwner.of(id, firstName, lastName);
+    @Value.Parameter
+    public abstract List<Bike> getBikes();
+
+    public static Owner getInstance(UUID id, String firstName, String lastName, List<Bike> bikes) {
+        return ImmutableOwner.of(id, firstName, lastName, bikes);
     }
 }

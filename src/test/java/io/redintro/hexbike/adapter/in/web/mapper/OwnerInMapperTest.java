@@ -1,6 +1,8 @@
 package io.redintro.hexbike.adapter.in.web.mapper;
 
+import io.redintro.hexbike.adapter.in.web.resource.BikeResource;
 import io.redintro.hexbike.adapter.in.web.resource.OwnerResource;
+import io.redintro.hexbike.domain.Bike;
 import io.redintro.hexbike.domain.Owner;
 import io.vavr.control.Option;
 import org.junit.jupiter.api.Test;
@@ -13,7 +15,10 @@ import static org.hamcrest.Matchers.*;
 
 class OwnerInMapperTest {
     private final UUID ownerId = UUID.randomUUID();
-    private final Owner owner = Owner.getInstance(ownerId, "Jeff", "Jefferson");
+    private final UUID bikeId = UUID.randomUUID();
+    private final Owner owner = Owner.getInstance(ownerId, "Jeff", "Jefferson",
+            List.of(Bike.getInstance(bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017,
+            1249)));
 
     @Test
     public void shouldCreateOwnerMapper() {
@@ -22,7 +27,9 @@ class OwnerInMapperTest {
 
     @Test
     public void shouldMapToDomainEntity() {
-        OwnerResource ownerResource = new OwnerResource(ownerId, "Jeff", "Jefferson");
+        OwnerResource ownerResource = new OwnerResource(ownerId, "Jeff", "Jefferson",
+                List.of(new BikeResource(bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017,
+                1249)));
 
         Option<Owner> owner = OwnerInMapper.mapToDomainEntity(ownerResource);
 

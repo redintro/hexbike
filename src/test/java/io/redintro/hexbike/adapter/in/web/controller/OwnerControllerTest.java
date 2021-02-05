@@ -3,6 +3,7 @@ package io.redintro.hexbike.adapter.in.web.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.redintro.hexbike.adapter.in.web.mapper.OwnerInMapper;
 import io.redintro.hexbike.adapter.in.web.resource.OwnerResource;
+import io.redintro.hexbike.domain.Bike;
 import io.redintro.hexbike.domain.Owner;
 import io.redintro.hexbike.port.in.ShowOwnerPort;
 import io.vavr.control.Option;
@@ -52,7 +53,12 @@ public class OwnerControllerTest {
 
     @Test
     public void shouldFindAllOwners() throws Exception {
-        List<Owner> owners = List.of(Owner.getInstance(UUID.randomUUID(), "Jeff", "Jefferson"));
+        UUID ownerId = UUID.randomUUID();
+        UUID bikeId = UUID.randomUUID();
+
+        List<Owner> owners = List.of(Owner.getInstance(UUID.randomUUID(), "Jeff", "Jefferson",
+                List.of(Bike.getInstance(bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017,
+                1249))));
 
         when(showOwnerPort.findAll()).thenReturn(owners);
 
@@ -71,8 +77,11 @@ public class OwnerControllerTest {
     @Test
     public void shouldFindById() throws Exception {
         UUID ownerId = UUID.randomUUID();
+        UUID bikeId = UUID.randomUUID();
 
-        Owner owner = Owner.getInstance(ownerId, "Jeff", "Jefferson");
+        Owner owner = Owner.getInstance(ownerId, "Jeff", "Jefferson",
+                List.of(Bike.getInstance(bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017,
+                1249)));
 
         when(showOwnerPort.findById(ownerId)).thenReturn(Option.of(owner));
 

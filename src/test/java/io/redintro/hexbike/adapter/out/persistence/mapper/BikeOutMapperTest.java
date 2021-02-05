@@ -6,6 +6,7 @@ import io.redintro.hexbike.domain.Bike;
 import io.redintro.hexbike.domain.Owner;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,7 +25,9 @@ class BikeOutMapperTest {
         UUID ownerId = UUID.randomUUID();
 
         BikeJpaEntity bikeJpaEntity = new BikeJpaEntity(bikeId, "Cinelli", "Vigorelli", "White",
-                2017, 1249, new OwnerJpaEntity(ownerId,"Jeff", "Jefferson"));
+                2017, 1249, new OwnerJpaEntity(ownerId,"Jeff", "Jefferson",
+                List.of(new BikeJpaEntity(bikeId, "Cinelli", "Vigorelli", "White", 2017,
+                1249, new OwnerJpaEntity()))));
 
         Bike bike = BikeOutMapper.mapToDomainEntity(bikeJpaEntity);
 

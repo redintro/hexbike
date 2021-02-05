@@ -1,5 +1,6 @@
 package io.redintro.hexbike.adapter.out.persistence.adapter;
 
+import io.redintro.hexbike.adapter.out.persistence.entity.BikeJpaEntity;
 import io.redintro.hexbike.adapter.out.persistence.entity.OwnerJpaEntity;
 import io.redintro.hexbike.adapter.out.persistence.repository.OwnerRepository;
 import io.redintro.hexbike.domain.Owner;
@@ -30,9 +31,12 @@ class OwnerPersistenceAdapterTest {
     @Test
     public void shouldFindAll() {
         UUID ownerId = UUID.randomUUID();
+        UUID bikeId = UUID.randomUUID();
 
         when(ownerRepository.findAll())
-                .thenReturn(List.of(new OwnerJpaEntity(ownerId, "Jeff", "Jefferson")));
+                .thenReturn(List.of(new OwnerJpaEntity(ownerId, "Jeff", "Jefferson",
+                        List.of(new BikeJpaEntity(bikeId, "Cinelli", "Vigorelli", "White", 2017,
+                                1249, new OwnerJpaEntity(ownerId, "Jeff", "Jefferson"))))));
 
         List<Owner> owners = ownerPersistenceAdapter.findAll();
 
@@ -42,10 +46,12 @@ class OwnerPersistenceAdapterTest {
     @Test
     public void shouldFindByUserName() {
         UUID ownerId = UUID.randomUUID();
+        UUID bikeId = UUID.randomUUID();
 
         when(ownerRepository.findById(any(UUID.class)))
-                .thenReturn(Option.of(new OwnerJpaEntity(ownerId, "Jeff", "Jefferson"))
-                        .toJavaOptional());
+                .thenReturn(Option.of(new OwnerJpaEntity(ownerId, "Jeff", "Jefferson",
+                        List.of(new BikeJpaEntity(bikeId, "Cinelli", "Vigorelli", "White", 2017,
+                                1249, new OwnerJpaEntity(ownerId, "Jeff", "Jefferson"))))).toJavaOptional());
 
         Owner owner = ownerPersistenceAdapter.findById(ownerId).get();
 
