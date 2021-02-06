@@ -6,7 +6,7 @@ import org.immutables.value.Value;
 
 import java.util.UUID;
 
-@Value.Immutable
+@Value.Immutable(builder = false)
 public abstract class Bike {
     @Value.Parameter
     public abstract UUID getId();
@@ -30,6 +30,6 @@ public abstract class Bike {
     public abstract int getPrice();
 
     public static Bike getInstance(UUID id, UUID ownerId, String make, String model, String colour, int year, int price) {
-        return ImmutableBike.of(id, ownerId, make, model, colour, year, price );
+        return ImmutableBike.of(id, ownerId, make, model, colour, year, price);
     }
 }

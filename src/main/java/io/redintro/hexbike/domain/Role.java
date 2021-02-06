@@ -4,7 +4,7 @@ import org.immutables.value.Value;
 
 import java.util.UUID;
 
-@Value.Immutable
+@Value.Immutable(builder = false)
 public abstract class Role {
     @Value.Parameter
     public abstract UUID getId();

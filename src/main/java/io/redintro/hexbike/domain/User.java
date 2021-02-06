@@ -5,7 +5,7 @@ import org.immutables.value.Value;
 import java.util.Set;
 import java.util.UUID;
 
-@Value.Immutable
+@Value.Immutable(builder = false)
 public abstract class User {
     @Value.Parameter
     public abstract UUID getId();
