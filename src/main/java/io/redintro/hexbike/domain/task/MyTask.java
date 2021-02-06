@@ -8,13 +8,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MyTask {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MyTask.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(MyTask.class);
 
-    @Scheduled(cron = "${io.redintro.scheduling.frequency.pattern}")
-    @SchedulerLock(name = "io.redintro.scheduling.lock.name.my-task",
-            lockAtLeastFor = "${io.redintro.scheduling.lock.atLeastFor}",
-            lockAtMostFor = "${io.redintro.scheduling.lock.atMostFor}")
-    public void execute() {
-        LOGGER.info("Scheduled task called [{}]", this.toString());
-    }
+  @Scheduled(cron = "${io.redintro.scheduling.frequency.pattern}")
+  @SchedulerLock(
+      name = "io.redintro.scheduling.lock.name.my-task",
+      lockAtLeastFor = "${io.redintro.scheduling.lock.atLeastFor}",
+      lockAtMostFor = "${io.redintro.scheduling.lock.atMostFor}")
+  public void execute() {
+    LOGGER.info("Scheduled task called [{}]", this.toString());
+  }
 }

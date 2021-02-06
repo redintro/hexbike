@@ -1,53 +1,56 @@
 package io.redintro.hexbike.adapter.in.web.resource;
 
-import javax.validation.constraints.NotBlank;
 import java.util.UUID;
+import javax.validation.constraints.NotBlank;
 
 public class BikeResource {
-    private final UUID id;
-    private final UUID ownerId;
-    @NotBlank(message = "Make cannot be blank")
-    private final String make;
-    private final String model;
-    private final String colour;
-    private final int year;
-    private final int price;
+  private final UUID id;
+  private final UUID ownerId;
 
-    public BikeResource(UUID id, UUID ownerId, String make, String model, String colour, int year, int price) {
-        this.id = id;
-        this.ownerId = ownerId;
-        this.make = make;
-        this.model = model;
-        this.colour = colour;
-        this.year = year;
-        this.price = price;
-    }
+  @NotBlank(message = "Make cannot be blank")
+  private final String make;
 
-    public UUID getId() {
-        return id;
-    }
+  private final String model;
+  private final String colour;
+  private final int year;
+  private final int price;
 
-    public UUID getOwnerId() {
-        return ownerId;
-    }
+  public BikeResource(
+      UUID id, UUID ownerId, String make, String model, String colour, int year, int price) {
+    this.id = id;
+    this.ownerId = ownerId;
+    this.make = make;
+    this.model = model;
+    this.colour = colour;
+    this.year = year;
+    this.price = price;
+  }
 
-    public String getMake() {
-        return make;
-    }
+  public UUID getId() {
+    return id;
+  }
 
-    public String getModel() {
-        return model;
-    }
+  public UUID getOwnerId() {
+    return ownerId;
+  }
 
-    public String getColour() {
-        return colour;
-    }
+  public String getMake() {
+    return make;
+  }
 
-    public int getYear() {
-        return year;
-    }
+  public String getModel() {
+    return model;
+  }
 
-    public int getPrice() {
-        return price;
-    }
+  public String getColour() {
+    return colour;
+  }
+
+  public int getYear() {
+    return year;
+  }
+
+  public int getPrice() {
+    return price;
+  }
 }

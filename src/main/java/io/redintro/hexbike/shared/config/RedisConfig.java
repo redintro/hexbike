@@ -12,27 +12,28 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 @Configuration
 public class RedisConfig {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RedisConfig.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(RedisConfig.class);
 
-    @Value("${spring.redis.host}")
-    private String host;
+  @Value("${spring.redis.host}")
+  private String host;
 
-    @Value("${spring.redis.port}")
-    private int port;
+  @Value("${spring.redis.port}")
+  private int port;
 
-    @Bean
-    public JedisConnectionFactory redisConnectionFactory() {
-        RedisStandaloneConfiguration config = new RedisStandaloneConfiguration(host, port);
-        JedisClientConfiguration clientConfiguration = JedisClientConfiguration.builder().usePooling().build();
-        LOGGER.info("redisConnectionFactory initialised with host: '{}' and port: '{}'", host, port);
-        return new JedisConnectionFactory(config, clientConfiguration);
-    }
+  @Bean
+  public JedisConnectionFactory redisConnectionFactory() {
+    RedisStandaloneConfiguration config = new RedisStandaloneConfiguration(host, port);
+    JedisClientConfiguration clientConfiguration =
+        JedisClientConfiguration.builder().usePooling().build();
+    LOGGER.info("redisConnectionFactory initialised with host: '{}' and port: '{}'", host, port);
+    return new JedisConnectionFactory(config, clientConfiguration);
+  }
 
-    @Bean
-    public RedisTemplate<String, Object> redisTemplate() {
-        RedisTemplate<String, Object> template = new RedisTemplate<>();
-        template.setConnectionFactory(redisConnectionFactory());
-        LOGGER.info("redisTemplate initialised");
-        return template;
-    }
+  @Bean
+  public RedisTemplate<String, Object> redisTemplate() {
+    RedisTemplate<String, Object> template = new RedisTemplate<>();
+    template.setConnectionFactory(redisConnectionFactory());
+    LOGGER.info("redisTemplate initialised");
+    return template;
+  }
 }

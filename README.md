@@ -15,7 +15,7 @@ To run from the command line without maven:
 - Stop: `docker-compose down`
 
 ### Logs
-Tail a running containers logs: 
+Tail a running containers logs:
 - Start: `docker-compose logs -f service`
 - Stop:`CTRL-C`
 
@@ -24,7 +24,7 @@ To view containers:
 - Running: `docker-compose ps`
 - All: `docker-compose ps -a`
 
-### Shell 
+### Shell
 To start a bash shell in a running container:
 - Start: `docker-compose exec [service-name] /bin/bash`
 - Exit: `CTRL-D`
@@ -51,13 +51,13 @@ Jacoco code coverage checks and reports are automatically performed and generate
 - Run: `mvn clean install`
 - Coverage reports are available at target/site/jacoco/index.html
 
-## Database Initialisation 
+## Database Initialisation
 Uses liquibase to manage the database schema and the maven plugin to add additional functionality
 - To generate a changelog file from an existing database: `mvn liquibase:generateChangeLog`
 
 ## Integration Tests
-Uses the Testcontainers framework together with Liquibase to stand up a PostgreSQL docker container instance for 
-integration testing. Integration tests are NOT run by default as part of the standard maven build. 
+Uses the Testcontainers framework together with Liquibase to stand up a PostgreSQL docker container instance for
+integration testing. Integration tests are NOT run by default as part of the standard maven build.
 - To run the integration tests: `mvn clean install or mvn clean verify -DskipItTests=false`
 
 ## Scheduled Tasks, Redis and Shedlock
@@ -70,7 +70,7 @@ run a scheduled task at any given time.
 - Select a keyspace: `select n` where 'n' is the keyspace number db[n]: (not required for db0 as it is default)
 - List all keys in a keyspace: `keys *`
 
-## Immutables 
+## Immutables
 The application uses the immutables library `https://immutables.github.io/` so requires annotation processing to be enabled:
 - In intelliJ check the 'Enable annotation processing' checkbox in Settings/Build,Execution,Deployment/Compiler/Annotation Processors
 - Right click the target/generated-sources/annotations directory and choose to 'Mark Directory as' Generated Sources Root

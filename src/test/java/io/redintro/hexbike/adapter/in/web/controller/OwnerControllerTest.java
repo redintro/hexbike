@@ -1,5 +1,10 @@
 package io.redintro.hexbike.adapter.in.web.controller;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.when;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.redintro.hexbike.adapter.in.web.mapper.OwnerInMapper;
 import io.redintro.hexbike.adapter.in.web.resource.OwnerResource;
@@ -7,6 +12,8 @@ import io.redintro.hexbike.domain.Bike;
 import io.redintro.hexbike.domain.Owner;
 import io.redintro.hexbike.port.in.ShowOwnerPort;
 import io.vavr.control.Option;
+import java.util.List;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,94 +28,98 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-
-import java.util.List;
-import java.util.UUID;
-
-import static org.mockito.Mockito.when;
-
 @ExtendWith(MockitoExtension.class)
 public class OwnerControllerTest {
-    private MockMvc mvc;
+  private MockMvc mvc;
 
-    @InjectMocks
-    private OwnerController controller;
+  @InjectMocks private OwnerController controller;
 
-    @Mock
-    private ShowOwnerPort showOwnerPort;
+  @Mock private ShowOwnerPort showOwnerPort;
 
-    private JacksonTester<List<OwnerResource>> jacksonListTester;
+  private JacksonTester<List<OwnerResource>> jacksonListTester;
 
-    private JacksonTester<OwnerResource> jacksonTester;
+  private JacksonTester<OwnerResource> jacksonTester;
 
-    @BeforeEach
-    public void setUp() {
-        JacksonTester.initFields(this, new ObjectMapper());
+  @BeforeEach
+  public void setUp() {
+    JacksonTester.initFields(this, new ObjectMapper());
 
-        mvc = MockMvcBuilders.standaloneSetup(controller).build();
-    }
+    mvc = MockMvcBuilders.standaloneSetup(controller).build();
+  }
 
-    @Test
-    public void shouldFindAllOwners() throws Exception {
-        UUID ownerId = UUID.randomUUID();
-        UUID bikeId = UUID.randomUUID();
+  @Test
+  public void shouldFindAllOwners() throws Exception {
+    UUID ownerId = UUID.randomUUID();
+    UUID bikeId = UUID.randomUUID();
 
-        List<Owner> owners = List.of(Owner.getInstance(UUID.randomUUID(), "Jeff", "Jefferson",
-                List.of(Bike.getInstance(bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017,
-                1249))));
+    List<Owner> owners =
+        List.of(
+            Owner.getInstance(
+                UUID.randomUUID(),
+                "Jeff",
+                "Jefferson",
+                List.of(
+                    Bike.getInstance(
+                        bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017, 1249))));
 
-        when(showOwnerPort.findAll()).thenReturn(owners);
+    when(showOwnerPort.findAll()).thenReturn(owners);
 
-        MockHttpServletResponse response = mvc.perform(
-                MockMvcRequestBuilders.get("/api/owners")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andReturn()
-                .getResponse();
+    MockHttpServletResponse response =
+        mvc.perform(MockMvcRequestBuilders.get("/api/owners").accept(MediaType.APPLICATION_JSON))
+            .andReturn()
+            .getResponse();
 
-        List<OwnerResource> ownerResources = OwnerInMapper.mapToListRestResource(owners);
+    List<OwnerResource> ownerResources = OwnerInMapper.mapToListRestResource(owners);
 
-        assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
-        assertThat(response.getContentAsString(), is(equalTo(jacksonListTester.write(ownerResources).getJson())));
-    }
+    assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
+    assertThat(
+        response.getContentAsString(),
+        is(equalTo(jacksonListTester.write(ownerResources).getJson())));
+  }
 
-    @Test
-    public void shouldFindById() throws Exception {
-        UUID ownerId = UUID.randomUUID();
-        UUID bikeId = UUID.randomUUID();
+  @Test
+  public void shouldFindById() throws Exception {
+    UUID ownerId = UUID.randomUUID();
+    UUID bikeId = UUID.randomUUID();
 
-        Owner owner = Owner.getInstance(ownerId, "Jeff", "Jefferson",
-                List.of(Bike.getInstance(bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017,
-                1249)));
+    Owner owner =
+        Owner.getInstance(
+            ownerId,
+            "Jeff",
+            "Jefferson",
+            List.of(
+                Bike.getInstance(bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017, 1249)));
 
-        when(showOwnerPort.findById(ownerId)).thenReturn(Option.of(owner));
+    when(showOwnerPort.findById(ownerId)).thenReturn(Option.of(owner));
 
-        MockHttpServletResponse response = mvc.perform(
+    MockHttpServletResponse response =
+        mvc.perform(
                 MockMvcRequestBuilders.get("/api/owners/" + ownerId)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andReturn()
-                .getResponse();
+                    .accept(MediaType.APPLICATION_JSON))
+            .andReturn()
+            .getResponse();
 
-        Option<OwnerResource> ownerResource = OwnerInMapper.mapToRestResource(owner);
+    Option<OwnerResource> ownerResource = OwnerInMapper.mapToRestResource(owner);
 
-        assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
-        assertThat(response.getContentAsString(), is(equalTo(jacksonTester.write(ownerResource.get()).getJson())));
-    }
+    assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
+    assertThat(
+        response.getContentAsString(),
+        is(equalTo(jacksonTester.write(ownerResource.get()).getJson())));
+  }
 
-    @Test
-    public void shouldFailToFindById() throws Exception {
-        UUID ownerId = UUID.randomUUID();
+  @Test
+  public void shouldFailToFindById() throws Exception {
+    UUID ownerId = UUID.randomUUID();
 
-        when(showOwnerPort.findById(ownerId)).thenReturn(Option.none());
+    when(showOwnerPort.findById(ownerId)).thenReturn(Option.none());
 
-        MockHttpServletResponse response = mvc.perform(
+    MockHttpServletResponse response =
+        mvc.perform(
                 MockMvcRequestBuilders.get("/api/owners/" + ownerId)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andReturn()
-                .getResponse();
+                    .accept(MediaType.APPLICATION_JSON))
+            .andReturn()
+            .getResponse();
 
-        assertThat(response.getStatus(), is(equalTo(HttpStatus.NOT_FOUND.value())));
-    }
+    assertThat(response.getStatus(), is(equalTo(HttpStatus.NOT_FOUND.value())));
+  }
 }

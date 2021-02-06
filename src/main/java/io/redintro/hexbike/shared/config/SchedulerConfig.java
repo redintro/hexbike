@@ -16,26 +16,26 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 @EnableScheduling
 @EnableSchedulerLock(defaultLockAtMostFor = "PT30S")
 @ConditionalOnProperty(
-        name = "io.redintro.scheduling.enabled",
-        havingValue = "true",
-        matchIfMissing = true)
+    name = "io.redintro.scheduling.enabled",
+    havingValue = "true",
+    matchIfMissing = true)
 public class SchedulerConfig {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SchedulerConfig.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(SchedulerConfig.class);
 
-    private static final String LOCK_NAMESPACE = "${io.redintro.scheduling.lock.name-space}";
+  private static final String LOCK_NAMESPACE = "${io.redintro.scheduling.lock.name-space}";
 
-    @Bean
-    public LockProvider lockProvider(RedisConnectionFactory connectionFactory) {
-        LOGGER.info("lockProvider initialised");
-        return new RedisLockProvider(connectionFactory, LOCK_NAMESPACE);
-    }
+  @Bean
+  public LockProvider lockProvider(RedisConnectionFactory connectionFactory) {
+    LOGGER.info("lockProvider initialised");
+    return new RedisLockProvider(connectionFactory, LOCK_NAMESPACE);
+  }
 
-    @Bean
-    public ThreadPoolTaskScheduler taskScheduler() {
-        ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
-        threadPoolTaskScheduler.setPoolSize(5);
-        threadPoolTaskScheduler.setThreadNamePrefix("ThreadPoolTaskScheduler");
-        LOGGER.info("taskScheduler initialised");
-        return threadPoolTaskScheduler;
-    }
+  @Bean
+  public ThreadPoolTaskScheduler taskScheduler() {
+    ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
+    threadPoolTaskScheduler.setPoolSize(5);
+    threadPoolTaskScheduler.setThreadNamePrefix("ThreadPoolTaskScheduler");
+    LOGGER.info("taskScheduler initialised");
+    return threadPoolTaskScheduler;
+  }
 }

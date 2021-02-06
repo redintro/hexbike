@@ -30,6 +30,7 @@
 		<redis.clients.version>3.3.0</redis.clients.version>
 		<shedlock-spring.version>4.14.0</shedlock-spring.version>
 		<shedlock-provider-redis-spring.version>4.14.0</shedlock-provider-redis-spring.version>
+        <spotless.version>2.7.0</spotless.version>
 		<testcontainers.version>1.15.1</testcontainers.version>
         <vavr.version>0.10.3</vavr.version>
 		<skipItTests>true</skipItTests>
@@ -237,6 +238,43 @@
 				</executions>
 			</plugin>
 			<plugin>
+				<groupId>com.diffplug.spotless</groupId>
+				<artifactId>spotless-maven-plugin</artifactId>
+				<version>${spotless.version}</version>
+				<configuration>
+					<formats>
+						<format>
+							<includes>
+								<include>*.md</include>
+								<include>.gitignore</include>
+                                <include>*.yml</include>
+							</includes>
+							<trimTrailingWhitespace/>
+							<endWithNewline/>
+							<indent>
+								<tabs>true</tabs>
+								<spacesPerTab>2</spacesPerTab>
+							</indent>
+						</format>
+					</formats>
+					<java>
+						<googleJavaFormat>
+							<version>1.9</version>
+							<style>GOOGLE</style>
+						</googleJavaFormat>
+					</java>
+				</configuration>
+				<executions>
+					<execution>
+						<id>apply</id>
+						<goals>
+							<goal>apply</goal>
+						</goals>
+						<phase>compile</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>${jacoco.version}</version>
@@ -305,5 +343,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

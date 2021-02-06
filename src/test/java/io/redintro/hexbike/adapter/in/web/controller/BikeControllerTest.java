@@ -1,14 +1,21 @@
 package io.redintro.hexbike.adapter.in.web.controller;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.redintro.hexbike.adapter.in.web.mapper.BikeInMapper;
 import io.redintro.hexbike.adapter.in.web.resource.BikeResource;
 import io.redintro.hexbike.domain.Bike;
-import io.redintro.hexbike.domain.Owner;
 import io.redintro.hexbike.port.in.ShowBikePort;
 import io.redintro.hexbike.service.AuthenticationService;
 import io.redintro.hexbike.service.HexBikeUserDetailsService;
 import io.vavr.control.Option;
+import java.util.List;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,106 +29,107 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.security.core.userdetails.User;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-
-import java.util.List;
-import java.util.UUID;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(BikeController.class)
 class BikeControllerTest {
-    @Autowired
-    private MockMvc mvc;
+  @Autowired private MockMvc mvc;
 
-    @MockBean
-    private ShowBikePort showBikePort;
+  @MockBean private ShowBikePort showBikePort;
 
-    @MockBean
-    private HexBikeUserDetailsService userDetailsService;
+  @MockBean private HexBikeUserDetailsService userDetailsService;
 
-    private JacksonTester<List<BikeResource>> jacksonListTester;
+  private JacksonTester<List<BikeResource>> jacksonListTester;
 
-    private JacksonTester<BikeResource> jacksonTester;
+  private JacksonTester<BikeResource> jacksonTester;
 
-    private String jwtToken;
+  private String jwtToken;
 
-    @BeforeEach
-    public void setUp() {
-        JacksonTester.initFields(this, new ObjectMapper());
+  @BeforeEach
+  public void setUp() {
+    JacksonTester.initFields(this, new ObjectMapper());
 
-        jwtToken = AuthenticationService.getToken("admin");
+    jwtToken = AuthenticationService.getToken("admin");
 
-        when(userDetailsService.loadUserByUsername(any(String.class)))
-                .thenReturn(new User("admin", "$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG",
-                        true, true, true, true,
-                        AuthorityUtils.createAuthorityList("ADMIN")));
-    }
+    when(userDetailsService.loadUserByUsername(any(String.class)))
+        .thenReturn(
+            new User(
+                "admin",
+                "$2a$04$KNLUwOWHVQZVpXyMBNc7JOzbLiBjb9Tk9bP7KNcPI12ICuvzXQQKG",
+                true,
+                true,
+                true,
+                true,
+                AuthorityUtils.createAuthorityList("ADMIN")));
+  }
 
-   @Test
-   public void shouldFindAll() throws Exception {
-        List<Bike> bikes = List.of(Bike.getInstance(UUID.randomUUID(), UUID.randomUUID(), "Cinelli",
-                "Vigorelli", "White", 2017, 1249));
+  @Test
+  public void shouldFindAll() throws Exception {
+    List<Bike> bikes =
+        List.of(
+            Bike.getInstance(
+                UUID.randomUUID(), UUID.randomUUID(), "Cinelli", "Vigorelli", "White", 2017, 1249));
 
-        when(showBikePort.findAll()).thenReturn(bikes);
+    when(showBikePort.findAll()).thenReturn(bikes);
 
-        MockHttpServletResponse response = mvc.perform(
+    MockHttpServletResponse response =
+        mvc.perform(
                 MockMvcRequestBuilders.get("/api/bikes")
                     .header(HttpHeaders.AUTHORIZATION, jwtToken)
                     .accept(MediaType.APPLICATION_JSON))
-                .andReturn()
-                .getResponse();
+            .andReturn()
+            .getResponse();
 
-        List<BikeResource> bikeResources = BikeInMapper.mapToListRestResource(bikes);
+    List<BikeResource> bikeResources = BikeInMapper.mapToListRestResource(bikes);
 
-        assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
-        assertThat(response.getContentAsString(), is(equalTo(jacksonListTester.write(bikeResources).getJson())));
-    }
+    assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
+    assertThat(
+        response.getContentAsString(),
+        is(equalTo(jacksonListTester.write(bikeResources).getJson())));
+  }
 
-    @Test
-    public void shouldFindById() throws Exception {
-        UUID bikeId = UUID.randomUUID();
-        UUID ownerId = UUID.randomUUID();
+  @Test
+  public void shouldFindById() throws Exception {
+    UUID bikeId = UUID.randomUUID();
+    UUID ownerId = UUID.randomUUID();
 
-        Bike bike = Bike.getInstance(bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017,
-                1249);
+    Bike bike = Bike.getInstance(bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017, 1249);
 
-        when(showBikePort.findById(bikeId)).thenReturn(Option.of(bike));
+    when(showBikePort.findById(bikeId)).thenReturn(Option.of(bike));
 
-        MockHttpServletResponse response = mvc.perform(
+    MockHttpServletResponse response =
+        mvc.perform(
                 MockMvcRequestBuilders.get("/api/bikes/" + bikeId)
                     .header(HttpHeaders.AUTHORIZATION, jwtToken)
                     .accept(MediaType.APPLICATION_JSON))
-                .andReturn()
-                .getResponse();
+            .andReturn()
+            .getResponse();
 
-        Option<BikeResource> bikeResource = BikeInMapper.mapToRestResource(bike);
+    Option<BikeResource> bikeResource = BikeInMapper.mapToRestResource(bike);
 
-        assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
-        assertThat(response.getContentAsString(), is(equalTo(jacksonTester.write(bikeResource.get()).getJson())));
-    }
+    assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
+    assertThat(
+        response.getContentAsString(),
+        is(equalTo(jacksonTester.write(bikeResource.get()).getJson())));
+  }
 
-    @Test
-    public void shouldFailToFindById() throws Exception {
-        UUID bikeId = UUID.randomUUID();
+  @Test
+  public void shouldFailToFindById() throws Exception {
+    UUID bikeId = UUID.randomUUID();
 
-        when(showBikePort.findById(bikeId)).thenReturn(Option.none());
+    when(showBikePort.findById(bikeId)).thenReturn(Option.none());
 
-        MockHttpServletResponse response = mvc.perform(
+    MockHttpServletResponse response =
+        mvc.perform(
                 MockMvcRequestBuilders.get("/api/bikes/" + bikeId)
                     .header(HttpHeaders.AUTHORIZATION, jwtToken)
                     .accept(MediaType.APPLICATION_JSON))
-               .andReturn()
-               .getResponse();
+            .andReturn()
+            .getResponse();
 
-        assertThat(response.getStatus(), is(equalTo(HttpStatus.NOT_FOUND.value())));
-    }
+    assertThat(response.getStatus(), is(equalTo(HttpStatus.NOT_FOUND.value())));
+  }
 }

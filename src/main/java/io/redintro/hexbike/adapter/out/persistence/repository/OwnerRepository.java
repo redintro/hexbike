@@ -1,9 +1,7 @@
 package io.redintro.hexbike.adapter.out.persistence.repository;
 
 import io.redintro.hexbike.adapter.out.persistence.entity.OwnerJpaEntity;
+import java.util.UUID;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.UUID;
-
-public interface OwnerRepository extends CrudRepository<OwnerJpaEntity, UUID> {
-}
+public interface OwnerRepository extends CrudRepository<OwnerJpaEntity, UUID> {}

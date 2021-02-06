@@ -1,68 +1,102 @@
 package io.redintro.hexbike.adapter.out.persistence.adapter;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
 import io.redintro.hexbike.adapter.out.persistence.entity.BikeJpaEntity;
 import io.redintro.hexbike.adapter.out.persistence.entity.OwnerJpaEntity;
 import io.redintro.hexbike.adapter.out.persistence.repository.BikeRepository;
 import io.redintro.hexbike.domain.Bike;
 import io.vavr.control.Option;
+import java.util.List;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
-import java.util.UUID;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
 @ExtendWith(MockitoExtension.class)
 class BikePersistenceAdapterTest {
-    @Mock
-    private BikeRepository bikeRepository;
+  @Mock private BikeRepository bikeRepository;
 
-    @InjectMocks
-    private BikePersistenceAdapter bikePersistenceAdapter;
+  @InjectMocks private BikePersistenceAdapter bikePersistenceAdapter;
 
-    @Test
-    public void shouldFindAll() {
-        UUID bikeId = UUID.randomUUID();
-        UUID ownerId = UUID.randomUUID();
+  @Test
+  public void shouldFindAll() {
+    UUID bikeId = UUID.randomUUID();
+    UUID ownerId = UUID.randomUUID();
 
-        when(bikeRepository.findAll())
-                .thenReturn(List.of(new BikeJpaEntity(bikeId, "Cinelli", "Vigorelli", "White", 2017,
-                        1249, new OwnerJpaEntity(ownerId, "Jeff", "Jefferson",
-                        List.of(new BikeJpaEntity(bikeId, "Cinelli", "Vigorelli", "White", 2017,
-                                1249, new OwnerJpaEntity()))))));
+    when(bikeRepository.findAll())
+        .thenReturn(
+            List.of(
+                new BikeJpaEntity(
+                    bikeId,
+                    "Cinelli",
+                    "Vigorelli",
+                    "White",
+                    2017,
+                    1249,
+                    new OwnerJpaEntity(
+                        ownerId,
+                        "Jeff",
+                        "Jefferson",
+                        List.of(
+                            new BikeJpaEntity(
+                                bikeId,
+                                "Cinelli",
+                                "Vigorelli",
+                                "White",
+                                2017,
+                                1249,
+                                new OwnerJpaEntity()))))));
 
-        List<Bike> bikes = bikePersistenceAdapter.findAll();
+    List<Bike> bikes = bikePersistenceAdapter.findAll();
 
-        assertThat(bikes.size(), is(equalTo(1)));
-    }
+    assertThat(bikes.size(), is(equalTo(1)));
+  }
 
-    @Test
-    public void shouldFindById() {
-        UUID bikeId = UUID.randomUUID();
-        UUID ownerId = UUID.randomUUID();
+  @Test
+  public void shouldFindById() {
+    UUID bikeId = UUID.randomUUID();
+    UUID ownerId = UUID.randomUUID();
 
-        when(bikeRepository.findById(any(UUID.class)))
-                .thenReturn(Option.of(new BikeJpaEntity(bikeId, "Cinelli", "Vigorelli",
-                        "White", 2017, 1249, new OwnerJpaEntity(ownerId, "Jeff",
-                        "Jefferson", List.of(new BikeJpaEntity(bikeId, "Cinelli", "Vigorelli",
-                        "White", 2017, 1249, new OwnerJpaEntity()))))).toJavaOptional());
+    when(bikeRepository.findById(any(UUID.class)))
+        .thenReturn(
+            Option.of(
+                    new BikeJpaEntity(
+                        bikeId,
+                        "Cinelli",
+                        "Vigorelli",
+                        "White",
+                        2017,
+                        1249,
+                        new OwnerJpaEntity(
+                            ownerId,
+                            "Jeff",
+                            "Jefferson",
+                            List.of(
+                                new BikeJpaEntity(
+                                    bikeId,
+                                    "Cinelli",
+                                    "Vigorelli",
+                                    "White",
+                                    2017,
+                                    1249,
+                                    new OwnerJpaEntity())))))
+                .toJavaOptional());
 
-        Option<Bike> bike = bikePersistenceAdapter.findById(bikeId);
+    Option<Bike> bike = bikePersistenceAdapter.findById(bikeId);
 
-        assertThat(bike.isDefined(), is(equalTo(true)));
-        assertThat(bike.get().getId(), is(equalTo(bikeId)));
-        assertThat(bike.get().getOwnerId(), is(equalTo(ownerId)));
-        assertThat(bike.get().getMake(), is(equalTo("Cinelli")));
-        assertThat(bike.get().getModel(), is(equalTo("Vigorelli")));
-        assertThat(bike.get().getColour(), is(equalTo("White")));
-        assertThat(bike.get().getYear(), is(equalTo(2017)));
-        assertThat(bike.get().getPrice(), is(equalTo(1249)));
-    }
+    assertThat(bike.isDefined(), is(equalTo(true)));
+    assertThat(bike.get().getId(), is(equalTo(bikeId)));
+    assertThat(bike.get().getOwnerId(), is(equalTo(ownerId)));
+    assertThat(bike.get().getMake(), is(equalTo("Cinelli")));
+    assertThat(bike.get().getModel(), is(equalTo("Vigorelli")));
+    assertThat(bike.get().getColour(), is(equalTo("White")));
+    assertThat(bike.get().getYear(), is(equalTo(2017)));
+    assertThat(bike.get().getPrice(), is(equalTo(1249)));
+  }
 }
