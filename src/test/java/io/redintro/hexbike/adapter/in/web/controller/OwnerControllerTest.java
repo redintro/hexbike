@@ -48,8 +48,8 @@ public class OwnerControllerTest {
 
   @Test
   public void shouldFindAllOwners() throws Exception {
-    UUID ownerId = UUID.randomUUID();
-    UUID bikeId = UUID.randomUUID();
+    final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
+    final UUID bikeId = UUID.fromString("11edf58d-0d27-470f-a527-3bab79ba5576");
 
     List<Owner> owners = List.of(Owner.getInstance(UUID.randomUUID(), "Jeff", "Jefferson"));
 
@@ -70,10 +70,10 @@ public class OwnerControllerTest {
 
   @Test
   public void shouldFindById() throws Exception {
-    UUID ownerId = UUID.randomUUID();
-    UUID bikeId = UUID.randomUUID();
+    final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
+    final UUID bikeId = UUID.fromString("11edf58d-0d27-470f-a527-3bab79ba5576");
 
-    Owner owner = Owner.getInstance(ownerId, "Jeff", "Jefferson");
+    final Owner owner = Owner.getInstance(ownerId, "Jeff", "Jefferson");
 
     when(showOwnerPort.findById(ownerId)).thenReturn(Option.of(owner));
 
@@ -94,7 +94,7 @@ public class OwnerControllerTest {
 
   @Test
   public void shouldFailToFindById() throws Exception {
-    UUID ownerId = UUID.randomUUID();
+    final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
 
     when(showOwnerPort.findById(ownerId)).thenReturn(Option.none());
 

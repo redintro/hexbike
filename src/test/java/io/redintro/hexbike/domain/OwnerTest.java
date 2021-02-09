@@ -10,9 +10,8 @@ import org.junit.jupiter.api.Test;
 class OwnerTest {
   @Test
   public void shouldCreateOwner() {
-    UUID ownerId = UUID.randomUUID();
-
-    Owner owner = Owner.getInstance(ownerId, "Jeff", "Jefferson");
+    final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
+    final Owner owner = Owner.getInstance(ownerId, "Jeff", "Jefferson");
 
     assertThat(owner.getId(), is(equalTo(ownerId)));
     assertThat(owner.getFirstName(), is(equalTo("Jeff")));

@@ -27,8 +27,8 @@ class UserPersistenceAdapterTest {
 
   @Test
   public void shouldFindByUserName() {
-    UUID userId = UUID.randomUUID();
-    UUID roleId = UUID.randomUUID();
+    final UUID userId = UUID.fromString("9b06bc40-2e96-4259-b880-58bbbd6db38f");
+    final UUID roleId = UUID.fromString("134f7041-27b6-414f-807c-4a607e4542f4");
 
     when(userRepository.findByUsername(any(String.class)))
         .thenReturn(

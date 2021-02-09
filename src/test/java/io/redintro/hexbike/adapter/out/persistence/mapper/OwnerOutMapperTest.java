@@ -17,7 +17,7 @@ class OwnerOutMapperTest {
 
   @Test
   public void shouldMapToDomainEntity() {
-    UUID ownerId = UUID.randomUUID();
+    final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
 
     OwnerJpaEntity ownerJpaEntity = new OwnerJpaEntity(ownerId, "Jeff", "Jefferson");
 

@@ -25,7 +25,7 @@ class ShowOwnerServiceTest {
 
   @Test
   public void shouldFindAll() {
-    UUID ownerId = UUID.randomUUID();
+    final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
 
     when(findOwnerPort.findAll())
         .thenReturn(List.of(Owner.getInstance(ownerId, "Jeff", "Jefferson")));
@@ -37,7 +37,7 @@ class ShowOwnerServiceTest {
 
   @Test
   public void shouldFindById() {
-    UUID ownerId = UUID.randomUUID();
+    final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
 
     Option<Owner> maybeOwner = Option.of(Owner.getInstance(ownerId, "Jeff", "Jefferson"));
 

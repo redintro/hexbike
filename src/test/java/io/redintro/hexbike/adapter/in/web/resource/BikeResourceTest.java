@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 class BikeResourceTest {
   @Test
   public void shouldCreateBikeResource() {
-    UUID bikeId = UUID.randomUUID();
-    UUID ownerId = UUID.randomUUID();
+    final UUID bikeId = UUID.fromString("11edf58d-0d27-470f-a527-3bab79ba5576");
+    final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
 
-    BikeResource bikeResource =
+    final BikeResource bikeResource =
         new BikeResource(bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017, 1249);
 
     assertThat(bikeResource.getId(), is(equalTo(bikeId)));

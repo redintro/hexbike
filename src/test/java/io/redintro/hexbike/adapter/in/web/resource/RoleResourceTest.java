@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 public class RoleResourceTest {
   @Test
   public void shouldCreateRoleResource() {
-    UUID roleId = UUID.randomUUID();
+    final UUID roleId = UUID.fromString("134f7041-27b6-414f-807c-4a607e4542f4");
 
-    RoleResource roleResource = new RoleResource(roleId, "ADMIN");
+    final RoleResource roleResource = new RoleResource(roleId, "ADMIN");
 
     assertThat(roleResource.getId(), is(equalTo(roleId)));
     assertThat(roleResource.getName(), is(equalTo("ADMIN")));

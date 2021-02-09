@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 class OwnerResourceTest {
   @Test
   public void shouldCreateOwnerResource() {
-    UUID ownerId = UUID.randomUUID();
+    final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
 
-    OwnerResource ownerResource = new OwnerResource(ownerId, "Jeff", "Jefferson");
+    final OwnerResource ownerResource = new OwnerResource(ownerId, "Jeff", "Jefferson");
 
     assertThat(ownerResource.getId(), is(equalTo(ownerId)));
     assertThat(ownerResource.getFirstName(), is(equalTo("Jeff")));

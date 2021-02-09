@@ -21,13 +21,13 @@ class BikeInMapperTest {
 
   @Test
   public void shouldMapToDomainEntity() {
-    UUID bikeId = UUID.randomUUID();
-    UUID ownerId = UUID.randomUUID();
+    final UUID bikeId = UUID.fromString("11edf58d-0d27-470f-a527-3bab79ba5576");
+    final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
 
-    BikeResource bikeResource =
+    final BikeResource bikeResource =
         new BikeResource(bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017, 1249);
 
-    Option<Bike> bike = BikeInMapper.mapToDomainEntity(bikeResource);
+    final Option<Bike> bike = BikeInMapper.mapToDomainEntity(bikeResource);
 
     assertThat(bike.isDefined(), is(equalTo(true)));
     assertThat(bike.get().getId(), is(equalTo(bikeId)));
@@ -41,12 +41,13 @@ class BikeInMapperTest {
 
   @Test
   public void shouldMapToRestResource() {
-    UUID bikeId = UUID.randomUUID();
-    UUID ownerId = UUID.randomUUID();
+    final UUID bikeId = UUID.fromString("11edf58d-0d27-470f-a527-3bab79ba5576");
+    final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
 
-    Bike bike = Bike.getInstance(bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017, 1249);
+    final Bike bike =
+        Bike.getInstance(bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017, 1249);
 
-    Option<BikeResource> bikeResource = BikeInMapper.mapToRestResource(bike);
+    final Option<BikeResource> bikeResource = BikeInMapper.mapToRestResource(bike);
 
     assertThat(bikeResource.isDefined(), is(equalTo(true)));
     assertThat(bikeResource.get().getId(), is(equalTo(bikeId)));
@@ -60,29 +61,30 @@ class BikeInMapperTest {
 
   @Test
   public void shouldMapToListOfRestResource() {
-    UUID bikeId = UUID.randomUUID();
-    UUID ownerId = UUID.randomUUID();
+    final UUID bikeId = UUID.fromString("11edf58d-0d27-470f-a527-3bab79ba5576");
+    final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
 
-    List<Bike> bikes =
+    final List<Bike> bikes =
         List.of(Bike.getInstance(bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017, 1249));
 
-    List<BikeResource> bikeResources = BikeInMapper.mapToListRestResource(bikes);
+    final List<BikeResource> bikeResources = BikeInMapper.mapToListRestResource(bikes);
 
     assertThat(bikeResources.size(), is(equalTo(1)));
   }
 
   @Test
   public void shouldMapWithNullBikeToListOfRestResource() {
-    UUID bikeId = UUID.randomUUID();
-    UUID ownerId = UUID.randomUUID();
+    final UUID bikeId = UUID.fromString("11edf58d-0d27-470f-a527-3bab79ba5576");
+    final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
 
-    Bike bike = Bike.getInstance(bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017, 1249);
+    final Bike bike =
+        Bike.getInstance(bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017, 1249);
 
-    List<Bike> bikes = new ArrayList<>();
+    final List<Bike> bikes = new ArrayList<>();
     bikes.add(bike);
     bikes.add(null);
 
-    List<BikeResource> bikeResources = BikeInMapper.mapToListRestResource(bikes);
+    final List<BikeResource> bikeResources = BikeInMapper.mapToListRestResource(bikes);
 
     assertThat(bikeResources.size(), is(equalTo(1)));
   }

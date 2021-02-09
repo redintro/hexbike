@@ -11,8 +11,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
 class OwnerInMapperTest {
-  private final UUID ownerId = UUID.randomUUID();
-  private final UUID bikeId = UUID.randomUUID();
+  private final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
   private final Owner owner = Owner.getInstance(ownerId, "Jeff", "Jefferson");
 
   @Test
@@ -22,9 +21,9 @@ class OwnerInMapperTest {
 
   @Test
   public void shouldMapToDomainEntity() {
-    OwnerResource ownerResource = new OwnerResource(ownerId, "Jeff", "Jefferson");
+    final OwnerResource ownerResource = new OwnerResource(ownerId, "Jeff", "Jefferson");
 
-    Option<Owner> owner = OwnerInMapper.mapToDomainEntity(ownerResource);
+    final Option<Owner> owner = OwnerInMapper.mapToDomainEntity(ownerResource);
 
     assertThat(owner.isDefined(), is(equalTo(true)));
     assertThat(owner.get().getId(), is(equalTo(ownerId)));
@@ -39,7 +38,7 @@ class OwnerInMapperTest {
 
   @Test
   public void shouldMapToResource() {
-    Option<OwnerResource> ownerResource = OwnerInMapper.mapToRestResource(owner);
+    final Option<OwnerResource> ownerResource = OwnerInMapper.mapToRestResource(owner);
 
     assertThat(ownerResource.isDefined(), is(equalTo(true)));
     assertThat(ownerResource.get().getId(), is(equalTo(ownerId)));
@@ -54,7 +53,7 @@ class OwnerInMapperTest {
 
   @Test
   public void shouldMapToListToResource() {
-    List<OwnerResource> ownerResources = OwnerInMapper.mapToListRestResource(List.of(owner));
+    final List<OwnerResource> ownerResources = OwnerInMapper.mapToListRestResource(List.of(owner));
     assertThat(ownerResources.size(), is(1));
   }
 }

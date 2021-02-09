@@ -26,7 +26,7 @@ class OwnerPersistenceAdapterTest {
 
   @Test
   public void shouldFindAll() {
-    UUID ownerId = UUID.randomUUID();
+    final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
 
     when(ownerRepository.findAll())
         .thenReturn(List.of(new OwnerJpaEntity(ownerId, "Jeff", "Jefferson")));
@@ -38,7 +38,7 @@ class OwnerPersistenceAdapterTest {
 
   @Test
   public void shouldFindByUserName() {
-    UUID ownerId = UUID.randomUUID();
+    final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
 
     when(ownerRepository.findById(any(UUID.class)))
         .thenReturn(Option.of(new OwnerJpaEntity(ownerId, "Jeff", "Jefferson")).toJavaOptional());

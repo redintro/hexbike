@@ -10,10 +10,11 @@ import org.junit.jupiter.api.Test;
 class BikeTest {
   @Test
   public void shouldCreateBike() {
-    UUID bikeId = UUID.randomUUID();
-    UUID ownerId = UUID.randomUUID();
+    final UUID bikeId = UUID.fromString("11edf58d-0d27-470f-a527-3bab79ba5576");
+    final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
 
-    Bike bike = Bike.getInstance(bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017, 1249);
+    final Bike bike =
+        Bike.getInstance(bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017, 1249);
 
     assertThat(bike.getId(), is(equalTo(bikeId)));
     assertThat(bike.getOwnerId(), is(equalTo(ownerId)));

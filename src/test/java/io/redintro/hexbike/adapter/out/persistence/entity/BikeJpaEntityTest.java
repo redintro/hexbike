@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 class BikeJpaEntityTest {
   @Test
   public void shouldCreateBikeJpaEntity() {
-    UUID bikeId = UUID.randomUUID();
-    UUID ownerId = UUID.randomUUID();
+    final UUID bikeId = UUID.fromString("11edf58d-0d27-470f-a527-3bab79ba5576");
+    final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
 
     BikeJpaEntity bikeJpaEntity =
         new BikeJpaEntity(

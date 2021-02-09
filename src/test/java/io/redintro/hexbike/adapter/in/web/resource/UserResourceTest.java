@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 class UserResourceTest {
   @Test
   public void shouldCreateUserResource() {
-    UUID userId = UUID.randomUUID();
-    UUID roleId = UUID.randomUUID();
+    final UUID userId = UUID.fromString("9b06bc40-2e96-4259-b880-58bbbd6db38f");
+    final UUID roleId = UUID.fromString("134f7041-27b6-414f-807c-4a607e4542f4");
 
     UserResource userResource =
         new UserResource(userId, "jeff01", "!Password", Set.of(new RoleResource(roleId, "ADMIN")));

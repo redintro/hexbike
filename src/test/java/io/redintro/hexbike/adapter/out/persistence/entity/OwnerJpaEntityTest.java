@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class OwnerJpaEntityTest {
   @Test
   public void shouldCreateOwnerJpaEntity() {
-    UUID ownerId = UUID.randomUUID();
+    final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
 
     OwnerJpaEntity ownerJpaEntity = new OwnerJpaEntity(ownerId, "Jeff", "Jefferson");
 

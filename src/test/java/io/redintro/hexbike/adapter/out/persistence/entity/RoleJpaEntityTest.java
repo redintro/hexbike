@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 class RoleJpaEntityTest {
   @Test
   public void shouldCreateRoleJpaEntity() {
-    UUID roleId = UUID.randomUUID();
+    final UUID roleId = UUID.fromString("134f7041-27b6-414f-807c-4a607e4542f4");
 
     RoleJpaEntity userJpaEntity = new RoleJpaEntity(roleId, "ADMIN");
 
