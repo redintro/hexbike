@@ -4,7 +4,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +21,7 @@ class BikeJpaEntityTest {
             "White",
             2017,
             1249,
-            new OwnerJpaEntity(ownerId, "Jeff", "Jefferson", List.of()));
+            new OwnerJpaEntity(ownerId, "Jeff", "Jefferson"));
 
     assertThat(bikeJpaEntity.getId(), is(equalTo(bikeId)));
     assertThat(bikeJpaEntity.getMake(), is(equalTo("Cinelli")));

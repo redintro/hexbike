@@ -14,13 +14,7 @@ public class OwnerInMapper {
     return Try.of(
             () ->
                 Owner.getInstance(
-                    resource.getId(),
-                    resource.getFirstName(),
-                    resource.getLastName(),
-                    resource.getBikeResources().stream()
-                        .map(BikeInMapper::mapToDomainEntity)
-                        .flatMap(Value::toJavaStream)
-                        .collect(Collectors.toList())))
+                    resource.getId(), resource.getFirstName(), resource.getLastName()))
         .toOption();
   }
 
@@ -39,16 +33,7 @@ public class OwnerInMapper {
   }
 
   private static Option<OwnerResource> toOwnerRestResource(Owner owner) {
-    return Try.of(
-            () ->
-                new OwnerResource(
-                    owner.getId(),
-                    owner.getFirstName(),
-                    owner.getLastName(),
-                    owner.getBikes().stream()
-                        .map(BikeInMapper::mapToRestResource)
-                        .flatMap(Value::toJavaStream)
-                        .collect(Collectors.toList())))
+    return Try.of(() -> new OwnerResource(owner.getId(), owner.getFirstName(), owner.getLastName()))
         .toOption();
   }
 }

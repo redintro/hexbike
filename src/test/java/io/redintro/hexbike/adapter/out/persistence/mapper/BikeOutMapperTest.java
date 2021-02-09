@@ -6,7 +6,6 @@ import static org.hamcrest.Matchers.*;
 import io.redintro.hexbike.adapter.out.persistence.entity.BikeJpaEntity;
 import io.redintro.hexbike.adapter.out.persistence.entity.OwnerJpaEntity;
 import io.redintro.hexbike.domain.Bike;
-import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
@@ -30,19 +29,7 @@ class BikeOutMapperTest {
             "White",
             2017,
             1249,
-            new OwnerJpaEntity(
-                ownerId,
-                "Jeff",
-                "Jefferson",
-                List.of(
-                    new BikeJpaEntity(
-                        bikeId,
-                        "Cinelli",
-                        "Vigorelli",
-                        "White",
-                        2017,
-                        1249,
-                        new OwnerJpaEntity()))));
+            new OwnerJpaEntity(ownerId, "Jeff", "Jefferson"));
 
     Bike bike = BikeOutMapper.mapToDomainEntity(bikeJpaEntity);
 

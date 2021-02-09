@@ -39,19 +39,7 @@ class BikePersistenceAdapterTest {
                     "White",
                     2017,
                     1249,
-                    new OwnerJpaEntity(
-                        ownerId,
-                        "Jeff",
-                        "Jefferson",
-                        List.of(
-                            new BikeJpaEntity(
-                                bikeId,
-                                "Cinelli",
-                                "Vigorelli",
-                                "White",
-                                2017,
-                                1249,
-                                new OwnerJpaEntity()))))));
+                    new OwnerJpaEntity(ownerId, "Jeff", "Jefferson"))));
 
     List<Bike> bikes = bikePersistenceAdapter.findAll();
 
@@ -73,19 +61,7 @@ class BikePersistenceAdapterTest {
                         "White",
                         2017,
                         1249,
-                        new OwnerJpaEntity(
-                            ownerId,
-                            "Jeff",
-                            "Jefferson",
-                            List.of(
-                                new BikeJpaEntity(
-                                    bikeId,
-                                    "Cinelli",
-                                    "Vigorelli",
-                                    "White",
-                                    2017,
-                                    1249,
-                                    new OwnerJpaEntity())))))
+                        new OwnerJpaEntity(ownerId, "Jeff", "Jefferson")))
                 .toJavaOptional());
 
     Option<Bike> bike = bikePersistenceAdapter.findById(bikeId);

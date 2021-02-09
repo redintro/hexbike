@@ -5,7 +5,6 @@ import static org.hamcrest.Matchers.*;
 
 import io.redintro.hexbike.adapter.out.persistence.entity.OwnerJpaEntity;
 import io.redintro.hexbike.domain.Owner;
-import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +19,7 @@ class OwnerOutMapperTest {
   public void shouldMapToDomainEntity() {
     UUID ownerId = UUID.randomUUID();
 
-    OwnerJpaEntity ownerJpaEntity = new OwnerJpaEntity(ownerId, "Jeff", "Jefferson", List.of());
+    OwnerJpaEntity ownerJpaEntity = new OwnerJpaEntity(ownerId, "Jeff", "Jefferson");
 
     Owner owner = OwnerOutMapper.mapToDomainEntity(ownerJpaEntity);
 

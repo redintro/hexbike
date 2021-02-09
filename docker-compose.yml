@@ -1,26 +1,26 @@
 version: '3'
 services:
-cache:
-	container_name: hexbike-cache
-	image: redis:alpine
-	ports:
-	- 6379:6379
-	volumes:
-	- cache-data:/var/lib/redis
+	cache:
+		container_name: hexbike-cache
+		image: redis:alpine
+		ports:
+			- 6379:6379
+		volumes:
+			- cache-data:/var/lib/redis
 
-db:
-	container_name: hexbike-database
-	image: postgres:10-alpine
-	restart: always
-	ports:
-	- 5432:5432
-	environment:
-	POSTGRES_USER: docker
-	POSTGRES_PASSWORD: docker
-	POSTGRES_DB: hexbike_dev
-	volumes:
-	- db-data:/var/lib/postgres/data
+	db:
+		container_name: hexbike-database
+		image: postgres:10-alpine
+		restart: always
+		ports:
+			- 5432:5432
+		environment:
+			POSTGRES_USER: docker
+			POSTGRES_PASSWORD: docker
+			POSTGRES_DB: hexbike_dev
+		volumes:
+			- db-data:/var/lib/postgres/data
 
 volumes:
-cache-data:
-db-data:
+	cache-data:
+	db-data:
