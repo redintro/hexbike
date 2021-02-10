@@ -5,9 +5,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.redintro.hexbike.adapter.in.web.mapper.OwnerInMapper;
-import io.redintro.hexbike.adapter.in.web.resource.OwnerResource;
+import com.jayway.jsonpath.DocumentContext;
+import com.jayway.jsonpath.JsonPath;
 import io.redintro.hexbike.domain.Owner;
 import io.redintro.hexbike.port.in.ShowOwnerPort;
 import io.vavr.control.Option;
@@ -19,7 +18,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -35,45 +33,41 @@ public class OwnerControllerTest {
 
   @Mock private ShowOwnerPort showOwnerPort;
 
-  private JacksonTester<List<OwnerResource>> jacksonListTester;
-
-  private JacksonTester<OwnerResource> jacksonTester;
-
   @BeforeEach
   public void setUp() {
-    JacksonTester.initFields(this, new ObjectMapper());
-
     mvc = MockMvcBuilders.standaloneSetup(controller).build();
   }
 
   @Test
   public void shouldFindAllOwners() throws Exception {
     final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
-    final UUID bikeId = UUID.fromString("11edf58d-0d27-470f-a527-3bab79ba5576");
+    final String firstName = "Jeff";
+    final String lastName = "Jefferson";
 
-    List<Owner> owners = List.of(Owner.getInstance(UUID.randomUUID(), "Jeff", "Jefferson"));
+    final List<Owner> owners = List.of(Owner.getInstance(ownerId, firstName, lastName));
 
     when(showOwnerPort.findAll()).thenReturn(owners);
 
-    MockHttpServletResponse response =
+    final MockHttpServletResponse response =
         mvc.perform(MockMvcRequestBuilders.get("/api/owners").accept(MediaType.APPLICATION_JSON))
             .andReturn()
             .getResponse();
 
-    List<OwnerResource> ownerResources = OwnerInMapper.mapToListRestResource(owners);
+    final DocumentContext jsonContext = JsonPath.parse(response.getContentAsString());
 
     assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
-    assertThat(
-        response.getContentAsString(),
-        is(equalTo(jacksonListTester.write(ownerResources).getJson())));
+    assertThat(jsonContext.read("$[0]['id']"), is(equalTo(ownerId.toString())));
+    assertThat(jsonContext.read("$[0]['firstName']"), is(equalTo(firstName)));
+    assertThat(jsonContext.read("$[0]['lastName']"), is(equalTo(lastName)));
   }
 
   @Test
   public void shouldFindById() throws Exception {
     final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
-    final UUID bikeId = UUID.fromString("11edf58d-0d27-470f-a527-3bab79ba5576");
+    final String firstName = "Jeff";
+    final String lastName = "Jefferson";
 
-    final Owner owner = Owner.getInstance(ownerId, "Jeff", "Jefferson");
+    final Owner owner = Owner.getInstance(ownerId, firstName, lastName);
 
     when(showOwnerPort.findById(ownerId)).thenReturn(Option.of(owner));
 
@@ -84,12 +78,12 @@ public class OwnerControllerTest {
             .andReturn()
             .getResponse();
 
-    Option<OwnerResource> ownerResource = OwnerInMapper.mapToRestResource(owner);
+    final DocumentContext jsonContext = JsonPath.parse(response.getContentAsString());
 
     assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
-    assertThat(
-        response.getContentAsString(),
-        is(equalTo(jacksonTester.write(ownerResource.get()).getJson())));
+    assertThat(jsonContext.read("$['id']"), is(equalTo(ownerId.toString())));
+    assertThat(jsonContext.read("$['firstName']"), is(equalTo(firstName)));
+    assertThat(jsonContext.read("$['lastName']"), is(equalTo(lastName)));
   }
 
   @Test

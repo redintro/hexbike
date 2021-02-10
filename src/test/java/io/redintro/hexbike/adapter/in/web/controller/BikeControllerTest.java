@@ -6,9 +6,8 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.redintro.hexbike.adapter.in.web.mapper.BikeInMapper;
-import io.redintro.hexbike.adapter.in.web.resource.BikeResource;
+import com.jayway.jsonpath.DocumentContext;
+import com.jayway.jsonpath.JsonPath;
 import io.redintro.hexbike.domain.Bike;
 import io.redintro.hexbike.port.in.ShowBikePort;
 import io.redintro.hexbike.service.AuthenticationService;
@@ -22,7 +21,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -42,16 +40,10 @@ class BikeControllerTest {
 
   @MockBean private HexBikeUserDetailsService userDetailsService;
 
-  private JacksonTester<List<BikeResource>> jacksonListTester;
-
-  private JacksonTester<BikeResource> jacksonTester;
-
   private String jwtToken;
 
   @BeforeEach
   public void setUp() {
-    JacksonTester.initFields(this, new ObjectMapper());
-
     jwtToken = AuthenticationService.getToken("admin");
 
     when(userDetailsService.loadUserByUsername(any(String.class)))
@@ -68,14 +60,20 @@ class BikeControllerTest {
 
   @Test
   public void shouldFindAll() throws Exception {
-    List<Bike> bikes =
-        List.of(
-            Bike.getInstance(
-                UUID.randomUUID(), UUID.randomUUID(), "Cinelli", "Vigorelli", "White", 2017, 1249));
+    final UUID bikeId = UUID.fromString("11edf58d-0d27-470f-a527-3bab79ba5576");
+    final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
+    final String make = "Cinelli";
+    final String model = "Vigorelli";
+    final String colour = "White";
+    final int year = 2017;
+    final int price = 1249;
+
+    final List<Bike> bikes =
+        List.of(Bike.getInstance(bikeId, ownerId, make, model, colour, year, price));
 
     when(showBikePort.findAll()).thenReturn(bikes);
 
-    MockHttpServletResponse response =
+    final MockHttpServletResponse response =
         mvc.perform(
                 MockMvcRequestBuilders.get("/api/bikes")
                     .header(HttpHeaders.AUTHORIZATION, jwtToken)
@@ -83,25 +81,32 @@ class BikeControllerTest {
             .andReturn()
             .getResponse();
 
-    List<BikeResource> bikeResources = BikeInMapper.mapToListRestResource(bikes);
+    final DocumentContext jsonContext = JsonPath.parse(response.getContentAsString());
 
-    assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
-    assertThat(
-        response.getContentAsString(),
-        is(equalTo(jacksonListTester.write(bikeResources).getJson())));
+    assertThat(jsonContext.read("$[0]['id']"), is(equalTo(bikeId.toString())));
+    assertThat(jsonContext.read("$[0]['ownerId']"), is(equalTo(ownerId.toString())));
+    assertThat(jsonContext.read("$[0]['make']"), is(equalTo("Cinelli")));
+    assertThat(jsonContext.read("$[0]['model']"), is(equalTo("Vigorelli")));
+    assertThat(jsonContext.read("$[0]['colour']"), is(equalTo("White")));
+    assertThat(jsonContext.read("$[0]['year']"), is(equalTo(2017)));
+    assertThat(jsonContext.read("$[0]['price']"), is(equalTo(1249)));
   }
 
   @Test
   public void shouldFindById() throws Exception {
     final UUID bikeId = UUID.fromString("11edf58d-0d27-470f-a527-3bab79ba5576");
     final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
+    final String make = "Cinelli";
+    final String model = "Vigorelli";
+    final String colour = "White";
+    final int year = 2017;
+    final int price = 1249;
 
-    final Bike bike =
-        Bike.getInstance(bikeId, ownerId, "Cinelli", "Vigorelli", "White", 2017, 1249);
+    final Bike bike = Bike.getInstance(bikeId, ownerId, make, model, colour, year, price);
 
     when(showBikePort.findById(bikeId)).thenReturn(Option.of(bike));
 
-    MockHttpServletResponse response =
+    final MockHttpServletResponse response =
         mvc.perform(
                 MockMvcRequestBuilders.get("/api/bikes/" + bikeId)
                     .header(HttpHeaders.AUTHORIZATION, jwtToken)
@@ -109,12 +114,15 @@ class BikeControllerTest {
             .andReturn()
             .getResponse();
 
-    Option<BikeResource> bikeResource = BikeInMapper.mapToRestResource(bike);
+    final DocumentContext jsonContext = JsonPath.parse(response.getContentAsString());
 
-    assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
-    assertThat(
-        response.getContentAsString(),
-        is(equalTo(jacksonTester.write(bikeResource.get()).getJson())));
+    assertThat(jsonContext.read("$['id']"), is(equalTo(bikeId.toString())));
+    assertThat(jsonContext.read("$['ownerId']"), is(equalTo(ownerId.toString())));
+    assertThat(jsonContext.read("$['make']"), is(equalTo("Cinelli")));
+    assertThat(jsonContext.read("$['model']"), is(equalTo("Vigorelli")));
+    assertThat(jsonContext.read("$['colour']"), is(equalTo("White")));
+    assertThat(jsonContext.read("$['year']"), is(equalTo(2017)));
+    assertThat(jsonContext.read("$['price']"), is(equalTo(1249)));
   }
 
   @Test
@@ -123,7 +131,7 @@ class BikeControllerTest {
 
     when(showBikePort.findById(bikeId)).thenReturn(Option.none());
 
-    MockHttpServletResponse response =
+    final MockHttpServletResponse response =
         mvc.perform(
                 MockMvcRequestBuilders.get("/api/bikes/" + bikeId)
                     .header(HttpHeaders.AUTHORIZATION, jwtToken)
