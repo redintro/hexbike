@@ -10,11 +10,15 @@ class OwnerJpaEntityTest {
   @Test
   public void shouldCreateOwnerJpaEntity() {
     final UUID ownerId = UUID.fromString("40b8098d-8058-465e-acff-ac1119e57b27");
+    final String firstName = "Jeff";
+    final String lastName = "Jefferson";
+    final AddressJpaEntity address = new AddressJpaEntity("Address 1", "Address 2");
 
-    OwnerJpaEntity ownerJpaEntity = new OwnerJpaEntity(ownerId, "Jeff", "Jefferson");
+    OwnerJpaEntity ownerJpaEntity = new OwnerJpaEntity(ownerId, firstName, lastName, address);
 
     assertThat(ownerJpaEntity.getId(), is(equalTo(ownerId)));
     assertThat(ownerJpaEntity.getFirstName(), is(equalTo("Jeff")));
     assertThat(ownerJpaEntity.getLastName(), is(equalTo("Jefferson")));
+    assertThat(ownerJpaEntity.getAddress(), is(equalTo(address)));
   }
 }

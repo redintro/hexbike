@@ -24,6 +24,7 @@
 		<json-path.version>2.4.0</json-path.version>
 		<liquibase.core.version>3.8.7</liquibase.core.version>
 		<liquibase-maven-plugin.version>3.10.2</liquibase-maven-plugin.version>
+		<mockito.version>3.7.7</mockito.version>
 		<immutables.version>2.8.8</immutables.version>
 		<postgresql.version>42.2.10</postgresql.version>
 		<springdoc.openapi-ui.version>1.2.32</springdoc.openapi-ui.version>
@@ -132,6 +133,11 @@
 		</dependency>
 
         <!-- Test -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-inline</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -253,7 +259,6 @@
 							<includes>
 								<include>*.md</include>
 								<include>.gitignore</include>
-                                <include>*.yml</include>
 							</includes>
 							<trimTrailingWhitespace/>
 							<endWithNewline/>
@@ -292,6 +297,8 @@
 						<exclude>**/SecurityConfig.class</exclude>
                         <!-- TODO: All statics so include when Mockito / PowerMock works with JUnit 5 -->
 						<exclude>**/AuthenticationService.class</exclude>
+						<exclude>**/AddressEmbed.class</exclude>
+						<exclude>**/OwnerJpaEntity.class</exclude>
 					</excludes>
 				</configuration>
 				<executions>

@@ -29,12 +29,30 @@ public class OwnerController {
   @Operation(security = {@SecurityRequirement(name = BEARER_TOKEN)})
   @GetMapping(value = "/owners", produces = MediaType.APPLICATION_JSON_VALUE)
   public List<OwnerResource> index() {
+    // What errors can mapper throw? NullPointerException as the types passed in are the same
+    /*
+
+    A result = Try.of(this::bunchOfWork)
+      .recover(x -> Match(x).of(
+          Case($(instanceOf(Exception_1.class)), t -> somethingWithException(t)),
+          Case($(instanceOf(Exception_2.class)), t -> somethingWithException(t)),
+          Case($(instanceOf(Exception_n.class)), t -> somethingWithException(t))
+      ))
+    .getOrElse(other);
+     */
+
     return OwnerInMapper.mapToListRestResource(showOwnerPort.findAll());
   }
 
   @Operation(security = {@SecurityRequirement(name = BEARER_TOKEN)})
   @GetMapping(value = "/owners/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public OwnerResource show(@PathVariable UUID id) {
+    /*
+    What do we want?
+    if there was an error mapping then throw a bad request exception
+    else no value was found then throw a not found exception
+    else return the value
+     */
     return showOwnerPort
         .findById(id)
         .flatMap(OwnerInMapper::mapToRestResource)

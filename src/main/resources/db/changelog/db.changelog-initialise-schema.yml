@@ -88,6 +88,8 @@ databaseChangeLog:
               - column:
                   name: price
                   type: NUMERIC
+                  constraints:
+                    nullable: false
               - column:
                   name: owner
                   type: UUID
@@ -153,6 +155,16 @@ databaseChangeLog:
                   type: VARCHAR(50)
                   constraints:
                     nullable: false
+              - column:
+                  name: address_1
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: address_2
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
         - loadData:
             tableName: owner
             columns:
@@ -164,6 +176,12 @@ databaseChangeLog:
                   type: STRING
               - column:
                   name: last_name
+                  type: STRING
+              - column:
+                  name: address_1
+                  type: STRING
+              - column:
+                  name: address_2
                   type: STRING
             commentLineStartsWith: //
             encoding: UTF-8
