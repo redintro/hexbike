@@ -11,6 +11,8 @@ public class AddressJpaEntity {
   @Column(name = "address_2")
   private String address2;
 
+  public AddressJpaEntity() {}
+
   public AddressJpaEntity(String address1, String address2) {
     this.address1 = address1;
     this.address2 = address2;
