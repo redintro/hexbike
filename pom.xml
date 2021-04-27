@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.2.9.RELEASE</version>
+		<version>2.4.5</version>
 		<relativePath/>
 	</parent>
 	<groupId>io.redintro</groupId>
@@ -35,7 +35,7 @@
         <spotless.version>2.7.0</spotless.version>
 		<testcontainers.version>1.15.1</testcontainers.version>
         <vavr.version>0.10.3</vavr.version>
-		<skipItTests>true</skipItTests>
+		<skipItTests>false</skipItTests>
 	</properties>
 
 	<dependencies>
