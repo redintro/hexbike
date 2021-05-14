@@ -44,6 +44,12 @@ Call the API:
 View the API documentation:
 http://localhost:8080/swagger-ui.html
 
+## Application Documentation 
+http://localhost:8080/actuator/beans
+http://localhost:8080/actuator/configprops
+http://localhost:8080/actuator/conditions
+http://localhost:8080/actuator/threaddump
+
 To access protected endpoints obtain a bearer token, click on the padlock icon and authenticate with the bearer token
 
 ## Test Coverage Checks and Reporting
