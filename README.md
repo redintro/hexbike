@@ -44,7 +44,7 @@ Call the API:
 View the API documentation:
 http://localhost:8080/swagger-ui.html
 
-## Application Documentation 
+## Application Documentation
 http://localhost:8080/actuator/beans
 http://localhost:8080/actuator/configprops
 http://localhost:8080/actuator/conditions
