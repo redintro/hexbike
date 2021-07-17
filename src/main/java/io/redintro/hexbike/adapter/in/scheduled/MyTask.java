@@ -1,4 +1,4 @@
-package io.redintro.hexbike.domain.task;
+package io.redintro.hexbike.adapter.in.scheduled;
 
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.slf4j.Logger;

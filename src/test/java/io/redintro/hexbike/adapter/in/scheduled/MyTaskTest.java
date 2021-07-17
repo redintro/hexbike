@@ -1,4 +1,4 @@
-package io.redintro.hexbike.domain.task;
+package io.redintro.hexbike.adapter.in.scheduled;
 
 import static org.mockito.Mockito.*;
 
