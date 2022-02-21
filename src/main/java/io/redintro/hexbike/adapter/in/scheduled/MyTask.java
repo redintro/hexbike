@@ -16,6 +16,6 @@ public class MyTask {
       lockAtLeastFor = "${io.redintro.scheduling.lock.atLeastFor}",
       lockAtMostFor = "${io.redintro.scheduling.lock.atMostFor}")
   public void execute() {
-    LOGGER.info("Scheduled task called [{}]", this.toString());
+    LOGGER.info("Scheduled task called [{}]", this);
   }
 }
